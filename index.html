@@ -11,7 +11,7 @@
 <style>
   :root {
     --ink: #0f0f0e;
-    --paper: #f8f9fa; /* Um pouco mais limpo/moderno */
+    --paper: #f8f9fa;
     --paper2: #ffffff;
     --accent: #b5401a;
     --accent2: #2a4a7f;
@@ -501,6 +501,57 @@
     text-decoration: none;
   }
 
+  /* ── CHI 2026 SECTION ── */
+  .chi-section {
+    background: var(--accent2);
+    color: white;
+    border-radius: 24px;
+    padding: clamp(3rem, 6vw, 5rem);
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .chi-content h2 { color: white; margin-bottom: 1.5rem; }
+  .chi-content p { font-size: 1.1rem; line-height: 1.6; opacity: 0.9; margin-bottom: 2rem; }
+  .chi-link {
+    display: inline-block;
+    background: white;
+    color: var(--accent2);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform 0.2s;
+  }
+  .chi-link:hover { transform: scale(1.05); }
+
+  /* ── SUPPORT SECTION ── */
+  .support-section {
+    background: #fff;
+    border: 2px solid var(--accent);
+    border-radius: 24px;
+    padding: clamp(3rem, 6vw, 5rem);
+    margin-top: 4rem;
+    text-align: center;
+  }
+  .support-section h2 { color: var(--accent); margin-bottom: 1rem; }
+  .support-section p { font-size: 1.1rem; color: var(--muted); margin-bottom: 2.5rem; max-width: 60ch; margin-left: auto; margin-right: auto; }
+  .support-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    padding: 1.2rem 3rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+    box-shadow: 0 10px 20px rgba(181, 64, 26, 0.2);
+  }
+  .support-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(181, 64, 26, 0.3); background: #9d3615; }
+
   /* ── CONTACT ── */
   .contact-block {
     display: grid;
@@ -531,15 +582,6 @@
     text-decoration: none;
     font-size: 1.1rem;
   }
-  .chi-notice {
-    background: #cfe2ff;
-    color: var(--accent2);
-    padding: 2rem;
-    border-radius: 20px;
-    font-size: 1rem;
-    line-height: 1.6;
-  }
-  .chi-notice strong { font-weight: 800; }
 
   /* ── FOOTER ── */
   footer {
@@ -566,6 +608,7 @@
     .framework-item { grid-template-columns: 1fr; gap: 1rem; }
     .stats-row { flex-direction: column; }
     .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .chi-section { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
     .contact-block { grid-template-columns: 1fr; gap: 3rem; }
     footer { flex-direction: column; gap: 1rem; text-align: center; }
     nav .links { display: none; }
@@ -599,10 +642,9 @@
   <div class="nav-right">
     <ul class="links">
       <li><a href="#research"><span data-lang="en">Research</span><span data-lang="pt">Pesquisa</span></a></li>
-      <li><a href="#why"><span data-lang="en">Implications</span><span data-lang="pt">Implicações</span></a></li>
       <li><a href="#frameworks">Frameworks</a></li>
-      <li><a href="#study"><span data-lang="en">The Study</span><span data-lang="pt">O Estudo</span></a></li>
       <li><a href="#about"><span data-lang="en">About</span><span data-lang="pt">Sobre</span></a></li>
+      <li><a href="#support"><span data-lang="en">Support</span><span data-lang="pt">Apoiar</span></a></li>
       <li><a href="#contact"><span data-lang="en">Contact</span><span data-lang="pt">Contato</span></a></li>
     </ul>
     <div class="lang-switcher">
@@ -634,19 +676,15 @@
         <span data-lang="en">20-Month Longitudinal Study</span>
         <span data-lang="pt">Estudo Longitudinal de 20 Meses</span>
       </span>
-      <span class="badge badge-gray">
-        <span data-lang="en">352 Conversations</span>
-        <span data-lang="pt">352 Conversas</span>
-      </span>
     </div>
     <div class="cta-row">
       <a href="#research" class="cta-primary">
         <span data-lang="en">Read the Research</span>
         <span data-lang="pt">Ler a Pesquisa</span>
       </a>
-      <a href="#contact" class="cta-secondary">
-        <span data-lang="en">Get in Touch</span>
-        <span data-lang="pt">Entrar em Contato</span>
+      <a href="#support" class="cta-secondary">
+        <span data-lang="en">Support this Mission</span>
+        <span data-lang="pt">Apoiar esta Missão</span>
       </a>
     </div>
   </div>
@@ -709,18 +747,6 @@
   </div>
 </header>
 
-<!-- FINDING -->
-<section style="padding-top: 4rem; padding-bottom: 4rem;">
-  <div class="finding-block fade-in">
-    <p data-lang="en">Agreement between multiple AI systems does not necessarily mean independent validation. Humans in the evaluation loop can act as regime stabilizers — and this failure mode is invisible to standard evaluation protocols.</p>
-    <p data-lang="pt">O acordo entre múltiplos sistemas de IA não significa necessariamente validação independente. Humanos no ciclo de avaliação podem atuar como estabilizadores de regime — e este modo de falha é invisível para os protocolos de avaliação padrão.</p>
-    <div class="finding-note">
-      <span data-lang="en">— Core finding, presented at ACM CHI 2026</span>
-      <span data-lang="pt">— Descoberta central, apresentada na ACM CHI 2026</span>
-    </div>
-  </div>
-</section>
-
 <!-- RESEARCH -->
 <section id="research">
   <div class="section-label">
@@ -729,99 +755,34 @@
   </div>
   <h2 data-lang="en">Two Accepted Papers<br>at ACM CHI 2026</h2>
   <h2 data-lang="pt">Dois Artigos Aceitos<br>na ACM CHI 2026</h2>
-  <p style="max-width: 60ch; color: var(--muted); margin-bottom: 0;">
-    <span data-lang="en">These papers form a single research program: the first documents the mechanism, the second examines its systemic implication for human-centered AI evaluation.</span>
-    <span data-lang="pt">Estes artigos formam um programa de pesquisa único: o primeiro documenta o mecanismo, o segundo examina sua implicação sistêmica para a avaliação de IA centrada no humano.</span>
-  </p>
-
+  
   <div class="papers-grid fade-in">
     <div class="paper-card">
-      <div class="paper-venue">CHI 2026 · HEAL Workshop · April 15</div>
+      <div class="paper-venue">CHI 2026 · HEAL Workshop</div>
       <div class="paper-title">When Humans Become Regime Stabilizers: A Hidden Failure Mode in Agent-in-the-Loop LLM Evaluation</div>
       <div class="paper-role">
         <span data-lang="en">The mechanism — how it happens</span>
         <span data-lang="pt">O mecanismo — como acontece</span>
       </div>
       <div class="paper-abstract">
-        <span data-lang="en">Identifies how human evaluators in agent-in-the-loop systems can inadvertently stabilize semantic regimes across independent LLM agents. When the same human interacts with multiple models in sequence, their accumulated framing progressively narrows each model's effective response space — producing convergence that undermines the independence assumption central to evaluation validity.</span>
-        <span data-lang="pt">Identifica como avaliadores humanos em sistemas de agentes podem inadvertidamente estabilizar regimes semânticos em agentes de LLM independentes. Quando o mesmo humano interage com múltiplos modelos em sequência, seu enquadramento acumulado estreita progressivamente o espaço de resposta efetivo de cada modelo — produzindo uma convergência que mina a suposição de independência central para a validade da avaliação.</span>
+        <span data-lang="en">Identifies how human evaluators in agent-in-the-loop systems can inadvertently stabilize semantic regimes across independent LLM agents.</span>
+        <span data-lang="pt">Identifica como avaliadores humanos em sistemas de agentes podem inadvertidamente estabilizar regimes semânticos em agentes de LLM independentes.</span>
       </div>
       <a href="https://openreview.net/forum?id=PJNqpu0fKr" class="paper-link" target="_blank">View on OpenReview →</a>
     </div>
 
     <div class="paper-card">
-      <div class="paper-venue">CHI 2026 · InterAI Workshop · April 13</div>
+      <div class="paper-venue">CHI 2026 · InterAI Workshop</div>
       <div class="paper-title">The Illusion of Consensus in Human-Centered Interactive AI</div>
       <div class="paper-role">
         <span data-lang="en">The consequence — what it means</span>
         <span data-lang="pt">A consequência — o que significa</span>
       </div>
       <div class="paper-abstract">
-        <span data-lang="en">Examines how shared architectural priors across LLMs, compounded by human-induced semantic stabilization, produce apparent consensus that is not independent validation. This challenges a foundational assumption in multi-model evaluation: that agreement between models constitutes evidence of correctness. The paper calls for evaluation frameworks that account for human-induced convergence effects.</span>
-        <span data-lang="pt">Examina como os padrões arquiteturais compartilhados entre LLMs, somados à estabilização semântica induzida por humanos, produzem um consenso aparente que não é uma validação independente. Isso desafia uma suposição fundamental na avaliação de múltiplos modelos: a de que o acordo entre modelos constitui evidência de correção. O artigo propõe frameworks de avaliação que considerem os efeitos de convergência induzidos por humanos.</span>
+        <span data-lang="en">Examines how shared architectural priors across LLMs, compounded by human-induced semantic stabilization, produce apparent consensus.</span>
+        <span data-lang="pt">Examina como os padrões arquiteturais compartilhados entre LLMs, somados à estabilização semântica induzida por humanos, produzem um consenso aparente.</span>
       </div>
       <a href="https://openreview.net/forum?id=eJtBEBmYGB" class="paper-link" target="_blank">View on OpenReview →</a>
-    </div>
-  </div>
-</section>
-
-<!-- WHY IT MATTERS -->
-<section id="why">
-  <div class="section-label">
-    <span data-lang="en">Implications</span>
-    <span data-lang="pt">Implicações</span>
-  </div>
-  <h2 data-lang="en">Why This Research Matters</h2>
-  <h2 data-lang="pt">Por Que Esta Pesquisa Importa</h2>
-  <p style="max-width: 60ch; color: var(--muted);">
-    <span data-lang="en">The failure mode identified here has consequences for any context where AI systems inform consequential decisions.</span>
-    <span data-lang="pt">O modo de falha identificado aqui tem consequências para qualquer contexto onde sistemas de IA informam decisões importantes.</span>
-  </p>
-
-  <div class="matters-grid fade-in">
-    <div class="matter-item">
-      <div class="matter-icon">AI Evaluation</div>
-      <div class="matter-title">
-        <span data-lang="en">Benchmarking & Model Evaluation</span>
-        <span data-lang="pt">Benchmarking e Avaliação de Modelos</span>
-      </div>
-      <div class="matter-desc">
-        <span data-lang="en">Current evaluation protocols assume human evaluators are neutral instruments. They are not. Human interaction patterns introduce systematic biases that accumulate over time and are undetectable by standard methodologies.</span>
-        <span data-lang="pt">Protocolos de avaliação atuais assumem que avaliadores humanos são instrumentos neutros. Eles não são. Padrões de interação humana introduzem vieses sistemáticos que se acumulam ao longo do tempo e são indetectáveis por metodologias padrão.</span>
-      </div>
-    </div>
-    <div class="matter-item">
-      <div class="matter-icon">Multi-Agent Systems</div>
-      <div class="matter-title">
-        <span data-lang="en">Agent-in-the-Loop Design</span>
-        <span data-lang="pt">Design de Agentes no Ciclo</span>
-      </div>
-      <div class="matter-desc">
-        <span data-lang="en">As AI systems are deployed with multiple models interacting under human oversight, the risk of evaluator-induced consensus scales accordingly. System designers need tools to detect and mitigate this failure mode.</span>
-        <span data-lang="pt">À medida que sistemas de IA são implantados com múltiplos modelos interagindo sob supervisão humana, o risco de consenso induzido pelo avaliador escala proporcionalmente. Designers de sistemas precisam de ferramentas para detectar e mitigar este modo de falha.</span>
-      </div>
-    </div>
-    <div class="matter-item">
-      <div class="matter-icon">AI Governance</div>
-      <div class="matter-title">
-        <span data-lang="en">Algorithmic Governance & Auditing</span>
-        <span data-lang="pt">Governança Algorítmica e Auditoria</span>
-      </div>
-      <div class="matter-desc">
-        <span data-lang="en">Governance frameworks that rely on AI consensus as a proxy for reliability may be systematically misled. Auditing methodologies must account for the human role in shaping what models produce.</span>
-        <span data-lang="pt">Frameworks de governança que dependem do consenso da IA como métrica de confiabilidade podem ser sistematicamente enganados. Metodologias de auditoria devem considerar o papel humano na moldagem do que os modelos produzem.</span>
-      </div>
-    </div>
-    <div class="matter-item">
-      <div class="matter-icon">HCI Research</div>
-      <div class="matter-title">
-        <span data-lang="en">Human-AI Interaction Research</span>
-        <span data-lang="pt">Pesquisa em Interação Humano-IA</span>
-      </div>
-      <div class="matter-desc">
-        <span data-lang="en">Short experimental sessions cannot capture how interaction patterns accumulate over time. This research demonstrates phenomena that are only visible in longitudinal data — pointing toward new methodological requirements for the field.</span>
-        <span data-lang="pt">Sessões experimentais curtas não conseguem capturar como os padrões de interação se acumulam. Esta pesquisa demonstra fenômenos que só são visíveis em dados longitudinais — apontando para novos requisitos metodológicos para o campo.</span>
-      </div>
     </div>
   </div>
 </section>
@@ -842,8 +803,8 @@
         </div>
       </div>
       <div class="framework-desc">
-        <span data-lang="en">When multiple AI systems appear to agree, it is often not because they reached independent conclusions. Users who interact repeatedly with models introduce consistent framing that stabilizes semantic patterns across systems — producing apparent consensus that reflects the human's prior inputs rather than independent model assessment.</span>
-        <span data-lang="pt">Quando múltiplos sistemas de IA parecem concordar, muitas vezes não é porque chegaram a conclusões independentes. Usuários que interagem repetidamente com modelos introduzem enquadramentos consistentes que estabilizam padrões semânticos entre sistemas — produzindo um consenso aparente que reflete as entradas prévias do humano, em vez de uma avaliação independente do modelo.</span>
+        <span data-lang="en">When multiple AI systems appear to agree, it reflects the human's prior inputs rather than independent model assessment.</span>
+        <span data-lang="pt">Quando múltiplos sistemas de IA parecem concordar, isso reflete as entradas prévias do humano em vez de uma avaliação independente do modelo.</span>
       </div>
     </div>
     <div class="framework-item">
@@ -855,75 +816,10 @@
         </div>
       </div>
       <div class="framework-desc">
-        <span data-lang="en">Sustained interaction with LLMs creates a progressive narrowing of the model's effective response space. The user's vocabulary, conceptual references, and framing expectations accumulate in the interaction context, causing outputs to increasingly reflect and amplify those inputs rather than providing independent assessment.</span>
-        <span data-lang="pt">A interação sustentada com LLMs cria um estreitamento progressivo do espaço de resposta efetivo do modelo. O vocabulário, as referências conceituais e as expectativas de enquadramento do usuário se acumulam no contexto da interação, fazendo com que as saídas reflitam e amplifiquem cada vez mais essas entradas, em vez de fornecer uma avaliação independente.</span>
+        <span data-lang="en">Sustained interaction creates a progressive narrowing of the model's effective response space.</span>
+        <span data-lang="pt">A interação sustentada cria um estreitamento progressivo do espaço de resposta efetivo do modelo.</span>
       </div>
     </div>
-    <div class="framework-item">
-      <div>
-        <div class="framework-name">Metric-Value Paradox</div>
-        <div class="framework-tag">
-          <span data-lang="en">Governance failure mode</span>
-          <span data-lang="pt">Modo de falha de governança</span>
-        </div>
-      </div>
-      <div class="framework-desc">
-        <span data-lang="en">When institutions optimize for measurable metrics as proxies for values, the metrics progressively displace the values they were designed to measure. Systems that perform well on benchmarks may systematically diverge from what the benchmark was intended to capture.</span>
-        <span data-lang="pt">Quando as instituições otimizam para métricas mensuráveis como substitutos para valores, as métricas deslocam progressivamente os valores que deveriam medir. Sistemas que apresentam bom desempenho em benchmarks podem divergir sistematicamente do que o benchmark pretendia capturar.</span>
-      </div>
-    </div>
-    <div class="framework-item">
-      <div>
-        <div class="framework-name">Cognitive Co-Processing</div>
-        <div class="framework-tag">
-          <span data-lang="en">Methodological framework</span>
-          <span data-lang="pt">Framework metodológico</span>
-        </div>
-      </div>
-      <div class="framework-desc">
-        <span data-lang="en">A framework for studying how human cognition and AI systems interact during extended, naturalistic engagement. Proposes treating prolonged human–AI interaction as a joint cognitive process with its own observable dynamics, rather than modeling the human as a static user and the AI as a static tool.</span>
-        <span data-lang="pt">Um framework para estudar como a cognição humana e os sistemas de IA interagem durante um engajamento prolongado e naturalístico. Propõe tratar a interação humano-IA prolongada como um processo cognitivo conjunto com suas próprias dinâmicas observáveis, em vez de modelar o humano como um usuário estático e a IA como uma ferramenta estática.</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- THE STUDY -->
-<section id="study">
-  <div class="section-label">
-    <span data-lang="en">Empirical Basis</span>
-    <span data-lang="pt">Base Empírica</span>
-  </div>
-  <h2 data-lang="en">The Longitudinal Study</h2>
-  <h2 data-lang="pt">O Estudo Longitudinal</h2>
-
-  <div class="stats-row fade-in">
-    <div class="stat-item">
-      <div class="stat-num">20</div>
-      <div class="stat-label">
-        <span data-lang="en">months of interaction</span>
-        <span data-lang="pt">meses de interação</span>
-      </div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">352</div>
-      <div class="stat-label">
-        <span data-lang="en">conversation sessions</span>
-        <span data-lang="pt">sessões de conversa</span>
-      </div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">34k+</div>
-      <div class="stat-label">
-        <span data-lang="en">total interactions</span>
-        <span data-lang="pt">interações totais</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="dataset-note fade-in">
-    <span data-lang="en">Note: The longitudinal dataset (Dataset 1) is currently private to preserve participant anonymity and maintain strategic leverage for upcoming research collaborations. Methodology and schema are available upon request.</span>
-    <span data-lang="pt">Nota: O conjunto de dados longitudinal (Dataset 1) é atualmente privado para preservar o anonimato do participante e manter vantagem estratégica para futuras colaborações de pesquisa. Metodologia e esquema estão disponíveis sob solicitação.</span>
   </div>
 </section>
 
@@ -935,10 +831,10 @@
   </div>
   <div class="about-grid">
     <div class="about-text fade-in">
-      <p data-lang="en">Vinícius Buri Lux is an independent researcher based in Salvador, Brazil, focused on the intersection of human cognition and large-scale AI systems. His work examines how sustained interaction patterns shape model behavior and the implications for AI evaluation and governance.</p>
-      <p data-lang="pt">Vinícius Buri Lux é um pesquisador independente baseado em Salvador, Brasil, focado na interseção entre a cognição humana e sistemas de IA de larga escala. Seu trabalho examina como padrões de interação sustentada moldam o comportamento do modelo e as implicações para a avaliação e governança de IA.</p>
-      <p data-lang="en">Operating outside traditional academic institutions, he leverages longitudinal, naturalistic data to identify failure modes that are often invisible to short-term experimental methodologies.</p>
-      <p data-lang="pt">Operando fora das instituições acadêmicas tradicionais, ele utiliza dados longitudinais e naturalísticos para identificar modos de falha que muitas vezes são invisíveis para metodologias experimentais de curto prazo.</p>
+      <p data-lang="en">Vinícius Buri Lux is an independent researcher based in Salvador, Brazil, focused on the intersection of human cognition and large-scale AI systems.</p>
+      <p data-lang="pt">Vinícius Buri Lux é um pesquisador independente baseado em Salvador, Brasil, focado na interseção entre a cognição humana e sistemas de IA de larga escala.</p>
+      <p data-lang="en">Operating outside traditional academic institutions, he leverages longitudinal, naturalistic data to identify failure modes invisible to short-term methodologies.</p>
+      <p data-lang="pt">Operando fora das instituições acadêmicas tradicionais, ele utiliza dados longitudinais e naturalísticos para identificar modos de falha invisíveis para metodologias de curto prazo.</p>
     </div>
     <div class="about-meta fade-in">
       <div class="meta-row">
@@ -953,26 +849,52 @@
         <span class="meta-key">Location</span>
         <span class="meta-val">Salvador, BA, Brazil</span>
       </div>
-      <div class="meta-row">
-        <span class="meta-key">Status</span>
-        <span class="meta-val">Independent Researcher</span>
-      </div>
     </div>
+  </div>
+
+  <!-- CHI 2026 BLOCK -->
+  <div class="chi-section fade-in">
+    <div class="chi-content">
+      <h2 data-lang="en">ACM CHI 2026</h2>
+      <h2 data-lang="pt">ACM CHI 2026</h2>
+      <p data-lang="en">The ACM CHI Conference on Human Factors in Computing Systems is the premier international conference of Human-Computer Interaction (HCI). It is the place where researchers and practitioners gather from across the world to discuss the latest in interactive technology.</p>
+      <p data-lang="pt">A ACM CHI Conference on Human Factors in Computing Systems é a principal conferência internacional de Interação Humano-Computador (IHC). É o lugar onde pesquisadores e profissionais de todo o mundo se reúnem para discutir o que há de mais moderno em tecnologia interativa.</p>
+      <a href="https://chi2026.acm.org" target="_blank" class="chi-link">chi2026.acm.org</a>
+    </div>
+    <div style="text-align: center;">
+      <div style="font-size: 5rem;">📍</div>
+      <div style="font-weight: 800; font-size: 1.5rem; margin-top: 1rem;">Barcelona, Spain</div>
+      <div style="opacity: 0.8;">April 13–17, 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPORT -->
+<section id="support">
+  <div class="support-section fade-in">
+    <h2 data-lang="en">Support this Research</h2>
+    <h2 data-lang="pt">Apoie esta Pesquisa</h2>
+    <p data-lang="en">This is an independent research initiative, conducted without institutional funding. Your support helps cover travel costs to present these findings at CHI 2026 in Barcelona and continue this longitudinal study.</p>
+    <p data-lang="pt">Esta é uma iniciativa de pesquisa independente, realizada sem financiamento institucional. Seu apoio ajuda a cobrir os custos de viagem para apresentar estas descobertas na CHI 2026 em Barcelona e continuar este estudo longitudinal.</p>
+    <a href="https://www.vakinha.com.br/6004954" target="_blank" class="support-btn">
+      <span data-lang="en">Contribute via Vakinha</span>
+      <span data-lang="pt">Contribuir via Vakinha</span>
+    </a>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact">
   <div class="section-label">
-    <span data-lang="en">Inquiries</span>
+    <span data-lang="en">Contact</span>
     <span data-lang="pt">Contato</span>
   </div>
   <div class="contact-block">
     <div class="contact-text">
       <h2 data-lang="en">Let's Connect</h2>
       <h2 data-lang="pt">Vamos Conversar</h2>
-      <p data-lang="en">I am open to research collaborations, institutional partnerships, and inquiries regarding the CMOTP protocol or longitudinal dataset access.</p>
-      <p data-lang="pt">Estou aberto a colaborações de pesquisa, parcerias institucionais e consultas sobre o protocolo CMOTP ou acesso ao conjunto de dados longitudinal.</p>
+      <p data-lang="en">Open to collaborations, partnerships, and inquiries regarding dataset access.</p>
+      <p data-lang="pt">Aberto a colaborações, parcerias e consultas sobre acesso ao conjunto de dados.</p>
     </div>
     <div class="contact-info">
       <div class="contact-item">
@@ -980,12 +902,12 @@
         <a href="mailto:viniburilux@gmail.com">viniburilux@gmail.com</a>
       </div>
       <div class="contact-item">
-        <span>WhatsApp / Phone</span>
+        <span>WhatsApp</span>
         <a href="tel:+5585999798762">+55 85 99979-8762</a>
       </div>
-      <div class="chi-notice">
-        <span data-lang="en"><strong>Note:</strong> I will be attending <strong>ACM CHI 2026</strong> in Barcelona (April 13–17). If you are a researcher or journalist attending the conference, please reach out to schedule a meeting.</span>
-        <span data-lang="pt"><strong>Nota:</strong> Estarei presente na <strong>ACM CHI 2026</strong> em Barcelona (13 a 17 de abril). Se você é um pesquisador ou jornalista e participará da conferência, entre em contato para agendar uma conversa.</span>
+      <div class="contact-item">
+        <span>LinkedIn</span>
+        <a href="https://www.linkedin.com/in/vinicius-buri-46597792" target="_blank">vinicius-buri</a>
       </div>
     </div>
   </div>
@@ -993,24 +915,25 @@
 
 <footer>
   <div>© 2026 Vinícius Buri Lux</div>
-  <div data-lang="en">Independent Research Initiative</div>
-  <div data-lang="pt">Iniciativa de Pesquisa Independente</div>
   <div>Salvador, Brazil</div>
+  <div>
+    <a href="https://www.linkedin.com/in/vinicius-buri-46597792" target="_blank" style="color: inherit; text-decoration: none;">LinkedIn</a> · 
+    <a href="https://github.com/viniburilux" target="_blank" style="color: inherit; text-decoration: none;">GitHub</a>
+  </div>
 </footer>
 
 <script>
   function setLang(lang) {
     document.body.className = 'lang-' + lang;
     document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-    document.getElementById('btn-' + lang).classList.add('active');
+    const btn = document.getElementById('btn-' + lang);
+    if(btn) btn.classList.add('active');
     localStorage.setItem('preferredLang', lang);
   }
 
-  // Check for saved preference
   const savedLang = localStorage.getItem('preferredLang') || 'en';
   setLang(savedLang);
 
-  // Simple intersection observer for fade-in
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
