@@ -220,6 +220,49 @@
     50% { transform: scaleY(0.6); opacity: 0.8; }
   }
 
+  /* ── MOBILE RESPONSIVENESS ── */
+  @media (max-width: 1024px) {
+    .container { padding: 0 24px; }
+    .problem-grid, .domains-intro, .evidence-grid { grid-template-columns: 1fr; gap: 48px; }
+    .hero h1 { font-size: clamp(32px, 8vw, 56px); }
+    .pipeline { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    
+    .hero { padding: 100px 20px 60px; }
+    .hero-metrics { flex-direction: column; border-radius: 12px; }
+    .metric { border-right: none; border-bottom: 1px solid var(--border); width: 100%; padding: 16px; }
+    .metric:last-child { border-bottom: none; }
+    
+    .hero-actions { flex-direction: column; width: 100%; }
+    .btn-primary, .btn-ghost { text-align: center; width: 100%; }
+
+    .section-title { font-size: 32px; }
+    .section-sub { font-size: 16px; }
+
+    .pipeline { grid-template-columns: 1fr; gap: 24px; }
+    .pipeline-step::after { display: none; }
+    
+    .evidence-numbers { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .ev-card { padding: 16px; }
+    .ev-num { font-size: 20px; }
+
+    .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+    .footer-links { align-items: center; }
+    
+    body { font-size: 16px; line-height: 1.6; }
+    .pain-desc, .step-desc, .ev-detail-text { font-size: 14px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 28px; }
+    .evidence-numbers { grid-template-columns: 1fr; }
+    .section-title { font-size: 26px; }
+  }
+
   /* ── SECTION BASE ── */
   section { padding: 100px 24px; position: relative; z-index: 1; }
   .container { max-width: 1100px; margin: 0 auto; }
