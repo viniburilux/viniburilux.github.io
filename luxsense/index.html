@@ -220,49 +220,6 @@
     50% { transform: scaleY(0.6); opacity: 0.8; }
   }
 
-  /* ── MOBILE RESPONSIVENESS ── */
-  @media (max-width: 1024px) {
-    .container { padding: 0 24px; }
-    .problem-grid, .domains-intro, .evidence-grid { grid-template-columns: 1fr; gap: 48px; }
-    .hero h1 { font-size: clamp(32px, 8vw, 56px); }
-    .pipeline { grid-template-columns: repeat(2, 1fr); gap: 32px; }
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 16px 24px; }
-    .nav-links { display: none; }
-    
-    .hero { padding: 100px 20px 60px; }
-    .hero-metrics { flex-direction: column; border-radius: 12px; }
-    .metric { border-right: none; border-bottom: 1px solid var(--border); width: 100%; padding: 16px; }
-    .metric:last-child { border-bottom: none; }
-    
-    .hero-actions { flex-direction: column; width: 100%; }
-    .btn-primary, .btn-ghost { text-align: center; width: 100%; }
-
-    .section-title { font-size: 32px; }
-    .section-sub { font-size: 16px; }
-
-    .pipeline { grid-template-columns: 1fr; gap: 24px; }
-    .pipeline-step::after { display: none; }
-    
-    .evidence-numbers { grid-template-columns: 1fr 1fr; gap: 12px; }
-    .ev-card { padding: 16px; }
-    .ev-num { font-size: 20px; }
-
-    .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
-    .footer-links { align-items: center; }
-    
-    body { font-size: 16px; line-height: 1.6; }
-    .pain-desc, .step-desc, .ev-detail-text { font-size: 14px; }
-  }
-
-  @media (max-width: 480px) {
-    .hero h1 { font-size: 28px; }
-    .evidence-numbers { grid-template-columns: 1fr; }
-    .section-title { font-size: 26px; }
-  }
-
   /* ── SECTION BASE ── */
   section { padding: 100px 24px; position: relative; z-index: 1; }
   .container { max-width: 1100px; margin: 0 auto; }
@@ -497,17 +454,56 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
-    nav { padding: 16px 20px; }
+    nav { padding: 14px 16px; }
     .nav-links { display: none; }
-    .hero-metrics { flex-direction: column; }
-    .metric { border-right: none; border-bottom: 1px solid var(--border); }
-    .metric:last-child { border-bottom: none; }
-    .hero-actions { flex-direction: column; align-items: center; }
-    .problem-grid, .domains-intro, .evidence-grid { grid-template-columns: 1fr; gap: 40px; }
+    .nav-cta { padding: 8px 14px; font-size: 12px; }
+
+    .hero { padding: 100px 16px 60px; }
+    .hero h1 { font-size: 28px; letter-spacing: -0.02em; }
+    .hero-sub { font-size: 15px; }
+    .hero-tag { font-size: 10px; padding: 5px 12px; }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+    }
+    .metric { border-right: none; border-bottom: 1px solid var(--border); padding: 14px 12px; }
+    .metric:nth-child(odd) { border-right: 1px solid var(--border); }
+    .metric:last-child { grid-column: 1/-1; border-bottom: none; }
+    .metric-val { font-size: 22px; }
+
+    .hero-actions { flex-direction: column; align-items: stretch; width: 100%; max-width: 300px; }
+    .btn-primary, .btn-ghost { text-align: center; padding: 13px 20px; }
+
+    section { padding: 60px 16px; }
+    .section-title { font-size: 24px; }
+    .section-sub { font-size: 15px; }
+
+    .problem-grid,
+    .domains-intro,
+    .evidence-grid { grid-template-columns: 1fr; gap: 32px; }
+
     .pipeline { grid-template-columns: 1fr 1fr; }
+    .pipeline-step { padding: 16px 12px; }
     .pipeline-step::after { display: none; }
-    footer { flex-direction: column; gap: 16px; text-align: center; }
+    .step-desc { font-size: 10px; }
+
+    .evidence-numbers { grid-template-columns: 1fr 1fr; }
+
+    .domain-tabs { gap: 6px; }
+    .tab { padding: 6px 12px; font-size: 11px; }
+
+    .cta-section { padding: 60px 16px; }
+    .cta-section h2 { font-size: 24px; }
+    .cta-section p { font-size: 15px; }
+    .cta-contact { flex-direction: column; align-items: center; gap: 10px; }
+
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px 16px; }
     .footer-meta { text-align: center; }
+
+    .pain-points { gap: 16px; }
+    .pain-item { gap: 12px; }
   }
 </style>
 </head>
@@ -773,11 +769,32 @@
 <!-- CTA -->
 <section class="cta-section" id="contato">
   <div class="container">
+
+    <!-- Bloco O que acontece no piloto -->
+    <div style="margin-bottom:64px;padding:32px;border:1px solid var(--border);border-radius:12px;background:var(--white-faint);text-align:left;max-width:720px;margin-left:auto;margin-right:auto;">
+      <div class="section-tag" style="margin-bottom:16px;">// O que acontece no piloto</div>
+      <div style="font-size:17px;font-weight:700;margin-bottom:16px;line-height:1.4;">
+        Você envia dados reais.<br>Eu devolvo um diagnóstico aplicável ao seu processo.
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--white-dim);line-height:1.65;">
+        <div>→ Classificação automática dos seus espectros com o modelo treinado</div>
+        <div>→ Comparação com seu processo atual: tempo e precisão</div>
+        <div>→ Identificação das regiões espectrais mais relevantes para o seu contexto</div>
+        <div>→ Indicação clara de onde há ganho operacional real</div>
+      </div>
+      <div style="margin-top:20px;padding:14px 16px;background:rgba(201,148,58,0.08);border:1px solid rgba(201,148,58,0.2);border-radius:8px;font-size:13px;color:var(--gold-light);line-height:1.6;">
+        <strong>Resultado:</strong> você entende, com seus próprios dados, se isso reduz tempo, custo ou risco no seu processo — antes de qualquer compromisso.
+      </div>
+      <div style="margin-top:16px;font-size:12px;color:var(--white-dim);font-style:italic;">
+        Você pode estar perdendo horas por lote sem saber. O piloto revela isso.
+      </div>
+    </div>
+
     <div class="section-tag" style="justify-content:center;display:flex">// 04 — Piloto</div>
     <h2>A próxima etapa exige<br>dados reais de processo.</h2>
     <p>Não estou buscando investimento.<br>Estou buscando dados reais para validar em ambiente industrial.</p>
     <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-      <a href="mailto:viniburilux@gmail.com" class="btn-primary">Propor piloto com seus dados reais</a>
+      <a href="mailto:viniburilux@gmail.com" class="btn-primary">Testar LuxSense com seus dados reais</a>
       <a href="https://wa.me/5585999798762" class="btn-ghost" target="_blank">WhatsApp direto</a>
     </div>
     <div class="cta-contact">
