@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LuxSense — Interpretação Espectral Inteligente</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #060d1f;
+    --navy-mid: #0e1d3a;
+    --blue: #1a56db;
+    --blue-bright: #3b82f6;
+    --gold: #c9943a;
+    --gold-light: #e8b96a;
+    --white: #f4f6fb;
+    --white-dim: rgba(244,246,251,0.65);
+    --white-faint: rgba(244,246,251,0.12);
+    --border: rgba(244,246,251,0.1);
+    --green: #0f9e6e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(6,13,31,0.95), transparent);
+    backdrop-filter: blur(4px);
+  }
+  .nav-logo {
+    font-size: 18px; font-weight: 800; letter-spacing: -0.02em;
+    color: var(--white);
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--white-dim); font-size: 13px; font-weight: 600;
+    text-decoration: none; letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--blue); color: white;
+    padding: 9px 20px; border-radius: 6px;
+    font-size: 13px; font-weight: 700; letter-spacing: 0.02em;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--blue-bright); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+  }
+
+  /* Glowing orb background */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 20%; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(26,86,219,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--white-faint);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    color: var(--gold-light);
+    letter-spacing: 0.08em;
+    margin-bottom: 32px;
+    position: relative; z-index: 1;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero h1 {
+    font-size: clamp(38px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    max-width: 820px;
+    position: relative; z-index: 1;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--gold);
+  }
+
+  .hero-sub {
+    margin-top: 24px;
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--white-dim);
+    max-width: 580px;
+    line-height: 1.65;
+    font-style: italic;
+    position: relative; z-index: 1;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+
+  .hero-metrics {
+    display: flex; gap: 0;
+    margin-top: 48px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative; z-index: 1;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .metric {
+    padding: 20px 32px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .metric:last-child { border-right: none; }
+  .metric-val {
+    font-size: 28px; font-weight: 800;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .metric-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--white-dim);
+    margin-top: 6px; letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .hero-actions {
+    display: flex; gap: 16px; margin-top: 40px;
+    position: relative; z-index: 1;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+  .btn-primary {
+    background: var(--blue); color: white;
+    padding: 14px 28px; border-radius: 8px;
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; letter-spacing: 0.02em;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+  .btn-primary:hover {
+    background: var(--blue-bright);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(26,86,219,0.35);
+  }
+  .btn-ghost {
+    background: transparent; color: var(--white-dim);
+    padding: 14px 28px; border-radius: 8px;
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; letter-spacing: 0.02em;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { color: var(--white); border-color: rgba(244,246,251,0.25); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SCROLL INDICATOR ── */
+  .scroll-hint {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    opacity: 0.4;
+    animation: fadeUp 1s 1s ease both;
+  }
+  .scroll-hint span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .scroll-arrow {
+    width: 1px; height: 32px;
+    background: linear-gradient(to bottom, var(--white), transparent);
+    animation: scrollDown 1.5s ease-in-out infinite;
+  }
+  @keyframes scrollDown {
+    0%, 100% { transform: scaleY(1); opacity: 0.4; }
+    50% { transform: scaleY(0.6); opacity: 0.8; }
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 100px 24px; position: relative; z-index: 1; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    color: var(--gold); letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800; letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .section-sub {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    color: var(--white-dim);
+    font-size: 17px; line-height: 1.7;
+    margin-top: 16px; max-width: 580px;
+  }
+
+  /* ── PROBLEM SECTION ── */
+  .problem { background: var(--navy); }
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    margin-top: 64px;
+  }
+  .problem-visual {
+    position: relative;
+  }
+  .spectrum-bar {
+    height: 3px;
+    border-radius: 2px;
+    margin: 8px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .spectrum-bar::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+    animation: shimmer 2s infinite;
+  }
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  .spectrum-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; color: var(--white-dim);
+    letter-spacing: 0.08em;
+    display: flex; justify-content: space-between;
+    margin-top: 24px;
+  }
+  .pain-points { display: flex; flex-direction: column; gap: 20px; }
+  .pain-item {
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .pain-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    border-radius: 8px;
+    background: rgba(201,148,58,0.12);
+    border: 1px solid rgba(201,148,58,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+  }
+  .pain-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .pain-desc { font-size: 13px; color: var(--white-dim); line-height: 1.5; }
+
+  /* ── SOLUTION / DOMAINS ── */
+  .domains { background: var(--navy-mid); }
+  .domains-intro {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: start;
+    margin-bottom: 64px;
+  }
+  .domain-tabs {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .tab {
+    padding: 8px 18px; border-radius: 6px;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
+    cursor: pointer; transition: all 0.2s;
+    border: 1px solid var(--border);
+    background: transparent; color: var(--white-dim);
+  }
+  .tab.active {
+    background: var(--blue); color: white; border-color: var(--blue);
+  }
+  .tab:hover:not(.active) {
+    border-color: rgba(244,246,251,0.25); color: var(--white);
+  }
+  .domain-panels { position: relative; min-height: 220px; }
+  .domain-panel {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .domain-panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .domain-panel h3 {
+    font-size: 20px; font-weight: 800; margin-bottom: 10px;
+  }
+  .domain-panel p {
+    font-size: 14px; color: var(--white-dim);
+    line-height: 1.65; margin-bottom: 16px;
+  }
+  .domain-opener {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--gold-light);
+    background: rgba(201,148,58,0.08);
+    border: 1px solid rgba(201,148,58,0.2);
+    border-radius: 6px; padding: 10px 14px;
+    line-height: 1.5;
+  }
+  .domain-opener strong { color: var(--gold-light); }
+
+  /* Pipeline visual */
+  .pipeline {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; margin-top: 48px;
+    border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+  }
+  .pipeline-step {
+    padding: 24px 20px; text-align: center;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .pipeline-step:last-child { border-right: none; }
+  .pipeline-step::after {
+    content: '→';
+    position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+    color: var(--blue-bright); font-size: 16px; z-index: 1;
+  }
+  .pipeline-step:last-child::after { display: none; }
+  .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--blue-bright);
+    letter-spacing: 0.1em; margin-bottom: 8px;
+  }
+  .step-name { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+  .step-desc { font-size: 11px; color: var(--white-dim); line-height: 1.4; }
+
+  /* ── EVIDENCE ── */
+  .evidence { background: var(--navy); }
+  .evidence-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 48px; margin-top: 64px; align-items: start;
+  }
+  .evidence-numbers {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .ev-card {
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--white-faint);
+  }
+  .ev-num {
+    font-size: 32px; font-weight: 800;
+    color: var(--gold-light); line-height: 1;
+  }
+  .ev-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--white-dim);
+    margin-top: 6px; letter-spacing: 0.06em;
+    text-transform: uppercase; line-height: 1.4;
+  }
+  .evidence-details { display: flex; flex-direction: column; gap: 16px; }
+  .ev-detail {
+    padding: 16px;
+    border-left: 2px solid var(--blue);
+    padding-left: 16px;
+  }
+  .ev-detail-title { font-size: 12px; font-weight: 700; color: var(--blue-bright); margin-bottom: 4px; }
+  .ev-detail-text { font-size: 13px; color: var(--white-dim); line-height: 1.55; }
+  .paper-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(15,158,110,0.1);
+    border: 1px solid rgba(15,158,110,0.25);
+    border-radius: 6px; padding: 10px 14px;
+    font-size: 12px; color: #5de8b5; margin-top: 8px;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: linear-gradient(135deg, var(--navy-mid) 0%, #0a1628 100%);
+    text-align: center; padding: 100px 24px;
+  }
+  .cta-section h2 {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 800; letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .cta-section p {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    color: var(--white-dim); font-size: 18px;
+    max-width: 520px; margin: 0 auto 40px; line-height: 1.65;
+  }
+  .cta-contact {
+    display: flex; gap: 24px; justify-content: center;
+    flex-wrap: wrap; margin-top: 48px;
+  }
+  .contact-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--white-dim);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .contact-item a { color: var(--gold-light); text-decoration: none; }
+  .contact-item a:hover { color: var(--white); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 48px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-brand { font-size: 13px; font-weight: 700; }
+  .footer-brand span { color: var(--gold); }
+  .footer-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--white-dim);
+    letter-spacing: 0.06em; text-align: right; line-height: 1.6;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero-metrics { flex-direction: column; }
+    .metric { border-right: none; border-bottom: 1px solid var(--border); }
+    .metric:last-child { border-bottom: none; }
+    .hero-actions { flex-direction: column; align-items: center; }
+    .problem-grid, .domains-intro, .evidence-grid { grid-template-columns: 1fr; gap: 40px; }
+    .pipeline { grid-template-columns: 1fr 1fr; }
+    .pipeline-step::after { display: none; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+    .footer-meta { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Lux<span>Sense</span></div>
+  <ul class="nav-links">
+    <li><a href="#problema">Problema</a></li>
+    <li><a href="#solucao">Solução</a></li>
+    <li><a href="#evidencia">Evidência</a></li>
+  </ul>
+  <a href="#contato" class="nav-cta">Propor Piloto</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">LuxVerso Research Initiative · TRL 3-4 validado</div>
+  <h1>Pare de interpretar espectros<br>manualmente. <em>Deixe o modelo decidir em minutos.</em></h1>
+  <p class="hero-sub">
+    Um sistema que interpreta espectros automaticamente e entrega uma decisão — em minutos, não horas. Sem trocar hardware — e sem depender de especialista.
+  </p>
+  <div class="hero-metrics">
+    <div class="metric">
+      <div class="metric-val">&lt; 5 min</div>
+      <div class="metric-label">Análise que<br>levava horas</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val">99,4%</div>
+      <div class="metric-label">Acurácia<br>Random Forest</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val">0</div>
+      <div class="metric-label">Especialistas<br>necessários</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val">3.510</div>
+      <div class="metric-label">Espectros<br>validados</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val">32</div>
+      <div class="metric-label">Compostos<br>farmacêuticos</div>
+    </div>
+  </div>
+  <div style="margin-top:16px;font-size:12px;color:var(--white-dim);position:relative;z-index:1;animation:fadeUp 0.8s 0.5s ease both;">
+    Se você já usa Raman no seu processo, isso se aplica diretamente a você.
+  </div>
+  <div class="hero-actions">
+    <a href="#contato" class="btn-primary">Propor piloto com seus dados</a>
+    <a href="#evidencia" class="btn-ghost">Ver evidência técnica</a>
+  </div>
+  <div class="scroll-hint">
+    <span>Saiba mais</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="problem" id="problema">
+  <div class="container">
+    <div class="section-tag">// 01 — Problema</div>
+    <div class="problem-grid">
+      <div>
+        <h2 class="section-title">O problema não é o espectro.<br>É o tempo para entender ele.</h2>
+        <p class="section-sub">Indústrias que usam espectroscopia para controle de qualidade já têm o hardware. O problema é o que vem depois: horas de análise manual, dependência de especialista, impossibilidade de escala.</p>
+        <div class="pain-points" style="margin-top:40px">
+          <div class="pain-item">
+            <div class="pain-icon">⏱</div>
+            <div>
+              <div class="pain-title">1 a 4 horas por análise</div>
+              <div class="pain-desc">Interpretação manual de espectros por analista especializado — estoque parado esperando laudo.</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-icon">👤</div>
+            <div>
+              <div class="pain-title">Dependência de especialista</div>
+              <div class="pain-desc">Quimiometria exige formação específica. Quando o analista sai, o processo trava.</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-icon">📋</div>
+            <div>
+              <div class="pain-title">Risco regulatório</div>
+              <div class="pain-desc">Subjetividade na interpretação compromete rastreabilidade — problema direto em auditorias ANVISA/FDA.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="problem-visual">
+        <div style="background:rgba(26,86,219,0.06);border:1px solid var(--border);border-radius:12px;padding:28px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:20px;letter-spacing:0.1em;">ESPECTRO RAMAN — ANÁLISE MANUAL</div>
+          <!-- Simulated spectrum -->
+          <div style="position:relative;height:100px;margin-bottom:12px;">
+            <svg viewBox="0 0 400 100" style="width:100%;height:100%">
+              <polyline points="0,80 30,78 50,75 70,60 80,30 90,10 100,25 110,70 130,72 150,68 170,40 180,15 190,35 200,72 220,70 240,50 250,20 260,45 270,75 290,74 320,72 350,70 380,72 400,73" fill="none" stroke="#1a56db" stroke-width="1.5" opacity="0.8"/>
+              <polyline points="0,80 30,78 50,75 70,60 80,30 90,10 100,25 110,70 130,72 150,68 170,40 180,15 190,35 200,72 220,70 240,50 250,20 260,45 270,75 290,74 320,72 350,70 380,72 400,73" fill="none" stroke="#3b82f6" stroke-width="0.5" opacity="0.3"/>
+              <!-- Peak markers -->
+              <line x1="90" y1="10" x2="90" y2="90" stroke="#c9943a" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.5"/>
+              <line x1="180" y1="15" x2="180" y2="90" stroke="#c9943a" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.5"/>
+              <line x1="250" y1="20" x2="250" y2="90" stroke="#c9943a" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.5"/>
+              <text x="86" y="8" fill="#c9943a" font-size="7" font-family="monospace">800</text>
+              <text x="176" y="13" fill="#c9943a" font-size="7" font-family="monospace">720</text>
+              <text x="246" y="18" fill="#c9943a" font-size="7" font-family="monospace">505</text>
+            </svg>
+          </div>
+          <div class="spectrum-label">
+            <span>150 cm⁻¹</span>
+            <span>Wavenumber</span>
+            <span>3245 cm⁻¹</span>
+          </div>
+          <div style="margin-top:20px;padding:12px;background:rgba(201,148,58,0.08);border-radius:6px;border:1px solid rgba(201,148,58,0.15);">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:6px;">ANTES DO LUXSENSE</div>
+            <div style="font-size:12px;color:var(--white-dim);line-height:1.5;">Analista identifica picos manualmente · Compara com biblioteca · Classifica o composto · Emite laudo · 1–4 horas</div>
+          </div>
+          <div style="margin-top:10px;padding:12px;background:rgba(15,158,110,0.08);border-radius:6px;border:1px solid rgba(15,158,110,0.2);">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#5de8b5;margin-bottom:6px;">COM LUXSENSE</div>
+            <div style="font-size:12px;color:var(--white-dim);line-height:1.5;">Espectro → modelo ML → classificação automática → decisão · <strong style="color:white">&lt; 5 minutos</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUÇÃO / DOMÍNIOS -->
+<section class="domains" id="solucao">
+  <div class="container">
+    <div class="section-tag">// 02 — Solução & Aplicações</div>
+    <div class="domains-intro">
+      <div>
+        <h2 class="section-title">Um motor.<br>Múltiplos domínios.</h2>
+        <p class="section-sub">LuxSense é uma plataforma modular de interpretação espectral. O mesmo pipeline se adapta a diferentes setores — você troca os dados, o modelo aprende o novo domínio.</p>
+      </div>
+      <div>
+        <div style="margin-bottom:24px;font-size:13px;color:var(--white-dim);line-height:1.6;">
+          Você não compra uma solução para um setor.<br>
+          Você integra um motor que aprende o seu domínio.
+          <div style="margin-top:8px;font-size:12px;color:var(--white-dim)">Começa em um domínio. Expande para todos.</div>
+        </div>
+        <div class="domain-tabs">
+          <button class="tab active" onclick="showDomain('pharma', this)">Farmacêutico</button>
+          <button class="tab" onclick="showDomain('alimentos', this)">Alimentos</button>
+          <button class="tab" onclick="showDomain('petro', this)">Petroquímica</button>
+          <button class="tab" onclick="showDomain('bio', this)">Bioetanol</button>
+          <button class="tab" onclick="showDomain('cosm', this)">Cosméticos</button>
+        </div>
+        <div class="domain-panels">
+          <div class="domain-panel active" id="panel-pharma">
+            <h3>Controle de Qualidade Farmacêutico</h3>
+            <p>Identificação automática de compostos, detecção de polimorfismo e contaminantes em APIs. Reduz tempo de liberação de lote e minimiza risco regulatório ANVISA/FDA.</p>
+            <div class="domain-opener"><strong>Frase de abertura:</strong> "Sua análise de QC por Raman ainda depende de interpretação manual? LuxSense classifica compostos em minutos com 99% de acurácia."</div>
+          </div>
+          <div class="domain-panel" id="panel-alimentos">
+            <h3>Detecção de Adulteração em Alimentos</h3>
+            <p>Identificação de adulterantes em óleos, azeites, mel e produtos naturais. Liberação de lote mais rápida e conformidade MAPA/ANVISA sem análise laboratorial demorada.</p>
+            <div class="domain-opener"><strong>Frase de abertura:</strong> "Empresa perdendo horas na liberação de óleos e alimentos processados? LuxSense detecta adulteração automaticamente."</div>
+          </div>
+          <div class="domain-panel" id="panel-petro">
+            <h3>Identificação de Impurezas em Petroquímica</h3>
+            <p>Análise automática de streams químicos para detecção de impurezas em etileno, propileno e derivados. Reduz paradas e aumenta eficiência operacional no polo industrial.</p>
+            <div class="domain-opener"><strong>Frase de abertura:</strong> "Controle de streams no polo ainda é manual? LuxSense identifica impurezas em tempo real e evita paradas caras."</div>
+          </div>
+          <div class="domain-panel" id="panel-bio">
+            <h3>Monitoramento de Fermentação em Bioetanol</h3>
+            <p>Análise contínua de processos fermentativos para detecção de contaminantes bacterianos e metabólitos. Reduz perdas por lote e melhora rendimento.</p>
+            <div class="domain-opener"><strong>Frase de abertura:</strong> "Monitoramento de fermentação ainda por coleta manual a cada 4 horas? LuxSense automatiza a análise e evita perdas de lote."</div>
+          </div>
+          <div class="domain-panel" id="panel-cosm">
+            <h3>Validação de Ativos em Cosméticos</h3>
+            <p>Verificação de autenticidade de óleos essenciais, fragrâncias e ativos sem destruir a amostra. Liberação rápida e rastreabilidade de matérias-primas.</p>
+            <div class="domain-opener"><strong>Frase de abertura:</strong> "Validação de ativos cosméticos ainda demora 24h? LuxSense interpreta o espectro e libera o lote em minutos."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pipeline -->
+    <div style="margin-top:48px;margin-bottom:16px;">
+      <div class="section-tag" style="margin-bottom:8px;">Como funciona na prática (sem mudar seu hardware)</div>
+    </div>
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <div class="step-num">01</div>
+        <div class="step-name">Espectro Bruto</div>
+        <div class="step-desc">Dados do espectrômetro existente (Metrohm, Thermo, Bruker)</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">02</div>
+        <div class="step-name">Pré-processamento</div>
+        <div class="step-desc">Baseline ALS + normalização SNV — remove fluorescência e variação de laser</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">03</div>
+        <div class="step-name">Modelo ML</div>
+        <div class="step-desc">Random Forest ou SVM — classificação automática com importância espectral</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">04</div>
+        <div class="step-name">Decisão</div>
+        <div class="step-desc">Composto identificado + confiança + regiões espectrais responsáveis</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVIDÊNCIA -->
+<section class="evidence" id="evidencia">
+  <div class="container">
+    <div class="section-tag">// 03 — Evidência Técnica</div>
+    <div class="evidence-grid">
+      <div>
+        <h2 class="section-title">Protótipo validado.<br>TRL 3-4.</h2>
+        <p class="section-sub">Não é conceito. O pipeline foi executado com dados reais de laboratório farmacêutico e os resultados são auditáveis.</p>
+        <div class="evidence-numbers" style="margin-top:40px">
+          <div style="grid-column:1/-1;margin-bottom:8px;font-size:13px;color:var(--white-dim);line-height:1.55;">
+            Isso significa: o modelo acerta praticamente todas as classificações em ambiente de laboratório.
+          </div>
+          <div class="ev-card">
+            <div class="ev-num">99,43%</div>
+            <div class="ev-label">Acurácia<br>Random Forest</div>
+          </div>
+          <div class="ev-card">
+            <div class="ev-num">97,44%</div>
+            <div class="ev-label">Acurácia<br>SVM + PCA</div>
+          </div>
+          <div class="ev-card">
+            <div class="ev-num">3.510</div>
+            <div class="ev-label">Espectros<br>validados</div>
+          </div>
+          <div class="ev-card">
+            <div class="ev-num">4 erros</div>
+            <div class="ev-label">Em 702 amostras<br>de teste</div>
+          </div>
+        </div>
+      </div>
+      <div class="evidence-details">
+        <div class="ev-detail">
+          <div class="ev-detail-title">Dataset</div>
+          <div class="ev-detail-text">Open-source Raman spectra — API development (Springer/Figshare, 2024). 32 compostos farmacêuticos reais usados em desenvolvimento de APIs.</div>
+        </div>
+        <div class="ev-detail">
+          <div class="ev-detail-title">Coerência química</div>
+          <div class="ev-detail-text">As regiões espectrais identificadas pelo modelo (~800, ~720, ~505, ~2664 cm⁻¹) correspondem a fingerprints Raman documentados na literatura (RRUFF/NIST). O modelo aprende química real — não artefatos.</div>
+        </div>
+        <div class="ev-detail">
+          <div class="ev-detail-title">Único erro identificado</div>
+          <div class="ev-detail-text">4 erros entre Methyl Isobutyl Ketone e 4-Methyl-2-Pentanone — cetonas isoméricas com espectros estruturalmente similares. Quimicamente esperado e documentado.</div>
+        </div>
+        <div class="ev-detail">
+          <div class="ev-detail-title">Próximo passo — TRL 5-6</div>
+          <div class="ev-detail-text">Validação com dados reais de processo industrial. A busca por parceiros para piloto é o objetivo atual.</div>
+        </div>
+        <div class="paper-badge">
+          📄 Base científica: Buri Lux, <em>"Architecture-Level Analysis of Nano-Enabled Sensing Systems"</em>, Frontiers in Nanotechnology — em revisão por pares (2026) · <a href="https://doi.org/10.5281/zenodo.18727181" target="_blank" style="color:#5de8b5;text-decoration:none;">DOI: 10.5281/zenodo.18727181</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contato">
+  <div class="container">
+    <div class="section-tag" style="justify-content:center;display:flex">// 04 — Piloto</div>
+    <h2>A próxima etapa exige<br>dados reais de processo.</h2>
+    <p>Não estou buscando investimento.<br>Estou buscando dados reais para validar em ambiente industrial.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a href="mailto:viniburilux@gmail.com" class="btn-primary">Propor piloto com seus dados reais</a>
+      <a href="https://wa.me/5585999798762" class="btn-ghost" target="_blank">WhatsApp direto</a>
+    </div>
+    <div class="cta-contact">
+      <div class="contact-item">✉ <a href="mailto:viniburilux@gmail.com">viniburilux@gmail.com</a></div>
+      <div class="contact-item">📱 <a href="https://wa.me/5585999798762">+55 85 99979-8762</a></div>
+      <div class="contact-item">🔬 <a href="https://viniburilux.github.io" target="_blank">viniburilux.github.io</a></div>
+    </div>
+    <div style="text-align:center;margin-top:40px;font-size:12px;color:var(--white-dim);">
+      Se isso fizer sentido no seu contexto, vale uma conversa de 15 minutos.
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Lux<span>Sense</span></div>
+  <div class="footer-meta">
+    LuxVerso Research Initiative · Vinicius Buri Lux<br>
+    Salvador, Bahia, Brasil · 2026
+  </div>
+</footer>
+
+<script>
+  function showDomain(id, btn) {
+    document.querySelectorAll('.domain-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
