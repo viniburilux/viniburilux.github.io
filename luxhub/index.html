@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LuxHub — Industrial Innovation Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Libre+Baskerville:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #060d1f;
+    --navy-mid: #0e1d3a;
+    --blue: #1a56db;
+    --blue-bright: #3b82f6;
+    --gold: #c9943a;
+    --gold-light: #e8b96a;
+    --white: #f4f6fb;
+    --white-dim: rgba(244,246,251,0.65);
+    --white-faint: rgba(244,246,251,0.10);
+    --border: rgba(244,246,251,0.1);
+    --green: #0f9e6e;
+    --gray: #6b7280;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Syne',sans-serif; background:var(--navy); color:var(--white); overflow-x:hidden; }
+
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:18px 48px;
+    display:flex; align-items:center; justify-content:space-between;
+    background:linear-gradient(to bottom,rgba(6,13,31,0.97),transparent);
+    backdrop-filter:blur(4px);
+  }
+  .nav-logo { font-size:20px; font-weight:800; letter-spacing:-0.02em; }
+  .nav-logo span { color:var(--gold); }
+  .nav-sub { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--white-dim); letter-spacing:0.12em; text-transform:uppercase; margin-left:12px; }
+  .nav-cta {
+    background:var(--blue); color:white; padding:9px 20px;
+    border-radius:6px; font-size:13px; font-weight:700; text-decoration:none;
+    transition:background 0.2s;
+  }
+  .nav-cta:hover { background:var(--blue-bright); }
+
+  /* HERO */
+  .hero {
+    min-height:100vh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    text-align:center; padding:120px 24px 80px;
+    position:relative;
+  }
+  .hero::after {
+    content:''; position:absolute; top:20%; left:50%; transform:translateX(-50%);
+    width:600px; height:400px;
+    background:radial-gradient(ellipse,rgba(26,86,219,0.15) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .hero-tag {
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--white-faint); border:1px solid var(--border);
+    border-radius:20px; padding:6px 16px;
+    font-family:'JetBrains Mono',monospace; font-size:11px;
+    color:var(--gold-light); letter-spacing:0.08em;
+    margin-bottom:32px; position:relative; z-index:1;
+  }
+  .hero-tag::before {
+    content:''; width:6px; height:6px; border-radius:50%;
+    background:var(--green); box-shadow:0 0 8px var(--green);
+    animation:pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  .hero h1 {
+    font-size:clamp(36px,6vw,70px); font-weight:800;
+    line-height:1.05; letter-spacing:-0.03em; max-width:820px;
+    position:relative; z-index:1;
+    animation:fadeUp 0.8s ease both;
+  }
+  .hero h1 em { font-style:normal; color:transparent; -webkit-text-stroke:1px var(--gold); }
+
+  .hero-sub {
+    margin-top:24px;
+    font-family:'Libre Baskerville',serif; font-style:italic;
+    font-size:clamp(16px,2vw,20px); color:var(--white-dim);
+    max-width:580px; line-height:1.65;
+    position:relative; z-index:1;
+    animation:fadeUp 0.8s 0.15s ease both;
+  }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  .hero-actions {
+    display:flex; gap:16px; margin-top:40px;
+    position:relative; z-index:1;
+    animation:fadeUp 0.8s 0.3s ease both;
+  }
+  .btn-primary {
+    background:var(--blue); color:white; padding:14px 28px;
+    border-radius:8px; font-size:14px; font-weight:700;
+    text-decoration:none; transition:all 0.2s;
+  }
+  .btn-primary:hover { background:var(--blue-bright); transform:translateY(-1px); box-shadow:0 8px 24px rgba(26,86,219,0.35); }
+  .btn-ghost {
+    background:transparent; color:var(--white-dim); padding:14px 28px;
+    border-radius:8px; font-size:14px; font-weight:700;
+    text-decoration:none; border:1px solid var(--border); transition:all 0.2s;
+  }
+  .btn-ghost:hover { color:var(--white); border-color:rgba(244,246,251,0.25); }
+
+  /* SECTIONS */
+  section { padding:90px 24px; position:relative; z-index:1; }
+  .container { max-width:1100px; margin:0 auto; }
+  .section-tag { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; color:var(--gold); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:16px; }
+  .section-title { font-size:clamp(26px,4vw,42px); font-weight:800; letter-spacing:-0.02em; line-height:1.1; }
+  .section-sub { font-family:'Libre Baskerville',serif; font-style:italic; color:var(--white-dim); font-size:17px; line-height:1.7; margin-top:16px; max-width:580px; }
+
+  /* PROBLEMA */
+  .problema { background:var(--navy); }
+  .problema-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; margin-top:56px; }
+  .pain-list { display:flex; flex-direction:column; gap:18px; margin-top:32px; }
+  .pain-item { display:flex; gap:14px; align-items:flex-start; }
+  .pain-icon { width:36px; height:36px; flex-shrink:0; border-radius:8px; background:rgba(201,148,58,0.12); border:1px solid rgba(201,148,58,0.2); display:flex; align-items:center; justify-content:center; font-size:15px; }
+  .pain-title { font-size:14px; font-weight:700; margin-bottom:3px; }
+  .pain-desc { font-size:13px; color:var(--white-dim); line-height:1.5; }
+
+  .opp-box { background:rgba(26,86,219,0.07); border:1px solid var(--border); border-radius:12px; padding:28px; }
+  .opp-line { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); }
+  .opp-line:last-child { border-bottom:none; }
+  .opp-label { font-size:13px; color:var(--white-dim); }
+  .opp-val { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--gold-light); font-weight:500; }
+
+  /* PIPELINE */
+  .pipeline-section { background:var(--navy-mid); }
+  .steps { display:grid; grid-template-columns:repeat(5,1fr); gap:0; margin-top:48px; border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+  .step { padding:22px 16px; text-align:center; border-right:1px solid var(--border); position:relative; }
+  .step:last-child { border-right:none; }
+  .step-num { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--blue-bright); letter-spacing:0.1em; margin-bottom:8px; }
+  .step-name { font-size:12px; font-weight:700; margin-bottom:4px; }
+  .step-desc { font-size:10px; color:var(--white-dim); line-height:1.4; }
+  .step::after { content:'→'; position:absolute; right:-10px; top:50%; transform:translateY(-50%); color:var(--blue-bright); font-size:14px; z-index:1; }
+  .step:last-child::after { display:none; }
+
+  /* MODELO */
+  .modelo-section { background:var(--navy); }
+  .modelo-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-top:56px; }
+  .modelo-card { padding:28px; border:1px solid var(--border); border-radius:12px; }
+  .modelo-card.highlight { background:rgba(15,158,110,0.06); border-color:rgba(15,158,110,0.2); }
+  .modelo-card-title { font-size:15px; font-weight:800; margin-bottom:12px; }
+  .modelo-item { font-size:13px; color:var(--white-dim); line-height:1.6; padding:6px 0; border-bottom:1px solid var(--border); }
+  .modelo-item:last-child { border-bottom:none; }
+  .modelo-item::before { content:'→ '; color:var(--blue-bright); }
+
+  /* PORTFOLIO */
+  .portfolio-section { background:var(--navy-mid); }
+  .portfolio-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:48px; }
+  .p-card { padding:24px; border:1px solid var(--border); border-radius:12px; background:var(--white-faint); }
+  .p-card-tag { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--gold); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px; }
+  .p-card-name { font-size:18px; font-weight:800; margin-bottom:6px; }
+  .p-card-desc { font-size:13px; color:var(--white-dim); line-height:1.55; margin-bottom:12px; }
+  .p-card-status { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--green); letter-spacing:0.06em; }
+
+  /* CTA */
+  .cta-section { background:linear-gradient(135deg,var(--navy-mid) 0%,#0a1628 100%); text-align:center; padding:90px 24px; }
+  .cta-section h2 { font-size:clamp(26px,4vw,46px); font-weight:800; letter-spacing:-0.02em; margin-bottom:16px; }
+  .cta-section p { font-family:'Libre Baskerville',serif; font-style:italic; color:var(--white-dim); font-size:18px; max-width:520px; margin:0 auto 40px; line-height:1.65; }
+  .cta-note { font-size:13px; color:var(--gold-light); margin-top:24px; font-weight:600; }
+  .contact-row { display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-top:40px; }
+  .contact-item { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--white-dim); }
+  .contact-item a { color:var(--gold-light); text-decoration:none; }
+
+  footer { padding:28px 48px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+  .footer-brand { font-size:14px; font-weight:800; }
+  .footer-brand span { color:var(--gold); }
+  .footer-meta { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--white-dim); letter-spacing:0.05em; text-align:right; line-height:1.6; }
+
+  @media(max-width:768px) {
+    nav { padding:14px 16px; }
+    .nav-sub { display:none; }
+    .hero-actions { flex-direction:column; align-items:center; }
+    .problema-grid, .modelo-grid, .portfolio-grid { grid-template-columns:1fr; gap:32px; }
+    .steps { grid-template-columns:1fr 1fr; }
+    .step::after { display:none; }
+    footer { flex-direction:column; gap:12px; text-align:center; }
+    .footer-meta { text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div style="display:flex;align-items:baseline;gap:0">
+    <div class="nav-logo">Lux<span>Hub</span></div>
+    <span class="nav-sub">by LuxVerso</span>
+  </div>
+  <a href="#contato" class="nav-cta">Falar sobre projeto</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-tag">Industrial Innovation Studio · Salvador, Bahia</div>
+  <h1>Inovação industrial.<br><em>Financiada pelo governo.</em></h1>
+  <p class="hero-sub">
+    Transformamos gargalos operacionais de indústrias em projetos de inovação com recursos não reembolsáveis — sem desembolso financeiro direto para a empresa.
+  </p>
+  <div class="hero-actions">
+    <a href="#contato" class="btn-primary">Verificar elegibilidade da sua empresa</a>
+    <a href="#pipeline" class="btn-ghost">Como funciona</a>
+  </div>
+  <div style="margin-top:24px;font-size:12px;color:var(--white-dim);position:relative;z-index:1;max-width:520px;text-align:center;line-height:1.6;">
+    Conhece uma indústria com gargalos operacionais? Conecte-nos — verificamos a elegibilidade gratuitamente e sem compromisso.
+  </div>
+</section>
+
+<section class="problema" id="problema">
+  <div class="container">
+    <div class="section-tag">// O problema</div>
+    <div class="problema-grid">
+      <div>
+        <h2 class="section-title">Bilhões em editais.<br>Poucas empresas acessam.</h2>
+        <p class="section-sub">O Brasil tem um dos maiores programas de subvenção à inovação industrial do mundo. A maioria das médias indústrias não sabe como entrar.</p>
+        <div class="pain-list">
+          <div class="pain-item">
+            <div class="pain-icon">💰</div>
+            <div>
+              <div class="pain-title">Dinheiro não reembolsável disponível</div>
+              <div class="pain-desc">FINEP, Embrapii, FAPs e BNDES Inovação lançam editais regularmente com recursos que não precisam ser devolvidos.</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-icon">🔧</div>
+            <div>
+              <div class="pain-title">Empresa não precisa investir em espécie</div>
+              <div class="pain-desc">A contrapartida pode ser econômica — planta industrial, equipe técnica, dados operacionais. Sem saída de caixa.</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-icon">⚙️</div>
+            <div>
+              <div class="pain-title">O gargalo é a estruturação</div>
+              <div class="pain-desc">Empresas têm o problema real. O que falta é transformar esse problema em projeto financiável.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="opp-box">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:0.1em;margin-bottom:20px;text-transform:uppercase;">Editais ativos — referência 2026</div>
+        <div class="opp-line"><span class="opp-label">FINEP Mais Inovação Brasil</span><span class="opp-val">R$ 3,3 bi</span></div>
+        <div class="opp-line"><span class="opp-label">Projeto individual (R$ min–max)</span><span class="opp-val">R$ 2M – R$ 5M</span></div>
+        <div class="opp-line"><span class="opp-label">Embrapii — Saúde + Digital</span><span class="opp-val">R$ 190M</span></div>
+        <div class="opp-line"><span class="opp-label">Modalidade</span><span class="opp-val">Não reembolsável</span></div>
+        <div class="opp-line"><span class="opp-label">Desembolso financeiro empresa</span><span class="opp-val">R$ 0</span></div>
+        <div style="margin-top:20px;padding:12px;background:rgba(15,158,110,0.1);border-radius:8px;border:1px solid rgba(15,158,110,0.2);">
+          <div style="font-size:12px;color:#5de8b5;line-height:1.5;">Uma empresa elegível com problema industrial real pode captar entre R$ 2M e R$ 5M para desenvolver tecnologia — sem colocar dinheiro próprio.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pipeline-section" id="pipeline">
+  <div class="container">
+    <div class="section-tag">// Como funciona</div>
+    <h2 class="section-title">Do problema ao projeto financiado.</h2>
+    <p class="section-sub">O LuxHub conduz todo o processo — da identificação da oportunidade até a submissão ao edital.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-name">Diagnóstico</div>
+        <div class="step-desc">Mapeamento do gargalo técnico e da oportunidade de inovação na empresa</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-name">Elegibilidade</div>
+        <div class="step-desc">Análise de aderência da empresa e da solução aos critérios do edital</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-name">Estruturação</div>
+        <div class="step-desc">Definição da solução tecnológica, escopo e parceiros técnicos</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-name">Submissão</div>
+        <div class="step-desc">Elaboração completa do projeto e envio ao edital selecionado</div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-name">Execução</div>
+        <div class="step-desc">Acompanhamento do desenvolvimento tecnológico financiado</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="modelo-section">
+  <div class="container">
+    <div class="section-tag">// Modelo de parceria</div>
+    <h2 class="section-title">A empresa entra com o problema.<br>O recurso vem do edital.</h2>
+    <div class="modelo-grid">
+      <div class="modelo-card highlight">
+        <div class="modelo-card-title" style="color:#5de8b5;">O que a empresa contribui</div>
+        <div class="modelo-item">Acesso à planta industrial para validação</div>
+        <div class="modelo-item">Equipe técnica dedicada ao projeto</div>
+        <div class="modelo-item">Dados operacionais e contexto do problema</div>
+        <div class="modelo-item">Infraestrutura existente como contrapartida</div>
+        <div style="margin-top:14px;font-size:12px;color:var(--green);font-weight:700;">Nenhum desembolso financeiro direto exigido.</div>
+      </div>
+      <div class="modelo-card">
+        <div class="modelo-card-title">O que o LuxHub estrutura</div>
+        <div class="modelo-item">Análise de elegibilidade e seleção do edital</div>
+        <div class="modelo-item">Definição da solução tecnológica aplicável</div>
+        <div class="modelo-item">Elaboração completa do projeto</div>
+        <div class="modelo-item">Conexão com ICT parceira (SENAI, UFBA, outros)</div>
+        <div class="modelo-item">Submissão e acompanhamento do processo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="portfolio-section" id="portfolio">
+  <div class="container">
+    <div class="section-tag">// Portfolio de tecnologias</div>
+    <h2 class="section-title">Soluções em desenvolvimento.</h2>
+    <p class="section-sub">Cada projeto estruturado pelo LuxHub gera uma tecnologia industrial aplicável. As primeiras duas já estão validadas.</p>
+    <div class="portfolio-grid">
+      <div class="p-card">
+        <div class="p-card-tag">Espectroscopia · QC Industrial</div>
+        <div class="p-card-name">LuxSense</div>
+        <div class="p-card-desc">Sistema de ML que automatiza a interpretação de espectros Raman para controle de qualidade industrial. Reduz análise de horas para minutos, sem substituição de hardware. Validado com 99,4% de acurácia em dados farmacêuticos reais.</div>
+        <div class="p-card-status">● TRL 3-4 · Piloto em andamento</div>
+      </div>
+      <div class="p-card">
+        <div class="p-card-tag">IoT Industrial · Monitoramento</div>
+        <div class="p-card-name">IndFlow</div>
+        <div class="p-card-desc">Plataforma de monitoramento industrial em tempo real. Integração direta com equipamentos — dados que hoje são lançados manualmente passam a ser capturados automaticamente. Clientes ativos no polo de Camaçari.</div>
+        <div class="p-card-status">● Produção · Clientes ativos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--navy);padding:60px 24px;">
+  <div class="container">
+    <div class="section-tag">// Empresas ideais</div>
+    <h2 class="section-title" style="font-size:clamp(22px,3vw,34px);margin-bottom:32px;">Qual empresa se encaixa?</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;">
+      <div style="padding:18px;border:1px solid var(--border);border-radius:10px;text-align:center;">
+        <div style="font-size:22px;margin-bottom:8px;">🏭</div>
+        <div style="font-size:13px;font-weight:700;">Manufatura</div>
+      </div>
+      <div style="padding:18px;border:1px solid var(--border);border-radius:10px;text-align:center;">
+        <div style="font-size:22px;margin-bottom:8px;">💊</div>
+        <div style="font-size:13px;font-weight:700;">Farmacêutica</div>
+      </div>
+      <div style="padding:18px;border:1px solid var(--border);border-radius:10px;text-align:center;">
+        <div style="font-size:22px;margin-bottom:8px;">⚡</div>
+        <div style="font-size:13px;font-weight:700;">Energia</div>
+      </div>
+      <div style="padding:18px;border:1px solid var(--border);border-radius:10px;text-align:center;">
+        <div style="font-size:22px;margin-bottom:8px;">🌾</div>
+        <div style="font-size:13px;font-weight:700;">Alimentos</div>
+      </div>
+      <div style="padding:18px;border:1px solid var(--border);border-radius:10px;text-align:center;">
+        <div style="font-size:22px;margin-bottom:8px;">⛏️</div>
+        <div style="font-size:13px;font-weight:700;">Mineração</div>
+      </div>
+      <div style="padding:18px;border:1px solid var(--border);border-radius:10px;text-align:center;">
+        <div style="font-size:22px;margin-bottom:8px;">🧪</div>
+        <div style="font-size:13px;font-weight:700;">Química</div>
+      </div>
+    </div>
+    <div style="margin-top:24px;padding:16px 20px;background:var(--white-faint);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--white-dim);line-height:1.6;">
+      <b style="color:var(--white);">Critério mínimo:</b> empresa ativa com faturamento anual acima de R$ 1M e algum desafio operacional que envolva automação, qualidade, dados ou eficiência. Se existe o problema, provavelmente existe o edital.
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contato">
+  <div class="container">
+    <div class="section-tag" style="display:flex;justify-content:center;margin-bottom:16px;">// Próximo passo</div>
+    <h2>Uma conversa de 20 minutos<br>pode identificar a oportunidade.</h2>
+    <p>Se sua empresa tem algum gargalo operacional — produção, qualidade, energia, manutenção — provavelmente existe um edital adequado. Verificamos a elegibilidade sem custo.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="mailto:viniburilux@gmail.com" class="btn-primary">Falar por e-mail</a>
+      <a href="https://wa.me/5585999798762" class="btn-ghost" target="_blank">WhatsApp direto</a>
+    </div>
+    <div class="cta-note">Sem desembolso financeiro direto. Sem risco para a empresa.</div>
+    <div class="contact-row">
+      <div class="contact-item">✉ <a href="mailto:viniburilux@gmail.com">viniburilux@gmail.com</a></div>
+      <div class="contact-item">📱 <a href="https://wa.me/5585999798762">+55 85 99979-8762</a></div>
+      <div class="contact-item">🔬 <a href="https://viniburilux.github.io" target="_blank">viniburilux.github.io</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Lux<span>Hub</span></div>
+  <div class="footer-meta">
+    LuxVerso Research Initiative · Vinícius Buri Lux<br>
+    Salvador, Bahia, Brasil · 2026
+  </div>
+</footer>
+
+</body>
+</html>
