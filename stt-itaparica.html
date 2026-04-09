@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GhostWorks — Piloto Itaparica</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05080f;
+    --surface: #0c1220;
+    --border: #1a2540;
+    --accent: #00c8ff;
+    --accent2: #ff6b35;
+    --gold: #f5c842;
+    --text: #e8edf5;
+    --muted: #6b7a99;
+    --green: #00e5a0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 52px;
+    animation: fadeIn 0.6s ease both;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,200,255,0.08);
+    border: 1px solid rgba(0,200,255,0.2);
+    border-radius: 4px;
+    padding: 6px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 40px;
+    animation: fadeIn 0.6s ease both;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Context box */
+  .context-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    font-size: 14px;
+    color: #b0bad4;
+    line-height: 1.75;
+  }
+
+  .context-box strong { color: var(--text); }
+
+  /* Ranking */
+  .ranking {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .muni-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    align-items: center;
+    gap: 16px;
+    transition: border-color 0.2s;
+    animation: slideIn 0.4s ease both;
+  }
+
+  .muni-card:hover { border-color: rgba(0,200,255,0.3); }
+
+  .muni-card.top {
+    border-color: rgba(245,200,66,0.3);
+    background: linear-gradient(135deg, rgba(245,200,66,0.04), var(--surface));
+  }
+
+  .rank-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .muni-card.top .rank-num { color: var(--gold); }
+
+  .muni-info { min-width: 0; }
+
+  .muni-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .muni-card.top .muni-name { color: var(--gold); }
+
+  .muni-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .muni-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    max-width: 160px;
+  }
+
+  .muni-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent2), var(--gold));
+    transition: width 1s ease;
+  }
+
+  .muni-card.top .muni-bar-fill {
+    background: linear-gradient(90deg, var(--gold), #ffed80);
+  }
+
+  .muni-rank-context {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .muni-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .muni-card.top .muni-score { color: var(--gold); }
+
+  .score-label {
+    font-size: 9px;
+    color: var(--muted);
+    text-align: right;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* Standout box */
+  .standout {
+    background: linear-gradient(135deg, rgba(245,200,66,0.06), rgba(0,200,255,0.04));
+    border: 1px solid rgba(245,200,66,0.25);
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+
+  .standout-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--gold);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .standout p {
+    font-size: 14px;
+    color: #b0bad4;
+    line-height: 1.75;
+  }
+
+  .standout strong { color: var(--text); }
+
+  /* Scale reference */
+  .scale-ref {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .scale-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .scale-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+  }
+
+  .scale-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .scale-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* Method */
+  .method-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 500px) { .method-grid { grid-template-columns: 1fr; } }
+
+  .method-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+
+  .method-key {
+    font-size: 10px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .method-val {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 52px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+    gap: 12px;
+  }
+
+  .footer-brand {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+
+  .footer-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  /* Disclaimer */
+  .disclaimer {
+    background: rgba(107,122,153,0.08);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-top: 24px;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .muni-card:nth-child(1) { animation-delay: 0.05s; }
+  .muni-card:nth-child(2) { animation-delay: 0.10s; }
+  .muni-card:nth-child(3) { animation-delay: 0.15s; }
+  .muni-card:nth-child(4) { animation-delay: 0.20s; }
+  .muni-card:nth-child(5) { animation-delay: 0.25s; }
+  .muni-card:nth-child(6) { animation-delay: 0.30s; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="badge">GhostWorks · Piloto Territorial · Abril 2026</div>
+    <h1>Território de<br><span>Itaparica</span></h1>
+    <div class="subtitle">Índice de Transformação Territorial 2017–2024 &nbsp;·&nbsp; Bahia, Brasil</div>
+  </div>
+
+  <!-- Context -->
+  <div class="section" style="animation-delay:0.1s">
+    <div class="section-label">Sobre este piloto</div>
+    <div class="context-box">
+      Análise experimental dos <strong>6 municípios do Território de Identidade Itaparica</strong>
+      usando embeddings de satélite do Google/DeepMind. O índice mede a <strong>dissimilaridade semântica
+      do território</strong> entre 2017 e 2024 — quanto maior o score, maior a transformação física
+      detectada por satélite.
+    </div>
+  </div>
+
+  <!-- Ranking -->
+  <div class="section" style="animation-delay:0.2s">
+    <div class="section-label">Score de transformação territorial (STT)</div>
+    <div class="ranking">
+
+      <div class="muni-card top">
+        <div class="rank-num">1°</div>
+        <div class="muni-info">
+          <div class="muni-name">Paulo Afonso</div>
+          <div class="muni-bar-wrap">
+            <div class="muni-bar"><div class="muni-bar-fill" style="width:100%"></div></div>
+            <div class="muni-rank-context">top 14% da Bahia</div>
+          </div>
+        </div>
+        <div>
+          <div class="muni-score">0.1321</div>
+          <div class="score-label">STT Score</div>
+        </div>
+      </div>
+
+      <div class="muni-card">
+        <div class="rank-num">2°</div>
+        <div class="muni-info">
+          <div class="muni-name">Abaré</div>
+          <div class="muni-bar-wrap">
+            <div class="muni-bar"><div class="muni-bar-fill" style="width:76%"></div></div>
+            <div class="muni-rank-context">top 24% da Bahia</div>
+          </div>
+        </div>
+        <div>
+          <div class="muni-score">0.1147</div>
+          <div class="score-label">STT Score</div>
+        </div>
+      </div>
+
+      <div class="muni-card">
+        <div class="rank-num">3°</div>
+        <div class="muni-info">
+          <div class="muni-name">Chorrochó</div>
+          <div class="muni-bar-wrap">
+            <div class="muni-bar"><div class="muni-bar-fill" style="width:64%"></div></div>
+            <div class="muni-rank-context">top 34% da Bahia</div>
+          </div>
+        </div>
+        <div>
+          <div class="muni-score">0.1017</div>
+          <div class="score-label">STT Score</div>
+        </div>
+      </div>
+
+      <div class="muni-card">
+        <div class="rank-num">4°</div>
+        <div class="muni-info">
+          <div class="muni-name">Glória</div>
+          <div class="muni-bar-wrap">
+            <div class="muni-bar"><div class="muni-bar-fill" style="width:50%"></div></div>
+            <div class="muni-rank-context">mediana da Bahia</div>
+          </div>
+        </div>
+        <div>
+          <div class="muni-score">0.0876</div>
+          <div class="score-label">STT Score</div>
+        </div>
+      </div>
+
+      <div class="muni-card">
+        <div class="rank-num">5°</div>
+        <div class="muni-info">
+          <div class="muni-name">Macururé</div>
+          <div class="muni-bar-wrap">
+            <div class="muni-bar"><div class="muni-bar-fill" style="width:49%"></div></div>
+            <div class="muni-rank-context">mediana da Bahia</div>
+          </div>
+        </div>
+        <div>
+          <div class="muni-score">0.0873</div>
+          <div class="score-label">STT Score</div>
+        </div>
+      </div>
+
+      <div class="muni-card">
+        <div class="rank-num">6°</div>
+        <div class="muni-info">
+          <div class="muni-name">Rodelas</div>
+          <div class="muni-bar-wrap">
+            <div class="muni-bar"><div class="muni-bar-fill" style="width:49%"></div></div>
+            <div class="muni-rank-context">mediana da Bahia</div>
+          </div>
+        </div>
+        <div>
+          <div class="muni-score">0.0873</div>
+          <div class="score-label">STT Score</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Standout insight -->
+  <div class="section" style="animation-delay:0.3s">
+    <div class="section-label">Achado principal</div>
+    <div class="standout">
+      <div class="standout-title">⚡ Paulo Afonso se destaca no território</div>
+      <p>
+        <strong>Paulo Afonso</strong> registrou score <strong>52% acima da média da Bahia</strong>
+        (0.132 vs média estadual de 0.090) e <strong>51% superior ao segundo colocado</strong> do
+        próprio território. Os três municípios à direita do São Francisco — Glória, Macururé e
+        Rodelas — apresentam valores semelhantes entre si, na mediana estadual, sugerindo
+        dinâmica territorial mais estável no período. As causas do maior score em Paulo Afonso
+        e Abaré merecem investigação — a natureza exata da transformação detectada (infraestrutura,
+        uso do solo, expansão urbana) só pode ser confirmada com cruzamento de dados adicionais.
+      </p>
+    </div>
+  </div>
+
+  <!-- Reference scale -->
+  <div class="section" style="animation-delay:0.35s">
+    <div class="section-label">Referência de escala — Bahia (413 municípios)</div>
+    <div class="scale-ref">
+      <div class="scale-item">
+        <div class="scale-dot" style="background:#ff4444"></div>
+        <div class="scale-val" style="color:#ff6b6b">0.2165</div>
+        <div class="scale-desc">Anguera<br>Maior transformação do estado</div>
+      </div>
+      <div class="scale-item">
+        <div class="scale-dot" style="background:var(--accent)"></div>
+        <div class="scale-val" style="color:var(--accent)">0.0900</div>
+        <div class="scale-desc">Média estadual<br>413 municípios</div>
+      </div>
+      <div class="scale-item">
+        <div class="scale-dot" style="background:var(--green)"></div>
+        <div class="scale-val" style="color:var(--green)">0.0284</div>
+        <div class="scale-desc">Ilha de Itaparica<br>Menor transformação</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Method -->
+  <div class="section" style="animation-delay:0.4s">
+    <div class="section-label">Metodologia</div>
+    <div class="method-grid">
+      <div class="method-item">
+        <div class="method-key">Dataset</div>
+        <div class="method-val">Google Satellite Embedding V1 Annual (GEE)</div>
+      </div>
+      <div class="method-item">
+        <div class="method-key">Modelo base</div>
+        <div class="method-val">AlphaEarth Foundations (Google + DeepMind)</div>
+      </div>
+      <div class="method-item">
+        <div class="method-key">Método</div>
+        <div class="method-val">Cosine similarity entre vetores de 64 dimensões</div>
+      </div>
+      <div class="method-item">
+        <div class="method-key">Resolução</div>
+        <div class="method-val">2km por pixel · agregação municipal</div>
+      </div>
+      <div class="method-item">
+        <div class="method-key">Cobertura</div>
+        <div class="method-val">2017 → 2024 (comparação direta)</div>
+      </div>
+      <div class="method-item">
+        <div class="method-key">Processamento</div>
+        <div class="method-val">Google Earth Engine · Python API</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <strong>Nota metodológica:</strong> Este é um piloto experimental. O índice STT detecta
+    transformação física do território via embeddings de satélite, mas não classifica automaticamente
+    a natureza da mudança (infraestrutura, uso do solo, expansão urbana, etc.). Interpretações
+    causais requerem cruzamento com dados setoriais adicionais — ANEEL, MapBiomas, Portal da
+    Transparência.
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-brand">GHOSTWORKS</div>
+    <div class="footer-meta">
+      LuxVerso Research Initiative · Vinicius Buri<br>
+      Piloto Territorial Itaparica · Abril 2026
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
