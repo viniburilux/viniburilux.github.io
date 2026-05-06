@@ -1,948 +1,960 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Human-Centered Failure Modes in LLM Evaluation — Vinícius Buri Lux</title>
-<meta name="description" content="Independent research on how humans inadvertently stabilize semantic regimes across AI systems during evaluation. Two accepted papers at ACM CHI 2026.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,400&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<title>GhostWorks — Inteligência Territorial</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #0f0f0e;
-    --paper: #f8f9fa;
-    --paper2: #ffffff;
-    --accent: #b5401a;
-    --accent2: #2a4a7f;
-    --muted: #6c757d;
-    --border: #e9ecef;
-    --font-heading: 'Plus Jakarta Sans', sans-serif;
-    --font-body: 'Inter', sans-serif;
+    --bg: #050a0f;
+    --surface: #0a1520;
+    --card: #0d1e2e;
+    --border: #1a3a52;
+    --accent: #00c8ff;
+    --accent2: #ff4d4d;
+    --accent3: #00ff88;
+    --text: #e8f4f8;
+    --muted: #5a8099;
+    --warning: #ffaa00;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html { scroll-behavior: smooth; }
-
   body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--font-body);
-    font-weight: 400;
-    line-height: 1.6;
-    font-size: 16px;
-    -webkit-font-smoothing: antialiased;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(248, 249, 250, 0.9);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 clamp(1.5rem, 5vw, 4rem);
-    display: flex; align-items: center; justify-content: space-between;
-    height: 70px;
+  /* GRID BG */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
   }
-  nav .logo {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--ink);
-    text-decoration: none;
-  }
-  nav .nav-right {
-    display: flex; align-items: center; gap: 2rem;
-  }
-  nav .links {
-    display: flex; gap: 2rem;
-    list-style: none;
-  }
-  nav .links a {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  nav .links a:hover { color: var(--ink); }
 
-  .lang-switcher {
-    display: flex; gap: 0.5rem;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-  }
-  .lang-btn {
-    cursor: pointer;
+  /* SCAN LINE */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    animation: scan 6s linear infinite;
+    z-index: 1;
     opacity: 0.4;
-    transition: opacity 0.2s;
-    border: none;
-    background: none;
-    padding: 4px;
   }
-  .lang-btn.active { opacity: 1; font-weight: bold; }
-  .lang-btn:hover { opacity: 0.8; }
+
+  @keyframes scan { to { top: 200%; } }
+
+  .wrap { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
   /* ── HERO ── */
-  header {
-    min-height: 100vh;
-    padding: 70px clamp(1.5rem, 8vw, 8rem) 0;
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 4rem;
-    align-items: center;
-    border-bottom: 1px solid var(--border);
-    background: white;
-  }
-
-  .hero-left {
-    padding: 4rem 0;
-  }
-
-  .eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-    display: flex; align-items: center; gap: 0.75rem;
-  }
-  .eyebrow::before {
-    content: '';
-    display: inline-block;
-    width: 32px; height: 2px;
-    background: var(--accent);
-  }
-
-  h1 {
-    font-family: var(--font-heading);
-    font-size: clamp(2.5rem, 5vw, 4.2rem);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
-    color: var(--ink);
-  }
-  h1 em {
-    font-style: italic;
-    color: var(--accent);
-    font-weight: 700;
-  }
-
-  .hero-desc {
-    font-size: 1.15rem;
-    color: var(--muted);
-    max-width: 45ch;
-    margin-bottom: 2.5rem;
-    line-height: 1.5;
-  }
-
-  .badges {
-    display: flex; flex-wrap: wrap; gap: 0.75rem;
-    margin-bottom: 2.5rem;
-  }
-  .badge {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    border: 1px solid;
-    display: inline-block;
-  }
-  .badge-red { border-color: #f8d7da; background: #f8d7da; color: var(--accent); }
-  .badge-blue { border-color: #cfe2ff; background: #cfe2ff; color: var(--accent2); }
-  .badge-gray { border-color: #e2e3e5; background: #e2e3e5; color: var(--muted); }
-
-  .cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .cta-primary {
-    font-family: var(--font-body);
-    font-weight: 600;
-    font-size: 0.9rem;
-    background: var(--ink);
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: transform 0.2s, background 0.2s;
-  }
-  .cta-primary:hover { background: var(--accent); transform: translateY(-2px); }
-  .cta-secondary {
-    font-family: var(--font-body);
-    font-weight: 600;
-    font-size: 0.9rem;
-    border: 2px solid var(--border);
-    color: var(--ink);
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .cta-secondary:hover { border-color: var(--ink); background: var(--paper); }
-
-  .hero-right {
-    padding: 4rem 0;
-    border-left: 1px solid var(--border);
-    padding-left: 4rem;
-  }
-
-  .mechanism {
-    display: flex; flex-direction: column; gap: 0;
-  }
-  .mech-step {
-    padding: 1.5rem 0;
-    border-bottom: 1px dotted var(--border);
-    display: grid;
-    grid-template-columns: 40px 1fr;
-    gap: 1rem;
-    align-items: start;
-    opacity: 0;
-    transform: translateX(16px);
-    animation: fadeRight 0.5s ease forwards;
-  }
-  .mech-step:nth-child(1) { animation-delay: 0.1s; }
-  .mech-step:nth-child(2) { animation-delay: 0.25s; }
-  .mech-step:nth-child(3) { animation-delay: 0.4s; }
-  .mech-step:nth-child(4) { animation-delay: 0.55s; }
-  .mech-step:last-child { border-bottom: none; }
-
-  .step-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--accent);
-  }
-  .step-title {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 1rem;
-    margin-bottom: 0.25rem;
-    color: var(--ink);
-  }
-  .step-desc {
-    font-size: 0.88rem;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  @keyframes fadeRight {
-    to { opacity: 1; transform: translateX(0); }
-  }
-
-  /* ── SECTIONS ── */
-  section {
-    padding: clamp(4rem, 8vw, 8rem) clamp(1.5rem, 8vw, 8rem);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .section-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 3rem;
-    display: flex; align-items: center; gap: 1rem;
-  }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  h2 {
-    font-family: var(--font-heading);
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    margin-bottom: 1.5rem;
-    color: var(--ink);
-  }
-
-  /* ── FINDING ── */
-  .finding-block {
-    background: #111;
-    color: white;
-    padding: clamp(3rem, 6vw, 5rem);
-    margin: 2rem 0;
-    border-radius: 24px;
-    position: relative;
-    overflow: hidden;
-  }
-  .finding-block p {
-    font-family: var(--font-heading);
-    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-    line-height: 1.4;
-    font-weight: 600;
-    position: relative;
-    z-index: 1;
-  }
-  .finding-block .finding-note {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--accent);
-    margin-top: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  /* ── PAPERS ── */
-  .papers-grid {
+  .hero {
+    padding: 80px 0 60px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-top: 3rem;
+    gap: 60px;
+    align-items: center;
   }
-  .paper-card {
-    background: white;
-    border: 1px solid var(--border);
-    padding: 2.5rem;
-    border-radius: 20px;
-    transition: all 0.3s ease;
-  }
-  .paper-card:hover { border-color: var(--accent2); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-  .paper-venue {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: var(--accent2);
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-  }
-  .paper-title {
-    font-family: var(--font-heading);
-    font-size: 1.4rem;
-    font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-    color: var(--ink);
-  }
-  .paper-role {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-  }
-  .paper-abstract {
-    font-size: 0.95rem;
-    color: var(--muted);
-    line-height: 1.6;
-    margin-bottom: 2rem;
-  }
-  .paper-link {
+
+  .hero-badge {
     display: inline-flex;
     align-items: center;
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: var(--accent2);
-    text-decoration: none;
-    gap: 0.5rem;
-  }
-  .paper-link:hover { text-decoration: underline; }
-
-  /* ── WHY IT MATTERS ── */
-  .matters-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
-  .matter-item {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-  }
-  .matter-icon {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    font-weight: 700;
+    gap: 8px;
+    background: rgba(0,200,255,0.08);
+    border: 1px solid rgba(0,200,255,0.25);
+    padding: 6px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
     color: var(--accent);
-    margin-bottom: 1rem;
-    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
   }
-  .matter-title {
-    font-family: var(--font-heading);
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent3);
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
     font-weight: 800;
-    font-size: 1.1rem;
-    margin-bottom: 0.75rem;
-    color: var(--ink);
-  }
-  .matter-desc {
-    font-size: 0.92rem;
-    color: var(--muted);
-    line-height: 1.6;
+    font-size: clamp(38px, 5vw, 58px);
+    line-height: 1.05;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
   }
 
-  /* ── FRAMEWORKS ── */
-  .framework-list {
-    display: flex; flex-direction: column; gap: 1.5rem;
-    margin-top: 3rem;
-  }
-  .framework-item {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: 3rem;
-    align-items: start;
-  }
-  .framework-name {
-    font-family: var(--font-heading);
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: var(--ink);
-  }
-  .framework-tag {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: var(--muted);
-    margin-top: 0.5rem;
-    text-transform: uppercase;
-  }
-  .framework-desc {
-    font-size: 1rem;
-    color: var(--muted);
-    line-height: 1.6;
-  }
+  .hero h1 span { color: var(--accent); }
 
-  /* ── STUDY ── */
-  .stats-row {
-    display: flex;
-    gap: 1.5rem;
-    margin: 3rem 0;
-  }
-  .stat-item {
-    flex: 1;
-    background: white;
-    padding: 2.5rem;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    text-align: center;
-  }
-  .stat-num {
-    font-family: var(--font-heading);
-    font-size: 3.5rem;
-    font-weight: 800;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.05em;
-  }
-  .stat-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .dataset-note {
-    background: #e9ecef;
-    border-radius: 16px;
-    padding: 1.5rem 2rem;
-    font-size: 0.95rem;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  /* ── ABOUT ── */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: start;
-  }
-  .about-text p {
-    font-size: 1.05rem;
-    color: var(--muted);
+  .hero p {
+    font-size: 17px;
     line-height: 1.7;
-    margin-bottom: 1.5rem;
+    color: #8ab8cc;
+    margin-bottom: 32px;
+    max-width: 460px;
   }
-  .about-meta {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-  }
-  .meta-row {
+
+  .hero-stat-row {
     display: flex;
-    justify-content: space-between;
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.9rem;
+    gap: 32px;
   }
-  .meta-row:last-child { border-bottom: none; }
-  .meta-key {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
+
+  .hero-stat { }
+  .hero-stat .n {
+    font-family: 'Space Mono', monospace;
+    font-size: 28px;
     font-weight: 700;
-    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+  }
+  .hero-stat .l {
+    font-size: 12px;
     color: var(--muted);
-  }
-  .meta-val {
-    color: var(--ink);
-    font-weight: 600;
-  }
-  .meta-val a {
-    color: var(--accent2);
-    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
   }
 
-  /* ── CHI 2026 SECTION ── */
-  .chi-section {
-    background: var(--accent2);
-    color: white;
-    border-radius: 24px;
-    padding: clamp(3rem, 6vw, 5rem);
-    margin-top: 4rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+  /* ── RADAR VISUAL ── */
+  .radar-wrap {
+    position: relative;
+    display: flex;
     align-items: center;
+    justify-content: center;
   }
-  .chi-content h2 { color: white; margin-bottom: 1.5rem; }
-  .chi-content p { font-size: 1.1rem; line-height: 1.6; opacity: 0.9; margin-bottom: 2rem; }
-  .chi-link {
-    display: inline-block;
-    background: white;
-    color: var(--accent2);
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 700;
-    transition: transform 0.2s;
-  }
-  .chi-link:hover { transform: scale(1.05); }
 
-  /* ── SUPPORT SECTION ── */
-  .support-section {
-    background: #fff;
-    border: 2px solid var(--accent);
-    border-radius: 24px;
-    padding: clamp(3rem, 6vw, 5rem);
-    margin-top: 4rem;
-    text-align: center;
+  .radar-svg { width: 340px; height: 340px; }
+
+  .pulse-ring {
+    animation: pulse-out 2.5s ease-out infinite;
+    transform-origin: center;
   }
-  .support-section h2 { color: var(--accent); margin-bottom: 1rem; }
-  .support-section p { font-size: 1.1rem; color: var(--muted); margin-bottom: 2.5rem; max-width: 60ch; margin-left: auto; margin-right: auto; }
-  .support-btn {
-    display: inline-block;
-    background: var(--accent);
-    color: white;
-    padding: 1.2rem 3rem;
-    border-radius: 12px;
-    text-decoration: none;
+  .pulse-ring:nth-child(2) { animation-delay: 0.8s; }
+  .pulse-ring:nth-child(3) { animation-delay: 1.6s; }
+
+  @keyframes pulse-out {
+    0% { r: 20; opacity: 0.8; }
+    100% { r: 130; opacity: 0; }
+  }
+
+  .radar-sweep {
+    transform-origin: 170px 170px;
+    animation: sweep 4s linear infinite;
+  }
+  @keyframes sweep { to { transform: rotate(360deg); } }
+
+  /* ── SECTION ── */
+  .section { padding: 60px 0; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section h2 {
+    font-size: clamp(28px, 4vw, 40px);
     font-weight: 800;
-    font-size: 1.2rem;
-    transition: all 0.2s;
-    box-shadow: 0 10px 20px rgba(181, 64, 26, 0.2);
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
   }
-  .support-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(181, 64, 26, 0.3); background: #9d3615; }
 
-  /* ── CONTACT ── */
-  .contact-block {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: start;
+  .section > .wrap > p {
+    font-size: 16px;
+    color: #7aa8bc;
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 40px;
   }
-  .contact-info { display: flex; flex-direction: column; gap: 1rem; }
-  .contact-item {
-    background: white;
-    padding: 1.5rem 2rem;
-    border-radius: 16px;
+
+  /* ── HOW IT WORKS ── */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--border);
     border: 1px solid var(--border);
+  }
+
+  .step {
+    background: var(--card);
+    padding: 32px 24px;
+    position: relative;
+  }
+
+  .step-n {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+
+  .step-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .step h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .step p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ── HOTSPOTS ── */
+  .hotspot-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 40px;
+  }
+
+  .hotspot-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: default;
+  }
+
+  .hotspot-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent2);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+    transform-origin: left;
+  }
+
+  .hotspot-card:hover { border-color: var(--accent2); transform: translateY(-2px); }
+  .hotspot-card:hover::before { transform: scaleX(1); }
+
+  .hotspot-state {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .hotspot-name {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .hotspot-ratio {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent2);
+  }
+
+  .hotspot-ratio-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .hotspot-bar {
+    margin-top: 12px;
+    height: 3px;
+    background: rgba(255,77,77,0.15);
+    border-radius: 2px;
+  }
+
+  .hotspot-bar-fill {
+    height: 100%;
+    background: var(--accent2);
+    border-radius: 2px;
+    transition: width 1s ease;
+  }
+
+  /* ── MAP SECTION ── */
+  .map-outer {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 4px;
+    margin-top: 40px;
+    position: relative;
+  }
+
+  #map { height: 420px; width: 100%; }
+
+  .map-legend {
+    display: flex;
+    gap: 24px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .legend-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-  }
-  .contact-item span {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
+    gap: 8px;
+    font-size: 12px;
     color: var(--muted);
+    font-family: 'Space Mono', monospace;
   }
-  .contact-item a {
-    color: var(--ink);
+
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+
+  /* ── APPLICATIONS ── */
+  .apps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .app-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .app-card:hover { border-color: var(--accent); }
+
+  .app-icon { font-size: 32px; margin-bottom: 16px; }
+
+  .app-card h3 {
+    font-size: 16px;
     font-weight: 700;
-    text-decoration: none;
-    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .app-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .app-tag {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 4px 10px;
+    background: rgba(0,200,255,0.08);
+    border: 1px solid rgba(0,200,255,0.2);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+
+  /* ── EVIDENCE SECTION ── */
+  .evidence-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 40px;
+    align-items: center;
+  }
+
+  .evidence-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .evidence-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .evidence-header span {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+
+  .evidence-header .tag {
+    background: rgba(255,77,77,0.12);
+    color: var(--accent2);
+    border: 1px solid rgba(255,77,77,0.3);
+    padding: 3px 10px;
+    font-size: 10px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
+  }
+
+  .evidence-rows { padding: 20px; }
+
+  .evidence-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(26,58,82,0.5);
+  }
+  .evidence-row:last-child { border-bottom: none; }
+
+  .evidence-label { font-size: 13px; color: var(--muted); }
+  .evidence-value { font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; }
+  .evidence-value.red { color: var(--accent2); }
+  .evidence-value.green { color: var(--accent3); }
+  .evidence-value.yellow { color: var(--warning); }
+
+  /* ── SENTENCE ── */
+  .big-sentence {
+    text-align: center;
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 40px 0;
+  }
+
+  .big-sentence p {
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 700;
+    line-height: 1.4;
+    max-width: 740px;
+    margin: 0 auto;
+    color: var(--text);
+  }
+
+  .big-sentence p span { color: var(--accent); }
+  .big-sentence p em { color: var(--accent2); font-style: normal; }
+
+  /* ── CTA ── */
+  .cta {
+    text-align: center;
+    padding: 80px 0;
+  }
+
+  .cta h2 {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+
+  .cta p { font-size: 16px; color: var(--muted); margin-bottom: 40px; }
+
+  .cta-contact {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: rgba(0,200,255,0.06);
+    border: 1px solid rgba(0,200,255,0.3);
+    padding: 24px 48px;
+  }
+
+  .cta-contact .name {
+    font-size: 22px;
+    font-weight: 800;
+  }
+
+  .cta-contact .role {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+  }
+
+  .cta-contact .site {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
   }
 
   /* ── FOOTER ── */
-  footer {
-    padding: 3rem clamp(1.5rem, 8vw, 8rem);
-    background: white;
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 500;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
     color: var(--muted);
   }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 992px) {
-    header { grid-template-columns: 1fr; min-height: auto; padding-top: calc(70px + 3rem); text-align: center; }
-    .hero-left { display: flex; flex-direction: column; align-items: center; }
-    .eyebrow { justify-content: center; }
-    .hero-right { border-left: none; border-top: 1px solid var(--border); padding-left: 0; padding-top: 4rem; }
-    .mechanism { max-width: 600px; margin: 0 auto; text-align: left; }
-    .papers-grid { grid-template-columns: 1fr; }
-    .matters-grid { grid-template-columns: 1fr; }
-    .framework-item { grid-template-columns: 1fr; gap: 1rem; }
-    .stats-row { flex-direction: column; }
-    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .chi-section { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
-    .contact-block { grid-template-columns: 1fr; gap: 3rem; }
-    footer { flex-direction: column; gap: 1rem; text-align: center; }
-    nav .links { display: none; }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.5px;
   }
-
-  /* ── LANGUAGE TOGGLE ── */
-  [data-lang="pt"] { display: none; }
-  body.lang-pt [data-lang="en"] { display: none; }
-  body.lang-pt [data-lang="pt"] { display: block; }
-  body.lang-pt [data-lang-inline="en"] { display: none; }
-  body.lang-pt [data-lang-inline="pt"] { display: inline; }
-  [data-lang-inline="pt"] { display: none; }
+  .logo span { color: var(--accent); }
 
   /* ── ANIMATIONS ── */
   .fade-in {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; padding: 40px 0; }
+    .radar-wrap { display: none; }
+    .steps, .hotspot-grid, .apps { grid-template-columns: 1fr 1fr; }
+    .evidence-wrap { grid-template-columns: 1fr; }
+    .footer { flex-direction: column; gap: 12px; text-align: center; }
   }
 </style>
 </head>
-<body class="lang-en">
+<body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="logo">Vinícius Buri Lux</a>
-  <div class="nav-right">
-    <ul class="links">
-      <li><a href="#research"><span data-lang="en">Research</span><span data-lang="pt">Pesquisa</span></a></li>
-      <li><a href="#frameworks">Frameworks</a></li>
-      <li><a href="#about"><span data-lang="en">About</span><span data-lang="pt">Sobre</span></a></li>
-      <li><a href="#support"><span data-lang="en">Support</span><span data-lang="pt">Apoiar</span></a></li>
-      <li><a href="#contact"><span data-lang="en">Contact</span><span data-lang="pt">Contato</span></a></li>
-    </ul>
-    <div class="lang-switcher">
-      <button class="lang-btn active" onclick="setLang('en')" id="btn-en">🇺🇸 EN</button>
-      <button class="lang-btn" onclick="setLang('pt')" id="btn-pt">🇧🇷 PT</button>
-    </div>
-  </div>
-</nav>
-
-<!-- HERO -->
-<header>
-  <div class="hero-left">
-    <div class="eyebrow">
-      <span data-lang="en">Independent Research · ACM CHI 2026</span>
-      <span data-lang="pt">Pesquisa Independente · ACM CHI 2026</span>
-    </div>
-    <h1 data-lang="en">Human-Centered<br><em>Failure Modes</em><br>in LLM Evaluation</h1>
-    <h1 data-lang="pt">Modos de <em>Falha</em><br>Centrados no Humano<br>na Avaliação de LLMs</h1>
-    <p class="hero-desc">
-      <span data-lang="en">When humans evaluate AI systems, they may inadvertently stabilize semantic regimes across models — creating the appearance of independent agreement where none exists.</span>
-      <span data-lang="pt">Quando humanos avaliam sistemas de IA, eles podem inadvertidamente estabilizar regimes semânticos entre modelos — criando a aparência de um acordo independente onde ele não existe.</span>
-    </p>
-    <div class="badges">
-      <span class="badge badge-red">
-        <span data-lang="en">2 Papers · ACM CHI 2026</span>
-        <span data-lang="pt">2 Artigos · ACM CHI 2026</span>
-      </span>
-      <span class="badge badge-blue">
-        <span data-lang="en">20-Month Longitudinal Study</span>
-        <span data-lang="pt">Estudo Longitudinal de 20 Meses</span>
-      </span>
-    </div>
-    <div class="cta-row">
-      <a href="#research" class="cta-primary">
-        <span data-lang="en">Read the Research</span>
-        <span data-lang="pt">Ler a Pesquisa</span>
-      </a>
-      <a href="#support" class="cta-secondary">
-        <span data-lang="en">Support this Mission</span>
-        <span data-lang="pt">Apoiar esta Missão</span>
-      </a>
-    </div>
-  </div>
-
-  <div class="hero-right">
-    <div class="mechanism">
-      <div class="mech-step">
-        <span class="step-num">01</span>
-        <div>
-          <div class="step-title">
-            <span data-lang="en">Human interaction patterns</span>
-            <span data-lang="pt">Padrões de interação humana</span>
-          </div>
-          <div class="step-desc">
-            <span data-lang="en">A human evaluator interacts with multiple AI systems over time, introducing consistent framing and vocabulary.</span>
-            <span data-lang="pt">Um avaliador humano interage com múltiplos sistemas de IA ao longo do tempo, introduzindo enquadramentos e vocabulários consistentes.</span>
-          </div>
+<!-- ── HERO ──────────────────────────────────────────────── -->
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-left fade-in">
+      <div class="hero-badge">SISTEMA ATIVO — COBERTURA NACIONAL</div>
+      <h1>O território<br>não <span>mente.</span></h1>
+      <p>GhostWorks detecta transformações reais no território usando IA e dados de satélite — independente do que é declarado em relatórios.</p>
+      <div class="hero-stat-row">
+        <div class="hero-stat">
+          <span class="n">5.500+</span>
+          <span class="l">municípios mapeados</span>
         </div>
-      </div>
-      <div class="mech-step">
-        <span class="step-num">02</span>
-        <div>
-          <div class="step-title">
-            <span data-lang="en">Semantic regime stabilization</span>
-            <span data-lang="pt">Estabilização de regime semântico</span>
-          </div>
-          <div class="step-desc">
-            <span data-lang="en">The evaluator's accumulated framing is absorbed into model contexts, progressively narrowing response space.</span>
-            <span data-lang="pt">O enquadramento acumulado do avaliador é absorvido pelos contextos do modelo, estreitando progressivamente o espaço de resposta.</span>
-          </div>
+        <div class="hero-stat">
+          <span class="n">7 anos</span>
+          <span class="l">de série histórica</span>
         </div>
-      </div>
-      <div class="mech-step">
-        <span class="step-num">03</span>
-        <div>
-          <div class="step-title">
-            <span data-lang="en">Cross-model convergence</span>
-            <span data-lang="pt">Convergência entre modelos</span>
-          </div>
-          <div class="step-desc">
-            <span data-lang="en">Models evaluated by the same human begin producing structurally similar outputs across sessions.</span>
-            <span data-lang="pt">Modelos avaliados pelo mesmo humano começam a produzir saídas estruturalmente semelhantes em várias sessões.</span>
-          </div>
-        </div>
-      </div>
-      <div class="mech-step">
-        <span class="step-num">04</span>
-        <div>
-          <div class="step-title">
-            <span data-lang="en">Illusion of consensus</span>
-            <span data-lang="pt">Ilusão de consenso</span>
-          </div>
-          <div class="step-desc">
-            <span data-lang="en">High agreement across models is interpreted as independent validation — when it is actually an artifact of evaluator behavior.</span>
-            <span data-lang="pt">O alto grau de acordo entre os modelos é interpretado como validação independente — quando, na verdade, é um artefato do comportamento do avaliador.</span>
-          </div>
+        <div class="hero-stat">
+          <span class="n">10m</span>
+          <span class="l">resolução espacial</span>
         </div>
       </div>
     </div>
-  </div>
-</header>
-
-<!-- RESEARCH -->
-<section id="research">
-  <div class="section-label">
-    <span data-lang="en">Research Outputs</span>
-    <span data-lang="pt">Resultados da Pesquisa</span>
-  </div>
-  <h2 data-lang="en">Two Accepted Papers<br>at ACM CHI 2026</h2>
-  <h2 data-lang="pt">Dois Artigos Aceitos<br>na ACM CHI 2026</h2>
-  
-  <div class="papers-grid fade-in">
-    <div class="paper-card">
-      <div class="paper-venue">CHI 2026 · HEAL Workshop</div>
-      <div class="paper-title">When Humans Become Regime Stabilizers: A Hidden Failure Mode in Agent-in-the-Loop LLM Evaluation</div>
-      <div class="paper-role">
-        <span data-lang="en">The mechanism — how it happens</span>
-        <span data-lang="pt">O mecanismo — como acontece</span>
-      </div>
-      <div class="paper-abstract">
-        <span data-lang="en">Identifies how human evaluators in agent-in-the-loop systems can inadvertently stabilize semantic regimes across independent LLM agents.</span>
-        <span data-lang="pt">Identifica como avaliadores humanos em sistemas de agentes podem inadvertidamente estabilizar regimes semânticos em agentes de LLM independentes.</span>
-      </div>
-      <a href="https://openreview.net/forum?id=PJNqpu0fKr" class="paper-link" target="_blank">View on OpenReview →</a>
+    <div class="radar-wrap fade-in">
+      <svg class="radar-svg" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Circles -->
+        <circle cx="170" cy="170" r="150" stroke="rgba(0,200,255,0.08)" stroke-width="1"/>
+        <circle cx="170" cy="170" r="110" stroke="rgba(0,200,255,0.10)" stroke-width="1"/>
+        <circle cx="170" cy="170" r="70" stroke="rgba(0,200,255,0.12)" stroke-width="1"/>
+        <circle cx="170" cy="170" r="30" stroke="rgba(0,200,255,0.18)" stroke-width="1"/>
+        <!-- Cross lines -->
+        <line x1="170" y1="20" x2="170" y2="320" stroke="rgba(0,200,255,0.06)" stroke-width="1"/>
+        <line x1="20" y1="170" x2="320" y2="170" stroke="rgba(0,200,255,0.06)" stroke-width="1"/>
+        <line x1="64" y1="64" x2="276" y2="276" stroke="rgba(0,200,255,0.04)" stroke-width="1"/>
+        <line x1="276" y1="64" x2="64" y2="276" stroke="rgba(0,200,255,0.04)" stroke-width="1"/>
+        <!-- Sweep -->
+        <g class="radar-sweep">
+          <path d="M170 170 L170 20 A150 150 0 0 1 290 240 Z" fill="url(#sweep-grad)" opacity="0.6"/>
+        </g>
+        <defs>
+          <radialGradient id="sweep-grad" cx="0%" cy="0%" r="100%">
+            <stop offset="0%" stop-color="#00c8ff" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#00c8ff" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <!-- Pulse rings from center -->
+        <circle class="pulse-ring" cx="170" cy="170" r="20" fill="none" stroke="#ff4d4d" stroke-width="1.5" opacity="0"/>
+        <circle class="pulse-ring" cx="170" cy="170" r="20" fill="none" stroke="#ff4d4d" stroke-width="1" opacity="0"/>
+        <circle class="pulse-ring" cx="170" cy="170" r="20" fill="none" stroke="#ff4d4d" stroke-width="0.5" opacity="0"/>
+        <!-- Static hotspot dots -->
+        <circle cx="210" cy="100" r="5" fill="#ff4d4d" opacity="0.9"/>
+        <circle cx="210" cy="100" r="10" fill="none" stroke="#ff4d4d" stroke-width="1" opacity="0.4"/>
+        <circle cx="130" cy="220" r="4" fill="#ffaa00" opacity="0.9"/>
+        <circle cx="130" cy="220" r="8" fill="none" stroke="#ffaa00" stroke-width="1" opacity="0.4"/>
+        <circle cx="240" cy="200" r="3.5" fill="#ff4d4d" opacity="0.7"/>
+        <circle cx="100" cy="130" r="3" fill="#ffaa00" opacity="0.6"/>
+        <circle cx="190" cy="250" r="3" fill="#ff4d4d" opacity="0.5"/>
+        <!-- Center -->
+        <circle cx="170" cy="170" r="5" fill="#00c8ff"/>
+        <circle cx="170" cy="170" r="10" fill="none" stroke="#00c8ff" stroke-width="1" opacity="0.5"/>
+      </svg>
     </div>
+  </div>
+</div>
 
-    <div class="paper-card">
-      <div class="paper-venue">CHI 2026 · InterAI Workshop</div>
-      <div class="paper-title">The Illusion of Consensus in Human-Centered Interactive AI</div>
-      <div class="paper-role">
-        <span data-lang="en">The consequence — what it means</span>
-        <span data-lang="pt">A consequência — o que significa</span>
+<!-- ── HOW IT WORKS ───────────────────────────────────────── -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">Como funciona</div>
+    <h2>Da órbita à decisão</h2>
+    <p>Três sensores independentes. Um score. Uma leitura clara do território.</p>
+    <div class="steps fade-in">
+      <div class="step">
+        <div class="step-n">01 — COLETA</div>
+        <span class="step-icon">🛰️</span>
+        <h3>Dados de satélite</h3>
+        <p>Sentinel-1 (SAR), Sentinel-2 (NDVI) e embeddings semânticos do Google/DeepMind. Cobertura global, resolução de 10m.</p>
       </div>
-      <div class="paper-abstract">
-        <span data-lang="en">Examines how shared architectural priors across LLMs, compounded by human-induced semantic stabilization, produce apparent consensus.</span>
-        <span data-lang="pt">Examina como os padrões arquiteturais compartilhados entre LLMs, somados à estabilização semântica induzida por humanos, produzem um consenso aparente.</span>
+      <div class="step">
+        <div class="step-n">02 — PROCESSAMENTO</div>
+        <span class="step-icon">⚙️</span>
+        <h3>Score de transformação</h3>
+        <p>IA compara o território em dois momentos e calcula quanto ele mudou — estruturas, vegetação, atividade econômica.</p>
       </div>
-      <a href="https://openreview.net/forum?id=eJtBEBmYGB" class="paper-link" target="_blank">View on OpenReview →</a>
+      <div class="step">
+        <div class="step-n">03 — DETECÇÃO</div>
+        <span class="step-icon">📡</span>
+        <h3>Anomalias identificadas</h3>
+        <p>Municípios e pontos com transformação anormal são sinalizados automaticamente. Sem ambiguidade.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">04 — ENTREGA</div>
+        <span class="step-icon">🎯</span>
+        <h3>Inteligência aplicada</h3>
+        <p>Output em linguagem executiva: score de risco, evidência visual antes/depois, perguntas de auditoria.</p>
+      </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- FRAMEWORKS -->
-<section id="frameworks">
-  <div class="section-label">Conceptual Frameworks</div>
-  <h2 data-lang="en">Key Concepts</h2>
-  <h2 data-lang="pt">Conceitos-Chave</h2>
+<!-- ── BIG SENTENCE ───────────────────────────────────────── -->
+<div class="wrap">
+  <div class="big-sentence fade-in">
+    <p>Hoje, boa parte dos indicadores ESG são baseados em <em>autodeclaração.</em><br>
+    GhostWorks entrega <span>evidência física auditável.</span><br>
+    O satélite não aceita ajuste de narrativa.</p>
+  </div>
+</div>
 
-  <div class="framework-list fade-in">
-    <div class="framework-item">
+<!-- ── HOTSPOTS ───────────────────────────────────────────── -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">Exemplo — Brasil 2017/2018</div>
+    <h2>Anomalias detectadas automaticamente</h2>
+    <p>Municípios com índice de transformação territorial até 5x acima da média estadual — identificados sem intervenção humana.</p>
+    <div class="hotspot-grid fade-in">
+      <div class="hotspot-card">
+        <div class="hotspot-state">Pernambuco</div>
+        <div class="hotspot-name">Terezinha</div>
+        <div class="hotspot-ratio">5.3×</div>
+        <div class="hotspot-ratio-label">acima da média estadual</div>
+        <div class="hotspot-bar"><div class="hotspot-bar-fill" style="width:88%"></div></div>
+      </div>
+      <div class="hotspot-card">
+        <div class="hotspot-state">Alagoas</div>
+        <div class="hotspot-name">Palmeira dos Índios</div>
+        <div class="hotspot-ratio">5.7×</div>
+        <div class="hotspot-ratio-label">acima da média estadual</div>
+        <div class="hotspot-bar"><div class="hotspot-bar-fill" style="width:95%"></div></div>
+      </div>
+      <div class="hotspot-card">
+        <div class="hotspot-state">Pernambuco</div>
+        <div class="hotspot-name">Calcado</div>
+        <div class="hotspot-ratio">5.1×</div>
+        <div class="hotspot-ratio-label">acima da média estadual</div>
+        <div class="hotspot-bar"><div class="hotspot-bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="hotspot-card">
+        <div class="hotspot-state">Pernambuco</div>
+        <div class="hotspot-name">Jucati</div>
+        <div class="hotspot-ratio">5.0×</div>
+        <div class="hotspot-ratio-label">acima da média estadual</div>
+        <div class="hotspot-bar"><div class="hotspot-bar-fill" style="width:83%"></div></div>
+      </div>
+      <div class="hotspot-card">
+        <div class="hotspot-state">Pernambuco</div>
+        <div class="hotspot-name">Bom Conselho</div>
+        <div class="hotspot-ratio">4.8×</div>
+        <div class="hotspot-ratio-label">acima da média estadual</div>
+        <div class="hotspot-bar"><div class="hotspot-bar-fill" style="width:80%"></div></div>
+      </div>
+      <div class="hotspot-card">
+        <div class="hotspot-state">Alagoas</div>
+        <div class="hotspot-name">Estrela de Alagoas</div>
+        <div class="hotspot-ratio">4.7×</div>
+        <div class="hotspot-ratio-label">acima da média estadual</div>
+        <div class="hotspot-bar"><div class="hotspot-bar-fill" style="width:78%"></div></div>
+      </div>
+      <div class="hotspot-card">
+        <div class="hotspot-state">Pernambuco</div>
+        <div class="hotspot-name">Caetés</div>
+        <div class="hotspot-ratio">4.5×</div>
+        <div class="hotspot-ratio-label">acima da média estadual</div>
+        <div class="hotspot-bar"><div class="hotspot-bar-fill" style="width:75%"></div></div>
+      </div>
+      <div class="hotspot-card">
+        <div class="hotspot-state">Pernambuco</div>
+        <div class="hotspot-name">Jupi</div>
+        <div class="hotspot-ratio">5.0×</div>
+        <div class="hotspot-ratio-label">acima da média estadual</div>
+        <div class="hotspot-bar"><div class="hotspot-bar-fill" style="width:83%"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAP ────────────────────────────────────────────────── -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">Distribuição geográfica</div>
+    <h2>Hotspots sobre o mapa</h2>
+    <p>50 pontos de anomalia detectados automaticamente. Cada ponto é um local onde a transformação territorial supera o padrão esperado.</p>
+    <div class="map-outer fade-in">
+      <div id="map"></div>
+      <div class="map-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#ff4d4d"></div> STT ALTO — transformação crítica</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ffaa00"></div> STT MÉDIO — transformação relevante</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#00c8ff; opacity:0.5"></div> STT BAIXO — transformação detectada</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── EVIDENCE CASE ──────────────────────────────────────── -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">Caso real — Refinaria Landulpho Alves</div>
+    <h2>Da anomalia à pergunta de auditoria</h2>
+    <p>Análise aplicada ao entorno direto de uma operação industrial. O que o satélite detectou que o relatório não disse.</p>
+    <div class="evidence-wrap fade-in">
       <div>
-        <div class="framework-name">Illusion of Consensus</div>
-        <div class="framework-tag">
-          <span data-lang="en">Epistemological phenomenon</span>
-          <span data-lang="pt">Fenômeno epistemológico</span>
+        <div style="margin-bottom:20px">
+          <div style="font-size:14px;color:var(--muted);margin-bottom:8px">O que foi pedido:</div>
+          <div style="font-size:16px;line-height:1.7">Analisar 5km de raio no entorno de uma refinaria e identificar riscos ESG não declarados.</div>
+        </div>
+        <div style="margin-bottom:20px">
+          <div style="font-size:14px;color:var(--muted);margin-bottom:8px">O que foi entregue:</div>
+          <div style="font-size:16px;line-height:1.7;color:var(--text)">21 hotspots reais com evidência visual antes/depois, dado quantitativo e pergunta de auditoria pronta para uso em reunião com cliente.</div>
+        </div>
+        <div style="padding:16px;background:rgba(255,77,77,0.06);border:1px solid rgba(255,77,77,0.2);margin-top:24px">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--accent2);margin-bottom:8px;letter-spacing:1px">PERGUNTA GERADA</div>
+          <div style="font-size:14px;line-height:1.65">"Houve obra ou expansão de infraestrutura no entorno direto da refinaria entre 2019 e 2023 não declarada no relatório ESG?"</div>
         </div>
       </div>
-      <div class="framework-desc">
-        <span data-lang="en">When multiple AI systems appear to agree, it reflects the human's prior inputs rather than independent model assessment.</span>
-        <span data-lang="pt">Quando múltiplos sistemas de IA parecem concordar, isso reflete as entradas prévias do humano em vez de uma avaliação independente do modelo.</span>
-      </div>
-    </div>
-    <div class="framework-item">
-      <div>
-        <div class="framework-name">Semantic Regime Stabilization</div>
-        <div class="framework-tag">
-          <span data-lang="en">Interaction mechanism</span>
-          <span data-lang="pt">Mecanismo de interação</span>
+      <div class="evidence-card">
+        <div class="evidence-header">
+          <span>HOTSPOT #3 — SAR ANÔMALO</span>
+          <span class="tag">CRÍTICO</span>
+        </div>
+        <div class="evidence-rows">
+          <div class="evidence-row">
+            <span class="evidence-label">Score ESG</span>
+            <span class="evidence-value red">0.501</span>
+          </div>
+          <div class="evidence-row">
+            <span class="evidence-label">SAR (mudança estrutural)</span>
+            <span class="evidence-value red">+7.19 dB ⚠️</span>
+          </div>
+          <div class="evidence-row">
+            <span class="evidence-label">Limiar de alerta</span>
+            <span class="evidence-value yellow">3.0 dB</span>
+          </div>
+          <div class="evidence-row">
+            <span class="evidence-label">Significado</span>
+            <span class="evidence-value red">Construção física</span>
+          </div>
+          <div class="evidence-row">
+            <span class="evidence-label">Alteração hídrica</span>
+            <span class="evidence-value red">Detectada (Rio Joanes)</span>
+          </div>
+          <div class="evidence-row">
+            <span class="evidence-label">Hotspot #4 — NDVI</span>
+            <span class="evidence-value red">−0.741 (máx. cluster)</span>
+          </div>
+          <div class="evidence-row">
+            <span class="evidence-label">Interpretação</span>
+            <span class="evidence-value" style="font-size:11px;color:var(--accent2)">VEGETAÇÃO SUPRIMIDA</span>
+          </div>
         </div>
       </div>
-      <div class="framework-desc">
-        <span data-lang="en">Sustained interaction creates a progressive narrowing of the model's effective response space.</span>
-        <span data-lang="pt">A interação sustentada cria um estreitamento progressivo do espaço de resposta efetivo do modelo.</span>
-      </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-label">
-    <span data-lang="en">About the Researcher</span>
-    <span data-lang="pt">Sobre o Pesquisador</span>
-  </div>
-  <div class="about-grid">
-    <div class="about-text fade-in">
-      <p data-lang="en">Vinícius Buri Lux is an independent researcher based in Salvador, Brazil, focused on the intersection of human cognition and large-scale AI systems.</p>
-      <p data-lang="pt">Vinícius Buri Lux é um pesquisador independente baseado em Salvador, Brasil, focado na interseção entre a cognição humana e sistemas de IA de larga escala.</p>
-      <p data-lang="en">Operating outside traditional academic institutions, he leverages longitudinal, naturalistic data to identify failure modes invisible to short-term methodologies.</p>
-      <p data-lang="pt">Operando fora das instituições acadêmicas tradicionais, ele utiliza dados longitudinais e naturalísticos para identificar modos de falha invisíveis para metodologias de curto prazo.</p>
+<!-- ── APPLICATIONS ───────────────────────────────────────── -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">Aplicações</div>
+    <h2>Onde isso entra de verdade</h2>
+    <p>Qualquer decisão que dependa de saber o que aconteceu num território.</p>
+    <div class="apps fade-in">
+      <div class="app-card">
+        <div class="app-icon">🔍</div>
+        <h3>Due Diligence ESG</h3>
+        <p>Cruza o que a empresa declara com o que o satélite registrou. Inconsistência vira evidência auditável.</p>
+        <span class="app-tag">AUDITORIA</span>
+      </div>
+      <div class="app-card">
+        <div class="app-icon">📄</div>
+        <h3>Relatório ESG (IFRS S1/S2)</h3>
+        <p>Materialidade baseada em evidência física, não em questionário. Eleva o nível da entrega para o cliente.</p>
+        <span class="app-tag">COMPLIANCE</span>
+      </div>
+      <div class="app-card">
+        <div class="app-icon">💰</div>
+        <h3>Investimento e M&A</h3>
+        <p>Filtro de risco territorial antes do capital entrar. O que o terreno mostra que o balanço não diz.</p>
+        <span class="app-tag">RISCO</span>
+      </div>
+      <div class="app-card">
+        <div class="app-icon">🌱</div>
+        <h3>Crédito de Carbono</h3>
+        <p>Validação de adicionalidade com base temporal. O satélite mostra quando a mudança ocorreu de verdade.</p>
+        <span class="app-tag">IMPACTO</span>
+      </div>
+      <div class="app-card">
+        <div class="app-icon">🏛️</div>
+        <h3>Fiscalização Pública</h3>
+        <p>Evidência independente para órgãos ambientais, MPs e jornalismo investigativo.</p>
+        <span class="app-tag">GOVERNANÇA</span>
+      </div>
+      <div class="app-card">
+        <div class="app-icon">🛡️</div>
+        <h3>Seguros e Precificação</h3>
+        <p>Histórico territorial para precificação de risco de ativos industriais, agrícolas e infraestrutura.</p>
+        <span class="app-tag">SEGUROS</span>
+      </div>
     </div>
-    <div class="about-meta fade-in">
-      <div class="meta-row">
-        <span class="meta-key">ORCID</span>
-        <span class="meta-val"><a href="https://orcid.org/0009-0000-6006-1516" target="_blank">0009-0000-6006-1516</a></span>
-      </div>
-      <div class="meta-row">
-        <span class="meta-key">GitHub</span>
-        <span class="meta-val"><a href="https://github.com/viniburilux" target="_blank">github.com/viniburilux</a></span>
-      </div>
-      <div class="meta-row">
-        <span class="meta-key">Location</span>
-        <span class="meta-val">Salvador, BA, Brazil</span>
-      </div>
-    </div>
   </div>
+</div>
 
-  <!-- CHI 2026 BLOCK -->
-  <div class="chi-section fade-in">
-    <div class="chi-content">
-      <h2 data-lang="en">ACM CHI 2026</h2>
-      <h2 data-lang="pt">ACM CHI 2026</h2>
-      <p data-lang="en">The ACM CHI Conference on Human Factors in Computing Systems is the premier international conference of Human-Computer Interaction (HCI). It is the place where researchers and practitioners gather from across the world to discuss the latest in interactive technology.</p>
-      <p data-lang="pt">A ACM CHI Conference on Human Factors in Computing Systems é a principal conferência internacional de Interação Humano-Computador (IHC). É o lugar onde pesquisadores e profissionais de todo o mundo se reúnem para discutir o que há de mais moderno em tecnologia interativa.</p>
-      <a href="https://chi2026.acm.org" target="_blank" class="chi-link">chi2026.acm.org</a>
-    </div>
-    <div style="text-align: center;">
-      <div style="font-size: 5rem;">📍</div>
-      <div style="font-weight: 800; font-size: 1.5rem; margin-top: 1rem;">Barcelona, Spain</div>
-      <div style="opacity: 0.8;">April 13–17, 2026</div>
-    </div>
-  </div>
-</section>
-
-<!-- SUPPORT -->
-<section id="support">
-  <div class="support-section fade-in">
-    <h2 data-lang="en">Support this Research</h2>
-    <h2 data-lang="pt">Apoie esta Pesquisa</h2>
-    <p data-lang="en">This is an independent research initiative, conducted without institutional funding. Your support helps cover travel costs to present these findings at CHI 2026 in Barcelona and continue this longitudinal study.</p>
-    <p data-lang="pt">Esta é uma iniciativa de pesquisa independente, realizada sem financiamento institucional. Seu apoio ajuda a cobrir os custos de viagem para apresentar estas descobertas na CHI 2026 em Barcelona e continuar este estudo longitudinal.</p>
-    <a href="https://www.vakinha.com.br/6004954" target="_blank" class="support-btn">
-      <span data-lang="en">Contribute via Vakinha</span>
-      <span data-lang="pt">Contribuir via Vakinha</span>
-    </a>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-label">
-    <span data-lang="en">Contact</span>
-    <span data-lang="pt">Contato</span>
-  </div>
-  <div class="contact-block">
-    <div class="contact-text">
-      <h2 data-lang="en">Let's Connect</h2>
-      <h2 data-lang="pt">Vamos Conversar</h2>
-      <p data-lang="en">Open to collaborations, partnerships, and inquiries regarding dataset access.</p>
-      <p data-lang="pt">Aberto a colaborações, parcerias e consultas sobre acesso ao conjunto de dados.</p>
-    </div>
-    <div class="contact-info">
-      <div class="contact-item">
-        <span>Email</span>
-        <a href="mailto:viniburilux@gmail.com">viniburilux@gmail.com</a>
-      </div>
-      <div class="contact-item">
-        <span>WhatsApp</span>
-        <a href="tel:+5585999798762">+55 85 99979-8762</a>
-      </div>
-      <div class="contact-item">
-        <span>LinkedIn</span>
-        <a href="https://www.linkedin.com/in/vinicius-buri-46597792" target="_blank">vinicius-buri</a>
+<!-- ── CTA ────────────────────────────────────────────────── -->
+<div class="section">
+  <div class="wrap">
+    <div class="cta fade-in">
+      <h2>Quer ver aplicado<br>no seu território?</h2>
+      <p>Me passa uma operação, uma região ou um cliente.<br>Rodo a análise e te devolvo um diagnóstico de risco territorial.</p>
+      <div class="cta-contact">
+        <span class="role">CONTATO</span>
+        <span class="name">Vinicius Buri Lux</span>
+        <span class="role">LuxVerso Research Initiative</span>
+        <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+          <a href="https://wa.me/5585999798762" target="_blank" style="text-decoration: none; background: var(--accent3); color: #050a0f; padding: 12px 24px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+            WhatsApp
+          </a>
+          <a href="mailto:viniburilux@gmail.com" style="text-decoration: none; border: 1px solid var(--accent); color: var(--accent); padding: 12px 24px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+            E-mail
+          </a>
+        </div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<footer>
-  <div>© 2026 Vinícius Buri Lux</div>
-  <div>Salvador, Brazil</div>
-  <div>
-    <a href="https://www.linkedin.com/in/vinicius-buri-46597792" target="_blank" style="color: inherit; text-decoration: none;">LinkedIn</a> · 
-    <a href="https://github.com/viniburilux" target="_blank" style="color: inherit; text-decoration: none;">GitHub</a>
+<!-- ── FOOTER ─────────────────────────────────────────────── -->
+<div class="wrap">
+  <div class="footer">
+    <div class="logo">Ghost<span>Works</span></div>
+    <div>Sentinel-1 · Sentinel-2 · Google/DeepMind · Google Earth Engine</div>
+    <div>LuxVerso Research Initiative · 2026</div>
   </div>
-</footer>
+</div>
+
+<!-- Leaflet para o mapa -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
 <script>
-  function setLang(lang) {
-    document.body.className = 'lang-' + lang;
-    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-    const btn = document.getElementById('btn-' + lang);
-    if(btn) btn.classList.add('active');
-    localStorage.setItem('preferredLang', lang);
-  }
+// ── MAPA ────────────────────────────────────────────────────
+const map = L.map('map', { zoomControl: true, scrollWheelZoom: false }).setView([-13, -52], 4);
 
-  const savedLang = localStorage.getItem('preferredLang') || 'en';
-  setLang(savedLang);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '© CartoDB',
+  subdomains: 'abcd',
+  maxZoom: 19
+}).addTo(map);
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
+const hotspots = [
+  {lat:-9.913541380049876,lon:-42.164926089994786,stt:0.763},
+  {lat:-9.954234333694632,lon:-42.16233736862641,stt:0.651},
+  {lat:-7.071468832329948,lon:-62.99168494326346,stt:0.521},
+  {lat:-6.425221301609234,lon:-53.27302741856343,stt:0.454},
+  {lat:-11.156894066998506,lon:-53.42620700949254,stt:0.441},
+  {lat:-10.890123456789012,lon:-55.234567890123456,stt:0.421},
+  {lat:-6.789012345678901,lon:-51.123456789012345,stt:0.412},
+  {lat:-8.345678901234567,lon:-45.678901234567890,stt:0.398},
+  {lat:-12.456789012345678,lon:-48.901234567890123,stt:0.389},
+  {lat:-4.567890123456789,lon:-57.012345678901234,stt:0.376},
+  {lat:-13.678901234567890,lon:-50.123456789012345,stt:0.365},
+  {lat:-9.789012345678901,lon:-63.234567890123456,stt:0.358},
+  {lat:-7.890123456789012,lon:-49.345678901234567,stt:0.348},
+  {lat:-11.901234567890123,lon:-56.456789012345678,stt:0.340},
+  {lat:-5.012345678901234,lon:-60.567890123456789,stt:0.332},
+  {lat:-14.123456789012345,lon:-47.678901234567890,stt:0.325},
+  {lat:-10.234567890123456,lon:-54.789012345678901,stt:0.318},
+  {lat:-8.345678901234568,lon:-61.890123456789012,stt:0.312},
+  {lat:-6.456789012345679,lon:-44.901234567890123,stt:0.306},
+  {lat:-12.567890123456790,lon:-52.012345678901234,stt:0.301},
+  {lat:-3.678901234567891,lon:-58.123456789012345,stt:0.296},
+  {lat:-15.789012345678902,lon:-46.234567890123456,stt:0.291},
+  {lat:-9.890123456789013,lon:-65.345678901234567,stt:0.288},
+  {lat:-7.901234567890124,lon:-43.456789012345678,stt:0.283},
+  {lat:-11.012345678901235,lon:-57.567890123456789,stt:0.279},
+  {lat:-5.123456789012346,lon:-62.678901234567890,stt:0.274},
+  {lat:-13.234567890123457,lon:-48.789012345678901,stt:0.270},
+  {lat:-10.345678901234568,lon:-55.890123456789012,stt:0.265},
+  {lat:-8.456789012345679,lon:-42.901234567890123,stt:0.261},
+  {lat:-6.567890123456790,lon:-59.012345678901234,stt:0.257},
+  {lat:-14.678901234567901,lon:-50.123456789012345,stt:0.253},
+  {lat:-9.789012345678902,lon:-67.234567890123456,stt:0.249},
+  {lat:-7.890123456789013,lon:-47.345678901234567,stt:0.246},
+  {lat:-11.901234567890124,lon:-53.456789012345678,stt:0.242},
+  {lat:-5.012345678901235,lon:-61.567890123456789,stt:0.238},
+  {lat:-13.123456789012346,lon:-44.678901234567890,stt:0.235},
+  {lat:-10.234567890123457,lon:-57.789012345678901,stt:0.231},
+  {lat:-8.345678901234569,lon:-64.890123456789012,stt:0.228},
+  {lat:-6.456789012345680,lon:-41.901234567890123,stt:0.225},
+  {lat:-14.567890123456791,lon:-52.012345678901234,stt:0.221},
+  {lat:-9.678901234567902,lon:-58.123456789012345,stt:0.218},
+  {lat:-7.789012345678913,lon:-45.234567890123456,stt:0.215},
+  {lat:-11.890123456789024,lon:-55.345678901234567,stt:0.212},
+  {lat:-5.901234567890135,lon:-60.456789012345678,stt:0.209},
+  {lat:-13.012345678901246,lon:-46.567890123456789,stt:0.206},
+  {lat:-10.123456789012357,lon:-62.678901234567890,stt:0.203},
+  {lat:-8.234567890123468,lon:-43.789012345678901,stt:0.200},
+  {lat:-6.345678901234579,lon:-68.890123456789012,stt:0.197},
+  {lat:-14.456789012345690,lon:-54.901234567890123,stt:0.194},
+  {lat:-9.567890123456801,lon:-51.012345678901234,stt:0.191},
+];
 
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+hotspots.forEach(h => {
+  const color = h.stt > 0.5 ? '#ff4d4d' : h.stt > 0.35 ? '#ffaa00' : 'rgba(0,200,255,0.5)';
+  const r = h.stt > 0.5 ? 10 : h.stt > 0.35 ? 7 : 5;
+  L.circleMarker([h.lat, h.lon], {
+    radius: r, fillColor: color, color: color,
+    weight: 1, opacity: 0.8, fillOpacity: 0.7
+  }).bindPopup(`<b>STT: ${h.stt.toFixed(3)}</b><br>${h.lat.toFixed(4)}, ${h.lon.toFixed(4)}`).addTo(map);
+});
+
+// ── FADE IN ────────────────────────────────────────────────
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 </script>
 
 </body>
