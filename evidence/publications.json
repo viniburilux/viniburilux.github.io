@@ -1,0 +1,46 @@
+{
+  "updated": "2026-08-25",
+  "author": "Vinícius Buri Lux",
+  "records": [
+    {
+      "title": "The Illusion of Consensus in Human-Centered Interactive AI",
+      "event": "CHI 2026",
+      "workshop": "InterAI Workshop (3rd Edition)",
+      "type": "workshop paper",
+      "status": "Accepted",
+      "date": "2026",
+      "primary_url": "https://openreview.net/forum?id=eJtBEBmYGB",
+      "note": "Registro público no índice do LUXVERSO."
+    },
+    {
+      "title": "When Humans Become Regime Stabilizers",
+      "event": "CHI 2026",
+      "workshop": "HEAL Workshop",
+      "type": "workshop paper",
+      "status": "Accepted",
+      "date": "2026",
+      "primary_url": "https://openreview.net/forum?id=PJNqpu0fKr",
+      "note": "Registro público no índice do LUXVERSO."
+    },
+    {
+      "title": "Territorial Change Detection Under Zero-Budget Constraints",
+      "event": "IJCAI-ECAI 2026",
+      "workshop": "GlobalSouthAI Workshop",
+      "type": "workshop paper",
+      "status": "Accepted",
+      "date": "2026",
+      "primary_url": "https://openreview.net/forum?id=d89iIi3Z2D",
+      "note": "Registro público no índice do LUXVERSO. Verificar se o aceite recente informado pelo autor é este registro ou um novo trabalho."
+    },
+    {
+      "title": null,
+      "event": "ICML",
+      "workshop": null,
+      "type": "workshop paper",
+      "status": "Conditionally Accepted",
+      "date": null,
+      "primary_url": null,
+      "note": "NEEDS CONFIRMATION: título, workshop, data e fonte primária não confirmados nos materiais públicos consultados."
+    }
+  ]
+}
