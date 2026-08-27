@@ -415,7 +415,7 @@ export default function LyrioESGPlatform() {
     return (
       <div
         className="min-h-screen w-full flex flex-col items-center justify-center gap-8 px-6 text-center"
-        style={{ backgroundColor: C.navy, color: "#F2EFE6", fontFamily: "'IBM Plex Sans', sans-serif" }}
+        style={{ backgroundColor: "#FFFFFF", color: C.navy, fontFamily: "'IBM Plex Sans', sans-serif" }}
       >
         <style>{`@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');`}</style>
         <img src={LOGO_FULL} alt="Lyrio ESG" className="w-64 sm:w-80 h-auto object-contain" />
@@ -423,7 +423,7 @@ export default function LyrioESGPlatform() {
           <h1 className="text-lg sm:text-xl font-medium" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
             Plataforma de Inteligência ESG
           </h1>
-          <p className="text-sm" style={{ color: "#8FA6C9" }}>
+          <p className="text-sm" style={{ color: "#52647A" }}>
             Uma arquitetura única, replicável para qualquer cliente — do diagnóstico ao score ESG, com o mesmo padrão de qualidade Lyrio.
           </p>
         </div>
