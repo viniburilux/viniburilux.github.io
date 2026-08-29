@@ -1,0 +1,75 @@
+{
+  "brand": "LUXVERSO",
+  "subtitle": "Research & Tech",
+  "version": "1.0",
+  "groups": [
+    {
+      "id": "ecosystem",
+      "label": "Ecossistema",
+      "items": [
+        {
+          "id": "luxverso",
+          "name": "LuxVerso",
+          "category": "visão",
+          "description": "O campo que conecta pesquisa, infraestrutura, projetos e evidências.",
+          "url": "https://luxverso.com/luxverso/"
+        },
+        {
+          "id": "projects",
+          "name": "Projetos",
+          "category": "portfólio investigativo",
+          "description": "Onde perguntas ganham forma de sistema, protótipo e aplicação.",
+          "url": "https://luxverso.com/projects/"
+        },
+        {
+          "id": "evidence",
+          "name": "Evidências",
+          "category": "rastro público",
+          "description": "Publicações, artefatos, resultados, limites e estado epistemológico.",
+          "url": "https://luxverso.com/evidence/"
+        },
+        {
+          "id": "infrastructure",
+          "name": "Infraestrutura",
+          "category": "camada técnica",
+          "description": "TraceFoundry, memória, proveniência e sistemas de investigação.",
+          "url": "https://luxverso.com/infrastructure/"
+        }
+      ]
+    },
+    {
+      "id": "applications",
+      "label": "Aplicações e verticais",
+      "items": [
+        {
+          "id": "biotech",
+          "name": "Inteligência Biotecnológica",
+          "category": "aplicação",
+          "description": "Literatura, patentes, organismos e instituições em uma rede pública de evidências.",
+          "url": "https://luxverso.com/inteligencia-biotecnologica/"
+        },
+        {
+          "id": "copiloto",
+          "name": "Copiloto",
+          "category": "interface",
+          "description": "Uma interface para formular perguntas e explorar investigações em andamento.",
+          "url": "https://luxverso.com/inteligencia-biotecnologica/copiloto/"
+        },
+        {
+          "id": "luxagro",
+          "name": "LuxAgro",
+          "category": "produto · agro",
+          "description": "Investigação para problemas complexos do Agro.",
+          "url": "https://luxverso.com/inteligencia-biotecnologica/LuxAgro/"
+        },
+        {
+          "id": "docs",
+          "name": "Documentos",
+          "category": "conhecimento",
+          "description": "Ensaios, princípios, métodos e documentação pública.",
+          "url": "https://luxverso.com/docs/"
+        }
+      ]
+    }
+  ]
+}
