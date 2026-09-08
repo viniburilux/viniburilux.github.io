@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="LUXVERSO — ecossistema de pesquisa, construção e inteligência aplicada a problemas complexos.">
-<meta property="og:title" content="LUXVERSO — Research & Build">
-<meta property="og:description" content="Um ecossistema vivo de pesquisa, infraestrutura, projetos e evidências.">
+<meta name="description" content="LUXVERSO — transformamos problemas complexos em sistemas inteligentes. IA, dados, investigação científica e construção rápida aplicados a território, biotecnologia e novas fronteiras tecnológicas.">
+<meta property="og:title" content="LUXVERSO — Da complexidade à tecnologia aplicável">
+<meta property="og:description" content="Uma capacidade tecnológica central. Múltiplas aplicações reais.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://luxverso.com/">
-<title>LUXVERSO — Research &amp; Build</title>
+<title>LUXVERSO — Da complexidade à tecnologia aplicável</title>
 <style>
 :root{--ink:#090a09;--ink-2:#111410;--panel:#151a16;--line:#293129;--fg:#f1f1e8;--muted:#a9b0a5;--dimmer:#687066;--lime:#d6f23d;--amber:#f0b429;--coral:#ff8067;--blue:#8bd9ff;--max:1180px}
 *{box-sizing:border-box}
@@ -33,9 +33,9 @@ a{color:inherit}
 .eyebrow{display:flex;align-items:center;gap:11px;color:var(--lime);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
 .eyebrow:before{content:"";width:25px;height:1px;background:var(--lime)}
 h1,h2,h3,p{margin:0}
-h1{max-width:900px;margin-top:20px;font-size:clamp(3.1rem,8vw,8rem);line-height:.93;letter-spacing:-.075em;font-weight:750}
+h1{max-width:900px;margin-top:20px;font-size:clamp(3.1rem,8vw,7.4rem);line-height:.95;letter-spacing:-.06em;font-weight:750}
 h1 em{font-style:normal;color:var(--lime)}
-.hero-lede{max-width:700px;margin-top:32px;color:var(--muted);font-size:clamp(1.05rem,1.8vw,1.35rem);line-height:1.55}
+.hero-lede{max-width:680px;margin-top:32px;color:var(--muted);font-size:clamp(1.05rem,1.8vw,1.35rem);line-height:1.55}
 .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
 .btn{display:inline-flex;align-items:center;gap:10px;padding:13px 17px;border:1px solid var(--line);border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;transition:transform .2s,background .2s,border-color .2s}
 .btn:hover{transform:translateY(-2px);border-color:var(--lime)}
@@ -69,11 +69,16 @@ h1 em{font-style:normal;color:var(--lime)}
 .card-action-primary:hover{background:transparent;color:var(--lime)}
 .card-action-muted{color:var(--dimmer);cursor:default}
 .card-foot .type{color:var(--dimmer);font-size:10px;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+.app-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:55px}
 .flow-band{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:55px}
 .flow-step{min-height:140px;padding:22px;background:var(--ink);display:flex;flex-direction:column;justify-content:space-between}
 .flow-step .n{color:var(--amber);font-size:11px}
 .flow-step b{font-size:18px;letter-spacing:-.03em}
 .flow-step span:last-child{color:var(--dimmer);font-size:11px;line-height:1.4}
+.infra-flow{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:50px}
+.infra-step{min-height:110px;padding:18px 16px;background:var(--ink);display:flex;flex-direction:column;justify-content:space-between}
+.infra-step .n{color:var(--amber);font-size:10px}
+.infra-step b{font-size:14.5px;letter-spacing:-.02em;line-height:1.2}
 .principles{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:55px}
 .principle{padding-top:20px;border-top:1px solid var(--line)}
 .principle .symbol{color:var(--coral);font-size:20px}
@@ -95,47 +100,25 @@ footer{display:flex;justify-content:space-between;gap:30px;padding:24px 34px 44p
 footer a{text-decoration:none;color:var(--muted)}
 footer a:hover{color:var(--lime)}
 
-/* ============================================================
-   NEW — ESSÊNCIA (o que é)
-   ============================================================ */
-.negations{list-style:none;margin-top:12px;padding:0;display:flex;flex-direction:column;gap:7px}
-.negations li{position:relative;padding-left:16px;color:var(--muted);font-size:14px;line-height:1.5}
-.negations li:before{content:"—";position:absolute;left:0;color:var(--dimmer)}
-.flow-chip{margin-top:50px;display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:18px 22px;border:1px solid var(--line);background:var(--panel)}
-.flow-chip .fc-step{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;color:var(--fg)}
-.flow-chip .fc-arrow{color:var(--lime);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-.flow-note{margin-top:16px;max-width:640px;color:var(--muted);font-size:14px;line-height:1.65}
+/* thesis section */
+.thesis-block{margin-top:50px;max-width:840px}
+.thesis-block p{color:var(--muted);font-size:16px;line-height:1.75}
+.thesis-block p+p{margin-top:20px}
+.thesis-block strong{color:var(--fg)}
+.thesis-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px}
+.thesis-tags span{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--lime);border:1px solid rgba(214,242,61,.35);padding:7px 12px}
 
-/* ============================================================
-   NEW — ARQUITETURA (6 camadas)
-   ============================================================ */
-.arch{margin-top:55px}
-.arch-tag{display:block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime)}
-.arch-engine{border:1px solid var(--lime);background:linear-gradient(135deg,#1b2413,#0d0f0a);padding:28px 30px}
-.arch-engine h3{margin-top:10px;font-size:22px;letter-spacing:-.02em}
-.arch-engine p{margin-top:10px;max-width:760px;color:var(--muted);font-size:14px;line-height:1.65}
-.arch-connector{width:1px;height:26px;background:var(--line);margin-left:30px}
-.arch-infra{border-left:3px solid var(--lime);background:var(--panel);padding:20px 26px}
-.arch-infra h3{margin-top:8px;font-size:18px;letter-spacing:-.02em}
-.arch-infra p{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.6}
-.arch-infra a{color:var(--lime);text-decoration:none;border-bottom:1px solid rgba(214,242,61,.4)}
-.arch-infra a:hover{border-color:var(--lime)}
-.arch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.arch-card{background:var(--ink-2);padding:22px 20px;min-height:150px}
-.arch-card h3{margin-top:8px;font-size:16px;letter-spacing:-.02em}
-.arch-card p{margin-top:8px;color:var(--muted);font-size:12.5px;line-height:1.55}
+/* deep-dive (demoted architecture) */
+.deepdive{margin-top:50px;display:flex;flex-wrap:wrap;gap:1px;background:var(--line);border:1px solid var(--line)}
+.deepdive-layer{flex:1 1 150px;background:var(--ink-2);padding:16px 18px}
+.deepdive-layer b{display:block;font-size:13px;color:var(--fg)}
+.deepdive-layer span{display:block;margin-top:5px;font-size:11.5px;color:var(--dimmer);line-height:1.4}
+.deepdive-link{margin-top:22px;display:flex;align-items:center;gap:10px}
+.deepdive-link a{color:var(--lime);text-decoration:none;font-size:13px;font-weight:700}
+.deepdive-link a:hover{text-decoration:underline}
+.deepdive-link span{color:var(--dimmer);font-size:12px}
 
-/* ============================================================
-   NEW — MANIFESTAÇÕES (catálogo completo link)
-   ============================================================ */
-.catalog-link{margin-top:30px;display:flex;align-items:center;gap:10px}
-.catalog-link a{color:var(--lime);text-decoration:none;font-size:13px;font-weight:700}
-.catalog-link a:hover{text-decoration:underline}
-.catalog-link span{color:var(--dimmer);font-size:12px}
-
-/* ============================================================
-   NEW — PERGUNTAS (accordion Q&A)
-   ============================================================ */
+/* Q&A accordion */
 .qa-list{margin-top:50px;max-width:840px}
 .qa-item{border-top:1px solid var(--line);padding:19px 0}
 .qa-item:last-child{border-bottom:1px solid var(--line)}
@@ -150,12 +133,12 @@ footer a:hover{color:var(--lime)}
 .hero-grid,.section-head{grid-template-columns:1fr;gap:35px}
 .hero-aside{border-left:0;border-top:1px solid var(--line);padding:20px 0 0;max-width:600px}
 .hub-grid{grid-template-columns:repeat(2,1fr)}
+.app-grid{grid-template-columns:repeat(2,1fr)}
 .flow-band{grid-template-columns:repeat(3,1fr)}
+.infra-flow{grid-template-columns:repeat(4,1fr)}
 .entry-grid{grid-template-columns:repeat(2,1fr)}
 .closing-inner{display:block}
 .closing-copy{margin-top:28px}
-.arch-grid{grid-template-columns:repeat(2,1fr)}
-.arch-connector{display:none}
 }
 @media(max-width:620px){
 .wrap{padding:0 20px}
@@ -167,13 +150,13 @@ footer a:hover{color:var(--lime)}
 .micro-stats{grid-template-columns:1fr}
 .section{padding:72px 0}
 .hub-grid,.principles,.entry-grid{grid-template-columns:1fr}
+.app-grid{grid-template-columns:1fr}
 .flow-band{grid-template-columns:repeat(2,1fr)}
 .flow-step{min-height:120px}
+.infra-flow{grid-template-columns:repeat(2,1fr)}
 .closing{padding:85px 0 75px}
 footer{display:block;padding-left:20px;padding-right:20px}
 footer div+div{margin-top:12px}
-.arch-grid{grid-template-columns:1fr}
-.arch-infra{border-left:none;border-top:3px solid var(--lime)}
 }
 </style>
 <script src="https://luxverso.com/_nav.js" defer></script>
@@ -184,7 +167,7 @@ footer div+div{margin-top:12px}
     <span class="mark"></span><strong>LUXVERSO</strong><span>Research &amp; Build</span>
   </a>
   <nav class="nav" aria-label="Navegação principal">
-    <a href="#arquitetura">Arquitetura</a><a href="#manifestacoes">Projetos</a><a href="#perguntas">Perguntas</a><a class="nav-cta" href="mailto:viniburilux@gmail.com">Falar com Vini ↗</a>
+    <a href="#capacidades">Capacidades</a><a href="#aplicacoes">Aplicações</a><a href="#perguntas">Perguntas</a><a class="nav-cta" href="mailto:viniburilux@gmail.com">Falar com Vini ↗</a>
   </nav>
 </header>
 
@@ -192,132 +175,126 @@ footer div+div{margin-top:12px}
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">Um ecossistema vivo de inteligência</div>
-      <h1>O domínio muda.<br><em>O modo de investigar permanece.</em></h1>
-      <p class="hero-lede">O LUXVERSO conecta capacidade central, infraestrutura, produtos, investigações e evidências em uma única arquitetura de investigação e construção — não uma coleção de projetos soltos.</p>
-      <div class="actions"><a class="btn btn-primary" href="#essencia">Explorar o ecossistema ↓</a><a class="btn btn-secondary" href="projects/">Ver projetos ↗</a></div>
-      <div class="micro-stats"><div class="micro-stat"><b>Research</b><span>perguntas que importam</span></div><div class="micro-stat"><b>Build</b><span>infraestrutura própria</span></div><div class="micro-stat"><b>Evidence</b><span>rastros públicos</span></div></div>
+      <div class="eyebrow">IA · Dados · Ciência · Software</div>
+      <h1>Transformamos problemas complexos em <em>sistemas inteligentes.</em></h1>
+      <p class="hero-lede">O LUXVERSO combina inteligência artificial, dados, investigação científica e construção rápida para explorar problemas complexos e desenvolver tecnologias, aplicações e infraestruturas.</p>
+      <div class="actions"><a class="btn btn-primary" href="#capacidades">Conheça nossas capacidades ↓</a><a class="btn btn-secondary" href="#aplicacoes">Ver aplicações ↗</a></div>
+      <div class="micro-stats"><div class="micro-stat"><b>Investigar</b><span>padrões e oportunidades</span></div><div class="micro-stat"><b>Representar</b><span>estruturas analisáveis</span></div><div class="micro-stat"><b>Construir</b><span>sistemas aplicáveis</span></div></div>
     </div>
-    <aside class="hero-aside"><p><strong>Uma arquitetura, não um portfólio.</strong> A mesma capacidade central atravessa domínios diferentes através de camadas específicas — engine, infraestrutura, produtos, investigações, demonstrações e evidências.</p><p style="margin-top:18px" class="mono">Vinícius Buri Lux<br>Salvador, Brasil</p></aside>
+    <aside class="hero-aside"><p><strong>Uma capacidade central. Múltiplas aplicações.</strong> Da descoberta científica à inteligência territorial e à automação de processos — diferentes soluções emergem da mesma tecnologia.</p><p style="margin-top:18px" class="mono">Vinícius Buri Lux<br>Salvador, Brasil</p></aside>
   </div>
 </section>
 
-<section class="section" id="essencia">
+<section class="section" id="fazemos">
   <div class="wrap">
-    <div class="section-head">
-      <div><div class="eyebrow">O que é</div><h2>Não é um portfólio.<br><em>É uma arquitetura.</em></h2></div>
-      <div>
-        <p class="section-lede"><strong>O LuxVerso é um ecossistema de descoberta humano-IA que transforma exploração em capacidade, infraestrutura, produtos e evidências.</strong></p>
-        <p class="section-lede" style="margin-top:18px">Na prática, isso significa que ele não é:</p>
-        <ul class="negations">
-          <li>um portfólio de projetos;</li>
-          <li>uma software house;</li>
-          <li>um laboratório acadêmico tradicional;</li>
-          <li>uma lista de startups independentes.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="flow-chip">
-      <span class="fc-step">Research</span><span class="fc-arrow">→</span><span class="fc-step">Representation</span><span class="fc-arrow">→</span><span class="fc-step">Build</span><span class="fc-arrow">→</span><span class="fc-step">Test</span><span class="fc-arrow">→</span><span class="fc-step">Evidence</span>
-    </div>
-    <p class="flow-note">Problemas diferentes exigem dados, métodos e produtos diferentes. Mas o processo de investigar, representar, construir, testar e aprender pode ser reutilizado entre eles — é isso que conecta domínios como território, biotecnologia e sistemas neurais sob a mesma arquitetura.</p>
-  </div>
-</section>
-
-<section class="section" id="arquitetura">
-  <div class="wrap">
-    <div class="section-head"><div><div class="eyebrow">Arquitetura do ecossistema</div><h2>Uma capacidade.<br><em>Seis camadas.</em></h2></div><p class="section-lede">A capacidade central atravessa tudo. As camadas abaixo mostram como ela se materializa — do motor de investigação até o que fica registrado como evidência pública.</p></div>
-    <div class="arch">
-      <div class="arch-engine">
-        <span class="arch-tag">Camada 0 · Core</span>
-        <h3>Research-to-Build Engine</h3>
-        <p>Investigação multiagente, descoberta de entidades, proveniência, análise relacional, memória e geração de hipóteses — o modo de operar que atravessa todos os domínios. Não é um produto isolado: é a capacidade central de investigação e construção.</p>
-      </div>
-      <div class="arch-connector"></div>
-      <div class="arch-infra">
-        <span class="arch-tag">Camada 1 · Infraestrutura</span>
-        <h3>Sistemas e pipelines reutilizáveis</h3>
-        <p>Componentes, bases e mecanismos que permitem que diferentes investigações e aplicações existam ao mesmo tempo. Exemplo: <a href="https://github.com/viniburilux/TraceFoundry" target="_blank" rel="noopener">TraceFoundry ↗</a></p>
-      </div>
-      <div class="arch-connector"></div>
-      <div class="arch-grid">
-        <div class="arch-card"><span class="arch-tag">Camada 2 · Produtos</span><h3>Aplicações verticais</h3><p>Resolvem problemas concretos em domínios específicos, com usuário e caso de uso próprios.</p></div>
-        <div class="arch-card"><span class="arch-tag">Camada 3 · Investigações</span><h3>Territórios em exploração</h3><p>Linhas de pesquisa aprofundadas que ainda não têm necessariamente forma de produto.</p></div>
-        <div class="arch-card"><span class="arch-tag">Camada 4 · Demonstrações</span><h3>Provas de possibilidade</h3><p>Protótipos e artefatos que mostram que algo pode ser construído — e funciona.</p></div>
-        <div class="arch-card"><span class="arch-tag">Camada 5 · Evidências</span><h3>O que fica registrado</h3><p>Publicações, datasets, resultados, limites e resultados negativos, quando relevantes.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="manifestacoes">
-  <div class="wrap">
-    <div class="section-head"><div><div class="eyebrow">Manifestações concretas</div><h2>Exemplos,<br><em>não o inventário completo.</em></h2></div><p class="section-lede">Cada camada da arquitetura já tem pelo menos uma manifestação pública. Os cards abaixo são exemplos representativos — o catálogo completo, com todos os projetos, experimentos e demonstrações, vive na página de projetos.</p></div>
+    <div class="section-head"><div><div class="eyebrow">O que fazemos</div><h2>Da pergunta<br><em>à tecnologia.</em></h2></div><p class="section-lede">Três movimentos que se repetem em qualquer domínio que investigamos — território, biotecnologia, oportunidades, sistemas biológicos.</p></div>
     <div class="hub-grid">
-      <article class="hub-card"><span class="card-kicker">Infraestrutura</span><h3 class="card-title">TraceFoundry</h3><p class="card-body">Discovery, evidência, proveniência e seleção explicável para investigações que precisam deixar rastros defensáveis.</p><div class="card-foot"><div class="card-actions"><a class="card-action card-action-primary" href="https://github.com/viniburilux/TraceFoundry" target="_blank" rel="noopener" aria-label="Ver a infraestrutura TraceFoundry">Ver repositório ↗</a></div><span class="type">sustenta múltiplas frentes</span></div></article>
-      <article class="hub-card"><span class="card-kicker">Produto · Aplicação vertical</span><h3 class="card-title">GhostWorks</h3><p class="card-body">Inteligência territorial construída a partir de sinais geoespaciais, embeddings de satélite e mudanças observáveis no território.</p><div class="card-foot"><div class="card-actions"><a class="card-action card-action-primary" href="https://luxverso.com/ghostworks/" aria-label="Abrir a experiência GhostWorks">Abrir experiência ↗</a><a class="card-action" href="https://github.com/viniburilux/ghostworks" target="_blank" rel="noopener" aria-label="Ver o repositório GhostWorks">Ver repositório ↗</a></div><span class="type">território</span></div></article>
-      <article class="hub-card"><span class="card-kicker">Produto · Aplicação vertical</span><h3 class="card-title">Inteligência Biotecnológica</h3><p class="card-body">Literatura, patentes, organismos, processos e instituições transformados em uma camada pública de investigação, relações e evidências.</p><div class="card-foot"><div class="card-actions"><a class="card-action card-action-primary" href="https://luxverso.com/inteligencia-biotecnologica/" aria-label="Abrir a experiência Inteligência Biotecnológica">Abrir experiência ↗</a><a class="card-action" href="https://github.com/viniburilux/inteligencia-biotecnologica" target="_blank" rel="noopener" aria-label="Ver o repositório Inteligência Biotecnológica">Ver repositório ↗</a></div><span class="type">biotecnologia</span></div></article>
-      <article class="hub-card"><span class="card-kicker">Produto · Aplicação vertical</span><h3 class="card-title">Lux-Radar</h3><p class="card-body">Uma superfície de opportunity intelligence para transformar sinais dispersos em oportunidades que podem ser investigadas.</p><div class="card-foot"><div class="card-actions"><a class="card-action card-action-primary" href="https://luxverso.com/Lux-Radar/" aria-label="Abrir a experiência Lux-Radar">Abrir experiência ↗</a><a class="card-action" href="https://github.com/viniburilux/Lux-Radar" target="_blank" rel="noopener" aria-label="Ver o repositório Lux-Radar">Ver repositório ↗</a></div><span class="type">oportunidades</span></div></article>
-      <article class="hub-card"><span class="card-kicker">Investigação</span><h3 class="card-title">Organoid Intelligence</h3><p class="card-body">Uma investigação sobre aprendizagem, previsão, memória e inteligência em sistemas neurais biológicos.</p><div class="card-foot"><div class="card-actions"><a class="card-action card-action-primary" href="https://luxverso.com/organoid-intelligence/" aria-label="Abrir a experiência Organoid Intelligence">Abrir experiência ↗</a><a class="card-action" href="https://github.com/viniburilux/organoid-intelligence" target="_blank" rel="noopener" aria-label="Ver o repositório Organoid Intelligence">Ver repositório ↗</a></div><span class="type">ainda sem forma de produto</span></div></article>
-      <article class="hub-card"><span class="card-kicker">Demonstração</span><h3 class="card-title">Agronutri Demo</h3><p class="card-body">Uma demonstração pública de exploração e apresentação de dados no ecossistema LUXVERSO.</p><div class="card-foot"><div class="card-actions"><a class="card-action card-action-primary" href="https://luxverso.com/agronutri-demo/" aria-label="Abrir a demonstração Agronutri">Abrir experiência ↗</a><a class="card-action" href="https://github.com/viniburilux/agronutri-demo" target="_blank" rel="noopener" aria-label="Ver o repositório Agronutri Demo">Ver repositório ↗</a></div><span class="type">prova de possibilidade</span></div></article>
+      <article class="hub-card"><span class="card-kicker">01</span><h3 class="card-title">Investigar</h3><p class="card-body">Encontramos padrões, relações e oportunidades em sistemas complexos — a partir de dados, literatura, documentos e sinais dispersos.</p></article>
+      <article class="hub-card"><span class="card-kicker">02</span><h3 class="card-title">Representar</h3><p class="card-body">Transformamos informação fragmentada em estruturas que podem ser analisadas, testadas e utilizadas — modelos, grafos, espaços vetoriais.</p></article>
+      <article class="hub-card"><span class="card-kicker">03</span><h3 class="card-title">Construir</h3><p class="card-body">Convertimos descobertas em sistemas, ferramentas e aplicações concretas, prontas para operar sobre o problema real.</p></article>
     </div>
-    <p class="catalog-link"><a href="projects/">Ver o catálogo completo de projetos, demonstrações e experimentos públicos ↗</a> <span>— inclui Manguezais Brasil, Monitor de Gastos PNCP, LuxSense e outros.</span></p>
   </div>
 </section>
 
-<section class="section" id="modo">
+<section class="section" id="capacidades">
   <div class="wrap">
-    <div class="section-head"><div><div class="eyebrow">Research &amp; Build</div><h2>Uma pergunta vira <em>um próximo sistema.</em></h2></div><p class="section-lede">O ciclo não começa pela ferramenta da moda. Começa pela representação do problema: quais dados importam, que estrutura existe e que tipo de sistema consegue operar aquilo.</p></div>
-    <div class="flow-band"><div class="flow-step"><span class="n mono">01</span><b>Entender</b><span>formular a pergunta certa</span></div><div class="flow-step"><span class="n mono">02</span><b>Representar</b><span>dar estrutura ao problema</span></div><div class="flow-step"><span class="n mono">03</span><b>Projetar</b><span>encontrar o caminho possível</span></div><div class="flow-step"><span class="n mono">04</span><b>Construir</b><span>fazer a infraestrutura existir</span></div><div class="flow-step"><span class="n mono">05</span><b>Testar</b><span>medir antes de ampliar</span></div><div class="flow-step"><span class="n mono">06</span><b>Aplicar</b><span>transformar evidência em próximo movimento</span></div></div>
-    <div class="principles"><article class="principle"><div class="symbol">↗</div><h3>Falsificar antes de aceitar.</h3><p>Resultados negativos, contradições e limites não ficam escondidos. Eles tornam a próxima pergunta mais precisa.</p></article><article class="principle"><div class="symbol">⌁</div><h3>Velocidade é iteração.</h3><p>Uma ideia pode virar representação, protótipo, experimento e artefato enquanto ainda há espaço para mudar de direção.</p></article><article class="principle"><div class="symbol">□</div><h3>Rastro antes de promessa.</h3><p>Cada frente preserva o que foi observado, inferido, hipotetizado ou ainda não pode ser afirmado.</p></article></div>
+    <div class="section-head"><div><div class="eyebrow">Capacidades</div><h2>Capacidades que atravessam<br><em>diferentes domínios.</em></h2></div><p class="section-lede">Não é uma pilha de tecnologias da moda. São as capacidades que sustentam cada aplicação do LuxVerso, não importa o domínio.</p></div>
+    <div class="hub-grid">
+      <article class="hub-card"><span class="card-kicker">Inteligência Artificial Aplicada</span><h3 class="card-title">IA para investigar e decidir</h3><p class="card-body">Modelos de linguagem, sistemas multiagente e aprendizado de máquina aplicados à investigação, análise e automação de descobertas.</p></article>
+      <article class="hub-card"><span class="card-kicker">Sistemas de Investigação</span><h3 class="card-title">Descoberta em escala</h3><p class="card-body">Arquiteturas para descobrir, adquirir e organizar informação dispersa em fontes heterogêneas — de literatura científica a dados geoespaciais e patentes.</p></article>
+      <article class="hub-card"><span class="card-kicker">Inteligência Relacional</span><h3 class="card-title">O que conecta os dados</h3><p class="card-body">Mapeamento de entidades, relações e evidências para revelar estruturas que não estão visíveis nos dados brutos.</p></article>
+      <article class="hub-card"><span class="card-kicker">Representação &amp; Machine Learning</span><h3 class="card-title">Do fenômeno ao modelo</h3><p class="card-body">Territórios, organismos e processos viram embeddings, espaços vetoriais e modelos — abrindo espaço para similaridade, clustering e classificação.</p></article>
+      <article class="hub-card"><span class="card-kicker">Experimentação Rápida</span><h3 class="card-title">Hipótese vira protótipo</h3><p class="card-body">Ciclos curtos entre uma pergunta e um pipeline testável — protótipos que verificam se uma ideia se sustenta antes de escalar.</p></article>
+      <article class="hub-card"><span class="card-kicker">Infraestrutura de Evidência</span><h3 class="card-title">O que fica preservado</h3><p class="card-body">Cada descoberta preserva sua origem, suas decisões e seus limites — para que o que foi aprendido possa ser verificado depois.</p></article>
+    </div>
   </div>
 </section>
 
-<section class="section" id="entrada">
+<section class="section" id="aplicacoes">
   <div class="wrap">
-    <div class="section-head"><div><div class="eyebrow">Escolha uma porta</div><h2>Entre pelo lugar que <em>faz sentido para você.</em></h2></div><p class="section-lede">O hub é uma porta, não um labirinto. A partir daqui você pode aprofundar na visão, navegar pelos projetos, seguir os rastros de evidência ou entrar em contato.</p></div>
-    <div class="entry-grid"><a class="entry" href="luxverso/"><b>Aprofundar na visão</b><p>A leitura completa da arquitetura e do raciocínio por trás dela.</p><span>ABRIR ECOSSISTEMA ↗</span></a><a class="entry" href="projects/"><b>Ver os projetos</b><p>O catálogo completo — produtos, investigações e demonstrações.</p><span>EXPLORAR PROJETOS ↗</span></a><a class="entry" href="evidence/"><b>Seguir as evidências</b><p>Publicações, aceites, artefatos, resultados e limites.</p><span>ABRIR EVIDÊNCIAS ↗</span></a><a class="entry" href="https://github.com/viniburilux" target="_blank" rel="noopener"><b>Conhecer o trabalho</b><p>Repositórios, documentação e o movimento público de construção.</p><span>VER GITHUB ↗</span></a></div>
+    <div class="section-head"><div><div class="eyebrow">Aplicações</div><h2>Uma capacidade.<br><em>Diferentes problemas.</em></h2></div><p class="section-lede">GhostWorks, Inteligência Biotecnológica, Lux Radar e Organoid Intelligence não são negócios desconectados — são aplicações diferentes da mesma capacidade tecnológica.</p></div>
+    <div class="app-grid">
+      <article class="hub-card featured"><span class="card-kicker">Território</span><h3 class="card-title">GhostWorks</h3><p class="card-body">Inteligência geoespacial para detectar, explorar e interpretar transformações territoriais a partir de embeddings de satélite e séries temporais.</p><div class="card-foot"><div class="card-actions"><a class="card-action card-action-primary" href="https://luxverso.com/ghostworks/" aria-label="Abrir a experiência GhostWorks">Abrir experiência ↗</a><a class="card-action" href="https://github.com/viniburilux/ghostworks" target="_blank" rel="noopener" aria-label="Ver o repositório GhostWorks">Repositório ↗</a></div></div></article>
+      <article class="hub-card"><span class="card-kicker">Biotecnologia</span><h3 class="card-title">Inteligência Biotecnológica</h3><p class="card-body">Descoberta e exploração tecnológica em biotecnologia — literatura, patentes, organismos, processos e instituições.</p><div class="card-foot"><div class="card-actions"><a class="card-action card-action-primary" href="https://luxverso.com/inteligencia-biotecnologica/" aria-label="Abrir a experiência Inteligência Biotecnológica">Abrir experiência ↗</a><a class="card-action" href="https://github.com/viniburilux/inteligencia-biotecnologica" target="_blank" rel="noopener" aria-label="Ver o repositório Inteligência Biotecnológica">Repositório ↗</a></div></div></article>
+      <article class="hub-card"><span class="card-kicker">Oportunidades</span><h3 class="card-title">Lux-Radar</h3><p class="card-body">Inteligência de oportunidades e ecossistemas — sinais dispersos transformados em oportunidades investigáveis.</p><div class="card-foot"><div class="card-actions"><a class="card-action card-action-primary" href="https://luxverso.com/Lux-Radar/" aria-label="Abrir a experiência Lux-Radar">Abrir experiência ↗</a><a class="card-action" href="https://github.com/viniburilux/Lux-Radar" target="_blank" rel="noopener" aria-label="Ver o repositório Lux-Radar">Repositório ↗</a></div></div></article>
+      <article class="hub-card"><span class="card-kicker">Sistemas biológicos</span><h3 class="card-title">Organoid Intelligence</h3><p class="card-body">Investigação computacional sobre memória, aprendizagem e inteligência em sistemas neurais biológicos.</p><div class="card-foot"><div class="card-actions"><a class="card-action card-action-primary" href="https://luxverso.com/organoid-intelligence/" aria-label="Abrir a experiência Organoid Intelligence">Abrir experiência ↗</a><a class="card-action" href="https://github.com/viniburilux/organoid-intelligence" target="_blank" rel="noopener" aria-label="Ver o repositório Organoid Intelligence">Repositório ↗</a></div></div></article>
+    </div>
+    <p class="deepdive-link"><a href="projects/">Ver mais aplicações e experimentos ↗</a></p>
+  </div>
+</section>
+
+<section class="section" id="infraestrutura">
+  <div class="wrap">
+    <div class="section-head"><div><div class="eyebrow">Como conseguimos fazer isso</div><h2>Por trás das aplicações,<br><em>uma máquina de investigação.</em></h2></div><p class="section-lede">Componentes desenvolvidos em diferentes investigações permitem adquirir informação, organizar conhecimento, preservar contexto, explorar relações, registrar evidências e transformar descobertas em próximos sistemas. TraceFoundry, LuxMemory e outros componentes sustentam esse fluxo.</p></div>
+    <div class="infra-flow">
+      <div class="infra-step"><span class="n mono">01</span><b>Discovery</b></div>
+      <div class="infra-step"><span class="n mono">02</span><b>Data &amp; Knowledge</b></div>
+      <div class="infra-step"><span class="n mono">03</span><b>Representation</b></div>
+      <div class="infra-step"><span class="n mono">04</span><b>Analysis</b></div>
+      <div class="infra-step"><span class="n mono">05</span><b>Hypothesis</b></div>
+      <div class="infra-step"><span class="n mono">06</span><b>Build</b></div>
+      <div class="infra-step"><span class="n mono">07</span><b>Test</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tese">
+  <div class="wrap">
+    <div class="section-head"><div><div class="eyebrow">Por que isso importa</div><h2>A tecnologia está reduzindo<br>o custo de <em>explorar o desconhecido.</em></h2></div></div>
+    <div class="thesis-block">
+      <p>IA, dados abertos, modelos fundacionais e infraestrutura computacional estão reduzindo barreiras históricas para investigação e desenvolvimento tecnológico. Ferramentas que antes exigiam equipes especializadas e longos ciclos de desenvolvimento estão se tornando acessíveis.</p>
+      <p><strong>O diferencial deixa de ser apenas possuir infraestrutura.</strong> Passa a ser saber investigar, representar, conectar, testar e construir — nessa ordem, em ciclos curtos, sobre problemas que ainda não têm solução pronta.</p>
+      <p>É nesse espaço que o LuxVerso opera.</p>
+    </div>
+    <div class="thesis-tags"><span>território</span><span>biotecnologia</span><span>recursos naturais</span><span>automação de processos</span><span>ciência de dados</span><span>sistemas biológicos</span></div>
+  </div>
+</section>
+
+<section class="section" id="por-dentro">
+  <div class="wrap">
+    <div class="section-head"><div><div class="eyebrow">Por dentro do LuxVerso</div><h2>Como a capacidade<br><em>está organizada.</em></h2></div><p class="section-lede">Para quem quer entender a arquitetura por trás: núcleo tecnológico, infraestrutura reutilizável, aplicações, investigações em curso, demonstrações e evidências públicas.</p></div>
+    <div class="deepdive">
+      <div class="deepdive-layer"><b>Engine</b><span>capacidade central de investigação</span></div>
+      <div class="deepdive-layer"><b>Infraestrutura</b><span>sistemas e pipelines reutilizáveis</span></div>
+      <div class="deepdive-layer"><b>Produtos</b><span>aplicações verticais em domínios reais</span></div>
+      <div class="deepdive-layer"><b>Investigações</b><span>territórios em exploração</span></div>
+      <div class="deepdive-layer"><b>Demonstrações</b><span>provas de possibilidade</span></div>
+      <div class="deepdive-layer"><b>Evidências</b><span>o que fica registrado</span></div>
+    </div>
+    <p class="deepdive-link"><a href="luxverso/">Explorar a arquitetura completa ↗</a> <span>— para investidores, parceiros e avaliadores técnicos.</span></p>
   </div>
 </section>
 
 <section class="section" id="perguntas" style="border-bottom:none">
   <div class="wrap">
-    <div class="section-head"><div><div class="eyebrow">Antes de continuar</div><h2>Talvez você esteja<br><em>se perguntando.</em></h2></div><p class="section-lede">Perguntas que costumam surgir quando alguém tenta entender o LuxVerso pela primeira vez.</p></div>
+    <div class="section-head"><div><div class="eyebrow">Antes de continuar</div><h2>Talvez você esteja<br><em>se perguntando.</em></h2></div></div>
     <div class="qa-list">
       <details class="qa-item">
         <summary>O LuxVerso é uma empresa ou um ecossistema?</summary>
-        <p>É uma empresa que organiza um ecossistema — capacidade central, infraestrutura, produtos, investigações e evidências operando sob a mesma arquitetura.</p>
+        <p>É uma empresa que desenvolve uma capacidade tecnológica central e a aplica a problemas complexos em diferentes domínios.</p>
       </details>
       <details class="qa-item">
-        <summary>Por que existem projetos em domínios tão diferentes?</summary>
-        <p>Porque os domínios mudam, mas parte da capacidade de investigar e construir é transferível entre eles — é a mesma arquitetura aplicada a território, biotecnologia ou sistemas neurais.</p>
+        <summary>Por que existem aplicações em domínios tão diferentes?</summary>
+        <p>Porque a capacidade de investigar, representar e construir é transferível. O domínio muda — o motor por trás, não.</p>
       </details>
       <details class="qa-item">
-        <summary>Todos os projetos são produtos?</summary>
-        <p>Não. Alguns são infraestrutura, outros investigações ou demonstrações. Só uma parte específica já opera como produto ou aplicação vertical — veja a arquitetura acima.</p>
+        <summary>GhostWorks, Bio Intelligence e Organoid Intelligence são empresas separadas?</summary>
+        <p>Não. São aplicações diferentes da mesma capacidade tecnológica central, cada uma com seu próprio domínio, usuário e problema.</p>
       </details>
       <details class="qa-item">
-        <summary>Então qual é "o produto" do LuxVerso?</summary>
-        <p>Essa pergunta ainda não tem uma única resposta definitiva — e tudo bem. A capacidade central está sendo progressivamente transformada em produtos e aplicações específicas, camada por camada.</p>
+        <summary>Qual é a tecnologia por trás disso?</summary>
+        <p>Uma infraestrutura de investigação computacional — aquisição de dados, representação, análise, memória e experimentação — construída e testada ao longo de múltiplos projetos reais.</p>
       </details>
       <details class="qa-item">
-        <summary>Onde termina a pesquisa e começa o produto?</summary>
-        <p>Quando uma investigação ganha domínio, usuário e problema concretos o suficiente para virar aplicação. Antes disso, ela permanece investigação ou demonstração.</p>
-      </details>
-      <details class="qa-item">
-        <summary>O que já existe hoje e o que ainda está sendo investigado?</summary>
-        <p>A arquitetura descrita acima mostra exatamente isso — cada camada indica o estágio real de cada iniciativa, sem forçar nada a parecer mais pronto do que é.</p>
-      </details>
-      <details class="qa-item">
-        <summary>Onde posso verificar as evidências do que foi construído?</summary>
-        <p>Na camada de evidências: artigos, preprints, datasets, resultados — e também os limites e resultados negativos, quando relevantes. <a href="evidence/">Abrir evidências ↗</a></p>
+        <summary>Onde posso ver isso em mais detalhe?</summary>
+        <p>Cada aplicação tem sua própria experiência pública e repositório. A arquitetura completa e as evidências estão documentadas para quem quiser aprofundar. <a href="evidence/">Abrir evidências ↗</a></p>
       </details>
     </div>
   </div>
 </section>
 
-<section class="closing"><div class="wrap closing-inner"><h2>O futuro não chega pronto.<br><em>A gente constrói a pergunta seguinte.</em></h2><div class="closing-copy"><p>O LUXVERSO é o campo onde ideias, projetos e seres se tornam sistemas vivos de investigação e construção.</p><div class="actions"><a class="btn btn-primary" href="mailto:viniburilux@gmail.com">Falar com Vini ↗</a><a class="btn btn-secondary" href="https://github.com/viniburilux" target="_blank" rel="noopener">Abrir GitHub ↗</a></div></div></div></section>
+<section class="closing"><div class="wrap closing-inner"><h2>O futuro não chega pronto.<br><em>A gente constrói a pergunta seguinte.</em></h2><div class="closing-copy"><p>O LUXVERSO é onde investigação vira tecnologia — e tecnologia vira sistemas que operam sobre problemas reais.</p><div class="actions"><a class="btn btn-primary" href="mailto:viniburilux@gmail.com">Falar com Vini ↗</a><a class="btn btn-secondary" href="https://github.com/viniburilux" target="_blank" rel="noopener">Abrir GitHub ↗</a></div></div></div></section>
 </main>
-<footer class="wrap"><div><strong>LUXVERSO</strong> · O Campo Unificado da Consciência</div><div><a href="#arquitetura">Arquitetura</a> · <a href="#perguntas">Perguntas</a> · <a href="evidence/">Evidências</a> · <a href="docs/">Documentos</a> · <a href="mailto:viniburilux@gmail.com">Contato</a></div></footer>
+<footer class="wrap"><div><strong>LUXVERSO</strong> · O Campo Unificado da Consciência</div><div><a href="#capacidades">Capacidades</a> · <a href="#por-dentro">Arquitetura</a> · <a href="evidence/">Evidências</a> · <a href="docs/">Documentos</a> · <a href="mailto:viniburilux@gmail.com">Contato</a></div></footer>
 </body>
 </html>
