@@ -99,6 +99,22 @@ h1 em{font-style:normal;color:var(--lime)}
 footer{display:flex;justify-content:space-between;gap:30px;padding:24px 34px 44px;color:var(--dimmer);font-size:11px;border-top:1px solid var(--line)}
 footer a{text-decoration:none;color:var(--muted)}
 footer a:hover{color:var(--lime)}
+.menu-toggle{position:fixed;right:24px;bottom:24px;z-index:80;display:inline-flex;align-items:center;gap:9px;padding:12px 16px;border:1px solid var(--lime);border-radius:999px;background:var(--lime);color:var(--ink);font:700 12px/1 Inter,ui-sans-serif,system-ui,sans-serif;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:transform .2s,box-shadow .2s}
+.menu-toggle:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(0,0,0,.45)}
+.menu-toggle span{font-size:16px;line-height:.7}
+.menu-panel{position:fixed;right:24px;bottom:82px;z-index:79;width:min(440px,calc(100vw - 48px));max-height:min(72vh,620px);overflow:auto;padding:20px;background:rgba(17,20,16,.98);border:1px solid var(--line);box-shadow:0 18px 60px rgba(0,0,0,.5);opacity:0;visibility:hidden;transform:translateY(12px) scale(.98);transform-origin:bottom right;transition:opacity .2s,transform .2s,visibility .2s}
+.menu-panel.open{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+.menu-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.menu-panel-head strong{display:block;font-size:15px}
+.menu-panel-head span{display:block;margin-top:5px;color:var(--dimmer);font-size:11px;line-height:1.4}
+.menu-close{border:0;background:transparent;color:var(--muted);font-size:20px;line-height:1;cursor:pointer}
+.menu-section{margin-top:18px}
+.menu-section h3{margin:0 0 9px;color:var(--lime);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.menu-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.menu-link{display:block;padding:12px;background:var(--panel);text-decoration:none}
+.menu-link:hover{background:#1c241c}
+.menu-link b{display:block;font-size:12px}
+.menu-link small{display:block;margin-top:4px;color:var(--dimmer);font-size:10px;line-height:1.35}
 
 /* thesis section */
 .thesis-block{margin-top:50px;max-width:840px}
@@ -156,7 +172,7 @@ footer a:hover{color:var(--lime)}
 .infra-flow{grid-template-columns:repeat(2,1fr)}
 .closing{padding:85px 0 75px}
 footer{display:block;padding-left:20px;padding-right:20px}
-footer div+div{margin-top:12px}
+footer div+div{margin-top:12px}.menu-toggle{right:20px;bottom:20px}.menu-panel{right:20px;bottom:76px;width:calc(100vw - 40px)}.menu-links{grid-template-columns:1fr}
 }
 </style>
 <script src="https://luxverso.com/_nav.js" defer></script>
@@ -167,7 +183,7 @@ footer div+div{margin-top:12px}
     <span class="mark"></span><strong>LUXVERSO</strong><span>Research &amp; Build</span>
   </a>
   <nav class="nav" aria-label="Navegação principal">
-    <a href="#capacidades">Capacidades</a><a href="#aplicacoes">Aplicações</a><a href="#perguntas">Perguntas</a><a class="nav-cta" href="mailto:viniburilux@gmail.com">Falar com Vini ↗</a>
+    <a href="#capacidades">Capacidades</a><a href="#aplicacoes">Aplicações</a><a href="#trajetoria">Trajetória</a><a href="#perguntas">Perguntas</a><a class="nav-cta" href="mailto:viniburilux@gmail.com">Falar com Vini ↗</a>
   </nav>
 </header>
 
@@ -178,7 +194,7 @@ footer div+div{margin-top:12px}
       <div class="eyebrow">IA · Dados · Ciência · Software</div>
       <h1>Transformamos problemas complexos em <em>sistemas inteligentes.</em></h1>
       <p class="hero-lede">O LUXVERSO combina inteligência artificial, dados, investigação científica e construção rápida para explorar problemas complexos e desenvolver tecnologias, aplicações e infraestruturas.</p>
-      <div class="actions"><a class="btn btn-primary" href="#capacidades">Conheça nossas capacidades ↓</a><a class="btn btn-secondary" href="#aplicacoes">Ver aplicações ↗</a></div>
+      <div class="actions"><a class="btn btn-primary" href="#capacidades">Conheça nossas capacidades ↓</a><a class="btn btn-secondary" href="#aplicacoes">Ver aplicações ↗</a><a class="btn btn-secondary" href="https://luxverso.com/emergent-ventures/">Conheça a trajetória ↗</a></div>
       <div class="micro-stats"><div class="micro-stat"><b>Investigar</b><span>padrões e oportunidades</span></div><div class="micro-stat"><b>Representar</b><span>estruturas analisáveis</span></div><div class="micro-stat"><b>Construir</b><span>sistemas aplicáveis</span></div></div>
     </div>
     <aside class="hero-aside"><p><strong>Uma capacidade central. Múltiplas aplicações.</strong> Da descoberta científica à inteligência territorial e à automação de processos — diferentes soluções emergem da mesma tecnologia.</p><p style="margin-top:18px" class="mono">Vinícius Buri Lux<br>Salvador, Brasil</p></aside>
@@ -250,6 +266,13 @@ footer div+div{margin-top:12px}
   </div>
 </section>
 
+<section class="section" id="trajetoria">
+  <div class="wrap">
+    <div class="section-head"><div><div class="eyebrow">Trajetória e origem</div><h2>Antes do ecossistema,<br><em>houve uma pergunta.</em></h2></div><p class="section-lede">O LUXVERSO também é uma trajetória de pesquisa independente: perguntas fragmentadas, sistemas construídos do zero e evidências preservadas ao longo do caminho.</p></div>
+    <div class="thesis-block"><p><strong>Conheça a história pública de Vinícius Buri Lux</strong>, os projetos que deram origem ao ecossistema e os rastros que conectam pesquisa, construção e aplicação.</p><div class="actions"><a class="btn btn-primary" href="https://luxverso.com/emergent-ventures/">Conheça a trajetória ↗</a><a class="btn btn-secondary" href="https://github.com/viniburilux" target="_blank" rel="noopener">Ver o trabalho público ↗</a></div></div>
+  </div>
+</section>
+
 <section class="section" id="por-dentro">
   <div class="wrap">
     <div class="section-head"><div><div class="eyebrow">Por dentro do LuxVerso</div><h2>Como a capacidade<br><em>está organizada.</em></h2></div><p class="section-lede">Para quem quer entender a arquitetura por trás: núcleo tecnológico, infraestrutura reutilizável, aplicações, investigações em curso, demonstrações e evidências públicas.</p></div>
@@ -293,8 +316,26 @@ footer div+div{margin-top:12px}
   </div>
 </section>
 
-<section class="closing"><div class="wrap closing-inner"><h2>O futuro não chega pronto.<br><em>A gente constrói a pergunta seguinte.</em></h2><div class="closing-copy"><p>O LUXVERSO é onde investigação vira tecnologia — e tecnologia vira sistemas que operam sobre problemas reais.</p><div class="actions"><a class="btn btn-primary" href="mailto:viniburilux@gmail.com">Falar com Vini ↗</a><a class="btn btn-secondary" href="https://github.com/viniburilux" target="_blank" rel="noopener">Abrir GitHub ↗</a></div></div></div></section>
+<section class="closing"><div class="wrap closing-inner"><h2>O futuro não chega pronto.<br><em>A gente constrói a pergunta seguinte.</em></h2><div class="closing-copy"><p>O LUXVERSO é onde investigação vira tecnologia — e tecnologia vira sistemas que operam sobre problemas reais.</p><div class="actions"><a class="btn btn-primary" href="https://wa.me/5585999798762?text=Ol%C3%A1%20Vini%2C%20conheci%20o%20LUXVERSO%20e%20quero%20conversar." target="_blank" rel="noopener">Falar no WhatsApp ↗</a><a class="btn btn-secondary" href="https://luxverso.com/emergent-ventures/">Conheça a trajetória ↗</a><a class="btn btn-secondary" href="https://github.com/viniburilux" target="_blank" rel="noopener">Abrir GitHub ↗</a></div></div></div></section>
 </main>
-<footer class="wrap"><div><strong>LUXVERSO</strong> · O Campo Unificado da Consciência</div><div><a href="#capacidades">Capacidades</a> · <a href="#por-dentro">Arquitetura</a> · <a href="evidence/">Evidências</a> · <a href="docs/">Documentos</a> · <a href="mailto:viniburilux@gmail.com">Contato</a></div></footer>
+<footer class="wrap"><div><strong>LUXVERSO</strong> · O Campo Unificado da Consciência</div><div><a href="#capacidades">Capacidades</a> · <a href="#trajetoria">Trajetória</a> · <a href="#por-dentro">Arquitetura</a> · <a href="evidence/">Evidências</a> · <a href="docs/">Documentos</a> · <a href="mailto:viniburilux@gmail.com">Contato</a></div></footer>
+<button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="ecosystemMenu">Explorar <span>▦</span></button>
+<div class="menu-panel" id="ecosystemMenu" aria-hidden="true">
+  <div class="menu-panel-head"><div><strong>Explorar o LUXVERSO</strong><span>Experiências públicas, pesquisa e protótipos em um só lugar.</span></div><button class="menu-close" id="menuClose" type="button" aria-label="Fechar menu">×</button></div>
+  <section class="menu-section"><h3>Trajetória e visão</h3><div class="menu-links"><a class="menu-link" href="https://luxverso.com/emergent-ventures/"><b>Conheça a trajetória</b><small>Evidence &amp; Journey · Vinícius Buri Lux</small></a><a class="menu-link" href="https://luxverso.com/LuxVerso/"><b>LuxVerso Research &amp; Build</b><small>A visão que atravessa as frentes</small></a></div></section>
+  <section class="menu-section"><h3>Inteligência e pesquisa</h3><div class="menu-links"><a class="menu-link" href="https://luxverso.com/inteligencia-biotecnologica/"><b>Inteligência Biotecnológica</b><small>Literatura, patentes e evidências</small></a><a class="menu-link" href="https://luxverso.com/organoid-intelligence/"><b>Organoid Intelligence</b><small>Pesquisa em sistemas neurais</small></a><a class="menu-link" href="https://luxverso.com/ghostworks/"><b>GhostWorks</b><small>Inteligência territorial</small></a><a class="menu-link" href="https://luxverso.com/Lux-Radar/"><b>Lux-Radar</b><small>Opportunity intelligence</small></a></div></section>
+  <section class="menu-section"><h3>Dados, território e protótipos</h3><div class="menu-links"><a class="menu-link" href="https://luxverso.com/Manguezais-Brasil/manguezais-sp/"><b>Manguezais SP</b><small>Monitoramento territorial</small></a><a class="menu-link" href="https://luxverso.com/monitor-gastos-pncp/"><b>Monitor PNCP</b><small>Dados públicos e contratações</small></a><a class="menu-link" href="https://luxverso.com/gastos-reais-ba/"><b>Gastos Reais Bahia</b><small>Case de dados públicos</small></a><a class="menu-link" href="https://luxverso.com/explorador-dados-bahia/"><b>Explorador Bahia</b><small>Investigação de dados</small></a><a class="menu-link" href="https://luxverso.com/rede-artistas-bahia-2025/"><b>Rede de Artistas</b><small>Visualização de relações</small></a><a class="menu-link" href="https://luxverso.com/luxsense/"><b>LuxSense</b><small>Machine learning aplicado</small></a><a class="menu-link" href="https://luxverso.com/agronutri-demo/"><b>AgroNutri IA</b><small>Protótipo territorial</small></a></div></section>
+  <section class="menu-section"><h3>Contato</h3><div class="menu-links"><a class="menu-link" href="https://wa.me/5585999798762?text=Ol%C3%A1%20Vini%2C%20conheci%20o%20LUXVERSO%20e%20quero%20conversar." target="_blank" rel="noopener"><b>Falar no WhatsApp</b><small>+55 85 99979-8762</small></a><a class="menu-link" href="https://github.com/viniburilux" target="_blank" rel="noopener"><b>Ver os repositórios</b><small>GitHub público</small></a></div></section>
+</div>
+<script>
+const menuToggle=document.getElementById('menuToggle');
+const ecosystemMenu=document.getElementById('ecosystemMenu');
+const menuClose=document.getElementById('menuClose');
+function setMenu(open){ecosystemMenu.classList.toggle('open',open);ecosystemMenu.setAttribute('aria-hidden',String(!open));menuToggle.setAttribute('aria-expanded',String(open));}
+menuToggle.addEventListener('click',()=>setMenu(!ecosystemMenu.classList.contains('open')));
+menuClose.addEventListener('click',()=>setMenu(false));
+document.addEventListener('click',event=>{if(ecosystemMenu.classList.contains('open')&&!ecosystemMenu.contains(event.target)&&event.target!==menuToggle){setMenu(false)}});
+document.addEventListener('keydown',event=>{if(event.key==='Escape')setMenu(false)});
+</script>
 </body>
 </html>
