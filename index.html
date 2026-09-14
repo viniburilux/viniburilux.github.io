@@ -73,11 +73,13 @@ a{color:inherit;text-decoration:none;}
 /* 5 portas numeradas */
 .gate-doors{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);max-width:640px;width:100%;overflow:hidden;}
 @media(max-width:540px){.gate-doors{grid-template-columns:1fr;}}
-.door{background:var(--bk);padding:22px 24px;cursor:pointer;display:grid;grid-template-columns:auto 1fr;gap:8px 14px;transition:background .25s;position:relative;}
+.door{background:var(--bk);padding:22px 24px;cursor:pointer;display:grid;grid-template-columns:auto auto 1fr;gap:0 14px;align-items:center;transition:background .25s;position:relative;}
 .door::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity .25s;pointer-events:none;box-shadow:inset 3px 0 0 var(--accent);}
 .door:hover{background:var(--bk-2);}
 .door:hover::after{opacity:1;}
-.door-num{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(20px,1.8vw,26px);color:var(--accent);line-height:1;grid-row:span 2;display:flex;align-items:flex-start;}
+.door-svg{width:18px;height:18px;color:var(--accent-dim);grid-row:span 2;transition:color .25s;}
+.door:hover .door-svg{color:var(--accent);}
+.door-num{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(18px,1.5vw,22px);color:var(--accent);line-height:1;}
 .door-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(14px,1.1vw,16px);letter-spacing:-.01em;}
 .door-desc{font-size:clamp(12px,.85vw,13.5px);color:var(--fg-3);line-height:1.5;}
 
@@ -215,9 +217,11 @@ footer .foot-links{display:flex;gap:20px;flex-wrap:wrap;}
   .gate-doors{margin:0 -2px;width:calc(100% + 4px);}
   .door{padding:18px 20px;}
   .gate-pipeline{max-width:100%;}
-  .pipe-wrap{flex-wrap:wrap;justify-content:center;}
+  .pipe-wrap{flex-direction:column;align-items:flex-start;gap:0;padding-left:16px;border-left:1px solid var(--accent-dim);}
   .pipe-arrow{display:none;}
-  .pipe-step{padding:4px 10px;font-size:10px;}
+  .pipe-step{padding:8px 12px;margin:2px 0;position:relative;font-size:10px;}
+  .pipe-step::before{content:'';position:absolute;left:-20px;top:50%;width:10px;height:1px;background:var(--accent-dim);}
+  .pipe-step.active::before{background:var(--accent);}
 }
 @media(max-width:400px){
   .door{padding:14px 16px;}
@@ -706,11 +710,11 @@ function showGate(){
 // GATE DOORS
 // ============================================================
 const doors = [
-  { key:'rapido', num:'01', title:'O que fazemos', desc:'Sistemas, tecnologias e resultados — direto.' },
-  { key:'tecnologia', num:'02', title:'Como resolvemos', desc:'Método, engenharia e stack.' },
-  { key:'empresa', num:'03', title:'Para sua empresa', desc:'Problemas, riscos e soluções concretas.' },
-  { key:'pesquisa', num:'04', title:'Por trás', desc:'Programas, publicações e trajetória.' },
-  { key:'investidor', num:'05', title:'Avaliar', desc:'Capacidade, execução e evidência.' }
+  { key:'rapido', num:'01', shape:'<svg viewBox="0 0 24 24" class="door-svg"><circle cx="12" cy="12" r="8" stroke="currentColor" fill="none" stroke-width="1.5"/></svg>', title:'O que fazemos', desc:'Sistemas, tecnologias e resultados — direto.' },
+  { key:'tecnologia', num:'02', shape:'<svg viewBox="0 0 24 24" class="door-svg"><polygon points="12,4 20,20 4,20" stroke="currentColor" fill="none" stroke-width="1.5"/></svg>', title:'Como resolvemos', desc:'Método, engenharia e stack.' },
+  { key:'empresa', num:'03', shape:'<svg viewBox="0 0 24 24" class="door-svg"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" fill="none" stroke-width="1.5"/></svg>', title:'Para sua empresa', desc:'Problemas, riscos e soluções concretas.' },
+  { key:'pesquisa', num:'04', shape:'<svg viewBox="0 0 24 24" class="door-svg"><polygon points="12,3 21,9 18,19 6,19 3,9" stroke="currentColor" fill="none" stroke-width="1.5"/></svg>', title:'Por trás', desc:'Programas, publicações e trajetória.' },
+  { key:'investidor', num:'05', shape:'<svg viewBox="0 0 24 24" class="door-svg"><polygon points="12,2 22,8 18,20 6,20 2,8" stroke="currentColor" fill="none" stroke-width="1.5"/></svg>', title:'Avaliar', desc:'Capacidade, execução e evidência.' }
 ];
 const gateGrid = document.getElementById('gateGrid');
 doors.forEach(d=>{
@@ -718,7 +722,7 @@ doors.forEach(d=>{
   el.className='door'; el.href=`#${d.key}`;
   el.setAttribute('aria-label',`${d.title}: ${d.desc}`);
   el.addEventListener('click',()=>enter(d.key));
-  el.innerHTML=`<span class="door-num">${d.num}</span><span class="door-title">${d.title}</span><span class="door-desc">${d.desc}</span>`;
+  el.innerHTML=`${d.shape}<span class="door-num">${d.num}</span><span class="door-title">${d.title}</span><span class="door-desc">${d.desc}</span>`;
   gateGrid.appendChild(el);
 });
 
