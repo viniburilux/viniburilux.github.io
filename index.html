@@ -8,177 +8,187 @@
 <meta property="og:description" content="Pesquisa, tecnologia e inteligência aplicada a problemas complexos. Conheça nossos sistemas e pesquisas.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://luxverso.com/">
-<title>LuxVerso — Pesquisa, tecnologia e inteligência aplicada</title>
+<title>LuxVerso — Da complexidade à tecnologia aplicável</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F8F7F4; --bg-2:#F0EFEB; --bg-card:#FFFFFF;
-  --ln:#E2E1DC; --ln-s:rgba(226,225,220,.5);
-  --fg:#1A1A18; --fg-2:#3D3D39; --fg-3:#6B6B64; --fg-4:#9C9B94;
-  --ac:#D4782F; --ac-d:#8B5E2A; --ac-g:rgba(212,120,47,.12);
-  --tech:#1A365D; --tech-l:#2A4F7A; --tech-g:rgba(26,54,93,.08);
-  --r-sm:4px; --r-md:8px;
+  --bk:#090A09; --bk-2:#111410; --panel:#151A16;
+  --ln:#293129; --ln-s:rgba(41,49,41,.5);
+  --fg:#F1F1E8; --fg-2:#A9B0A5; --fg-3:#687066;
+  --lime:#D6F23D; --lime-d:#A3C72A; --lime-g:rgba(214,242,61,.12);
+  --amber:#F0B429; --amber-d:#8A6D1F;
+  --coral:#FF8067; --blue:#8BD9FF;
+  --max:1180px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--fg);font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;}
+body{background:var(--bk);color:var(--fg);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;}
 a{color:inherit;text-decoration:none;}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
 
 /* TYPOGRAPHY */
-.d-l{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(30px,4vw,52px);letter-spacing:-.025em;line-height:1.08;color:var(--fg);}
-.d-m{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(22px,2.6vw,32px);letter-spacing:-.02em;line-height:1.12;}
-.h-l{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(18px,2vw,24px);letter-spacing:-.015em;}
-.h-m{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(16px,1.3vw,18px);}
-.body{font-size:clamp(15px,1vw,17px);line-height:1.7;color:var(--fg-2);}
-.body-s{font-size:clamp(13px,.85vw,14.5px);line-height:1.65;color:var(--fg-3);}
-.mono{font-family:'IBM Plex Mono',monospace;font-size:clamp(11px,.65vw,12.5px);letter-spacing:.02em;color:var(--fg-3);}
-.tag{font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,.55vw,11px);padding:3px 10px;background:var(--tech-g);color:var(--tech);display:inline-block;}
+.d-l{font-size:clamp(32px,5.2vw,64px);font-weight:750;letter-spacing:-.05em;line-height:.95;}
+.d-m{font-size:clamp(24px,3vw,40px);font-weight:650;letter-spacing:-.04em;line-height:1;}
+.h-l{font-size:clamp(20px,2.2vw,28px);font-weight:650;letter-spacing:-.03em;}
+.h-m{font-size:clamp(17px,1.5vw,21px);font-weight:650;letter-spacing:-.02em;}
+.body{font-size:clamp(15px,1vw,16.5px);line-height:1.7;color:var(--fg-2);}
+.body-s{font-size:clamp(13px,.85vw,14.5px);line-height:1.6;color:var(--fg-3);}
+.tag{font-size:clamp(10px,.55vw,11px);padding:3px 10px;border:1px solid var(--ln);color:var(--fg-2);display:inline-block;}
 
-/* TOPBAR */
-#top{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:10px 36px;background:rgba(248,247,244,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--ln);}
+/* TOPBAR — command bar */
+#top{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:12px 36px;background:rgba(9,10,9,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--ln);}
 #top .brand{display:flex;align-items:center;gap:10px;}
-#top .mark{width:8px;height:8px;background:var(--ac);}
-#top .name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:.01em;}
-#top .sub{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--fg-3);letter-spacing:.04em;}
-#top .nav{display:flex;gap:4px;}
-#top .nv{padding:5px 10px;font-size:14px;color:var(--fg-3);cursor:pointer;transition:color .15s;}
-#top .nv:hover{color:var(--ac);}
-#top .nv.active{color:var(--tech);font-weight:500;}
-#top .cta-btn{background:var(--ac);color:#fff;padding:5px 14px;font-size:13px;font-weight:500;cursor:pointer;transition:background .15s;}
-#top .cta-btn:hover{background:var(--ac-d);}
-#top .menu-btn{display:none;background:none;border:1px solid var(--ln);color:var(--fg-2);padding:5px 9px;cursor:pointer;font-size:1rem;}
+#top .mark{width:9px;height:9px;border-radius:50%;background:var(--lime);box-shadow:0 0 18px rgba(214,242,61,.6);}
+#top .name{font-size:15px;font-weight:700;letter-spacing:.12em;}
+#top .sub{font-size:11px;color:var(--fg-3);letter-spacing:.06em;text-transform:uppercase;}
+#top .nav{display:flex;gap:6px;}
+#top .nv{font-size:13px;font-weight:450;color:var(--fg-3);padding:6px 11px;cursor:pointer;transition:color .15s,background .15s;}
+#top .nv:hover{color:var(--lime);background:var(--lime-g);}
+#top .nv.active{color:var(--lime);font-weight:600;}
+#top .cta-btn{font-size:12px;font-weight:700;color:var(--bk);background:var(--lime);padding:8px 14px;transition:background .15s;}
+#top .cta-btn:hover{background:var(--lime-d);}
+#top .menu-btn{display:none;background:none;border:1px solid var(--ln);color:var(--fg-2);padding:5px 9px;cursor:pointer;font-size:1.1rem;}
 
 /* HERO */
-#hero{padding:120px 36px 70px;max-width:1100px;margin:0 auto;}
-#hero .e{font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,.6vw,11px);letter-spacing:.15em;text-transform:uppercase;color:var(--ac);margin-bottom:16px;}
-#hero .d-l{max-width:780px;}
-#hero .d-l em{font-style:normal;color:var(--ac);}
-#hero .sub{max-width:580px;margin-top:20px;}
-#hero .acts{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px;}
-#hero .btn-p{display:inline-flex;align-items:center;gap:8px;background:var(--ac);color:#fff;padding:11px 22px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(14px,.95vw,16px);transition:background .15s;}
-#hero .btn-p:hover{background:var(--ac-d);}
-#hero .btn-s{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--ln);padding:11px 22px;font-family:'IBM Plex Sans',sans-serif;font-weight:500;font-size:clamp(14px,.95vw,16px);color:var(--fg-2);transition:border-color .15s,color .15s;}
-#hero .btn-s:hover{border-color:var(--ac);color:var(--ac);}
+#hero{padding:130px 36px 80px;max-width:var(--max);margin:0 auto;}
+#hero .e{font-size:clamp(10px,.6vw,11.5px);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--lime);margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+#hero .e::before{content:'';width:24px;height:1px;background:var(--lime);}
+#hero .d-l{max-width:860px;}
+#hero .d-l em{font-style:normal;color:var(--lime);}
+#hero .sub{max-width:580px;margin-top:24px;}
+#hero .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;}
+.btn-p{display:inline-flex;align-items:center;gap:8px;font-size:clamp(13px,.9vw,15px);font-weight:700;padding:12px 20px;background:var(--lime);color:var(--bk);transition:background .15s,transform .15s;}
+.btn-p:hover{background:var(--lime-d);transform:translateY(-2px);}
+.btn-s{display:inline-flex;align-items:center;gap:8px;font-size:clamp(13px,.9vw,15px);font-weight:600;padding:12px 20px;border:1px solid var(--ln);color:var(--fg-2);transition:border-color .15s,color .15s,transform .15s;}
+.btn-s:hover{border-color:var(--lime);color:var(--lime);transform:translateY(-2px);}
 
 /* SECTIONS */
-.section{padding:64px 36px;max-width:1100px;margin:0 auto;border-top:1px solid var(--ln);}
-.section:first-of-type{border-top:none;}
-.section-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,.6vw,11px);letter-spacing:.12em;text-transform:uppercase;color:var(--ac);margin-bottom:14px;}
+.section{padding:80px 36px;max-width:var(--max);margin:0 auto;border-top:1px solid var(--ln);}
+.section-eyebrow{font-size:clamp(10px,.6vw,11px);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;}
 .section-lede{margin-top:10px;max-width:620px;}
 
-/* CAPACITY GRID */
-.cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:28px;}
-@media(max-width:720px){.cap-grid{grid-template-columns:1fr;gap:16px;}}
-.cap-card{background:var(--bg-card);padding:28px;border:1px solid var(--ln);transition:border-color .15s;}
-.cap-card:hover{border-color:var(--ac);}
-.cap-card .icon{font-size:22px;color:var(--tech);margin-bottom:8px;line-height:1;}
-.cap-card .h-m{margin-bottom:6px;}
+/* CAPACITY */
+.cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ln);overflow:hidden;margin-top:30px;}
+@media(max-width:720px){.cap-grid{grid-template-columns:1fr;}}
+.cap-card{background:var(--panel);padding:28px;display:flex;flex-direction:column;gap:10px;transition:background .15s;}
+.cap-card:hover{background:#1C241C;}
+.cap-card .icon{font-size:16px;font-weight:600;color:var(--lime);}
+.cap-card .h-m{color:var(--fg);}
 .cap-card .body-s{color:var(--fg-3);}
 
 /* APPLICATIONS */
 .app-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ln);overflow:hidden;margin-top:24px;}
 @media(max-width:720px){.app-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:480px){.app-grid{grid-template-columns:1fr;}}
-.app-card{background:var(--bg-card);padding:22px;display:flex;flex-direction:column;gap:8px;transition:background .15s;}
-.app-card:hover{background:var(--bg-2);}
-.app-card .tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10px;padding:3px 9px;background:var(--tech-g);color:var(--tech);letter-spacing:.04em;width:fit-content;}
-.app-card .h-m{font-size:clamp(15px,1.1vw,17px);}
+.app-card{background:var(--panel);padding:22px;display:flex;flex-direction:column;gap:8px;transition:background .15s;}
+.app-card:hover{background:#1C241C;}
+.app-card .tag{font-size:10px;font-weight:600;color:var(--lime);}
+.app-card .h-m{color:var(--fg);font-size:clamp(16px,1.2vw,18px);}
 .app-card .body-s{color:var(--fg-3);}
-.app-card .act{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ac);margin-top:4px;transition:color .15s;}
-.app-card .act:hover{color:var(--ac-d);}
+.app-card .act{font-size:12px;font-weight:600;color:var(--lime);margin-top:4px;transition:color .15s;}
+.app-card .act:hover{color:var(--lime-d);}
 
-/* SYSTEMS HIGHLIGHT */
+/* SYSTEMS */
 .sys-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--ln);overflow:hidden;margin-top:24px;}
 @media(max-width:640px){.sys-grid{grid-template-columns:1fr;}}
-.sys-card{background:var(--bg-card);padding:26px;display:flex;flex-direction:column;gap:8px;transition:background .15s;}
-.sys-card:hover{background:var(--bg-2);}
-.sys-card .stage{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--fg-4);letter-spacing:.08em;text-transform:uppercase;}
-.sys-card .h-m{font-size:clamp(16px,1.2vw,18px);}
+.sys-card{background:var(--panel);padding:26px;display:flex;flex-direction:column;gap:8px;transition:background .15s;}
+.sys-card:hover{background:#1C241C;}
+.sys-card .stage{font-size:10px;font-weight:600;color:var(--fg-3);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+.sys-card .stage::before{content:'';width:16px;height:1px;background:var(--fg-3);}
+.sys-card .h-m{font-size:clamp(17px,1.2vw,20px);color:var(--fg);}
 .sys-card .body-s{color:var(--fg-3);}
-.sys-card .bot{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid var(--ln);font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--fg-3);flex-wrap:wrap;gap:8px;}
-.sys-card .bot .lk{color:var(--ac);transition:color .15s;}
-.sys-card .bot .lk:hover{color:var(--ac-d);}
+.sys-card .bot{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid var(--ln);font-size:12px;color:var(--fg-3);flex-wrap:wrap;gap:8px;}
+.sys-card .bot .lk{color:var(--lime);font-weight:600;transition:color .15s;}
+.sys-card .bot .lk:hover{color:var(--lime-d);}
 
 /* EVIDENCE */
 .ev-row{display:flex;flex-wrap:wrap;gap:40px 60px;margin-top:24px;padding:28px 0;border-top:1px solid var(--ln);}
 .ev-item{display:flex;flex-direction:column;gap:3px;}
-.ev-item .n{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(30px,3.8vw,44px);color:var(--ac);line-height:1;cursor:pointer;transition:color .15s;}
-.ev-item .n:hover{color:var(--ac-d);}
-.ev-item .ct{font-family:'IBM Plex Sans',sans-serif;font-size:clamp(15px,1vw,17px);color:var(--fg-2);}
-.ev-item .sb{font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,.55vw,11px);color:var(--fg-4);letter-spacing:.04em;}
-.ev-obs{margin-top:14px;font-size:clamp(13px,.85vw,14.5px);color:var(--fg-3);line-height:1.6;max-width:700px;}
+.ev-item .n{font-size:clamp(34px,4.2vw,50px);font-weight:750;color:var(--lime);line-height:1;letter-spacing:-.04em;cursor:pointer;transition:color .15s;}
+.ev-item .n:hover{color:var(--lime-d);}
+.ev-item .ct{font-size:clamp(15px,1vw,17px);color:var(--fg-2);}
+.ev-item .sb{font-size:clamp(10px,.55vw,11px);color:var(--fg-3);letter-spacing:.04em;}
 
-/* APPLY / COLLAB */
+/* APPLY */
 .apply-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ln);overflow:hidden;margin-top:24px;}
 @media(max-width:720px){.apply-grid{grid-template-columns:1fr;}}
-.apply-card{background:var(--bg-card);padding:26px;display:flex;flex-direction:column;gap:10px;transition:background .15s;}
-.apply-card:hover{background:var(--bg-2);}
-.apply-card .h-m{font-size:clamp(16px,1.1vw,18px);}
+.apply-card{background:var(--panel);padding:26px;display:flex;flex-direction:column;gap:10px;transition:background .15s;}
+.apply-card:hover{background:#1C241C;}
+.apply-card .h-m{color:var(--fg);}
 .apply-card .body-s{color:var(--fg-3);}
-.apply-card .go{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ac);margin-top:4px;transition:color .15s;}
-.apply-card .go:hover{color:var(--ac-d);}
+.apply-card .go{font-size:12px;font-weight:600;color:var(--lime);margin-top:4px;transition:color .15s;}
+.apply-card .go:hover{color:var(--lime-d);}
 
 /* FOOTER */
-#foot{max-width:1100px;margin:0 auto;padding:28px 36px 48px;border-top:1px solid var(--ln);display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:clamp(11px,.65vw,12.5px);color:var(--fg-3);}
-#foot a{color:var(--fg-3);transition:color .15s;}
-#foot a:hover{color:var(--ac);}
-#foot .fl{display:flex;gap:20px;flex-wrap:wrap;}
+#foot{padding:40px 36px 52px;max-width:var(--max);margin:0 auto;border-top:1px solid var(--ln);display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:20px;}
+@media(max-width:720px){#foot{grid-template-columns:1fr 1fr;gap:24px;}}
+@media(max-width:480px){#foot{grid-template-columns:1fr;}}
+#foot .col{display:flex;flex-direction:column;gap:10px;}
+#foot .col .h{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-2);}
+#foot .col a{font-size:12px;color:var(--fg-3);transition:color .15s;}
+#foot .col a:hover{color:var(--lime);}
+#foot .col .mono{font-size:11px;color:var(--fg-3);}
+#foot .divider{grid-column:1/-1;height:1px;background:var(--ln);margin:4px 0;}
+#foot .footnote{grid-column:1/-1;font-size:11px;color:var(--fg-3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 
 /* INTERNAL VIEWS */
 #app{display:none;padding-top:48px;}
 #app.open{display:block;}
-.view{padding:56px 36px 48px;max-width:1040px;margin:0 auto;border-top:1px solid var(--ln);}
-.view:first-of-type{border-top:none;}
-.view .d-l{font-size:clamp(26px,3vw,38px);}
-.view-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,.6vw,11px);letter-spacing:.12em;text-transform:uppercase;color:var(--ac);margin-bottom:14px;}
+.view{padding:56px 36px 48px;max-width:960px;margin:0 auto;border-top:1px solid var(--ln);}
+.view .d-l{font-size:clamp(28px,3.4vw,44px);}
+.view-eyebrow{font-size:clamp(10px,.6vw,11px);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;}
 .view-lede{margin-top:12px;max-width:600px;}
 .card-grid{display:grid;gap:1px;background:var(--ln);overflow:hidden;margin-top:20px;}
 .grid-2{grid-template-columns:repeat(2,1fr);}
 .grid-3{grid-template-columns:repeat(3,1fr);}
 @media(max-width:780px){.grid-3{grid-template-columns:1fr 1fr;}}
 @media(max-width:540px){.grid-2,.grid-3{grid-template-columns:1fr;}}
-.card{background:var(--bg-card);padding:20px;display:flex;flex-direction:column;gap:8px;transition:background .15s;}
-.card:hover{background:var(--bg-2);}
-.card-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ac-d);}
-.card-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(15px,1vw,16.5px);}
+.card{background:var(--panel);padding:20px;display:flex;flex-direction:column;gap:8px;transition:background .15s;}
+.card:hover{background:#1C241C;}
+.card-tag{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);}
+.card-title{font-size:clamp(15px,1vw,17px);font-weight:650;letter-spacing:-.02em;}
 .card-body{font-size:clamp(13px,.85vw,14px);color:var(--fg-2);line-height:1.6;}
 .card-tags{display:flex;flex-wrap:wrap;gap:4px;}
 .card-tags .tag{font-size:9px;padding:2px 7px;}
-.card-foot{display:flex;justify-content:space-between;padding-top:9px;border-top:1px solid var(--ln);font-size:11px;gap:8px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;}
-.card-foot a{color:var(--ac);transition:color .15s;}
-.card-foot a:hover{color:var(--ac-d);}
+.card-foot{display:flex;justify-content:space-between;padding-top:9px;border-top:1px solid var(--ln);font-size:12px;gap:8px;flex-wrap:wrap;}
+.card-foot a{color:var(--lime);font-weight:600;transition:color .15s;}
+.card-foot a:hover{color:var(--lime-d);}
 .cross-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
 .cross-link{font-size:clamp(10px,.5vw,11px);color:var(--fg-3);border:1px solid var(--ln);padding:3px 8px;transition:color .15s,border-color .15s;}
-.cross-link:hover{color:var(--ac);border-color:var(--ac);}
+.cross-link:hover{color:var(--lime);border-color:var(--lime);}
 .nudge{margin-top:32px;padding-top:16px;border-top:1px solid var(--ln);display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:13px;color:var(--fg-3);}
 .nudge a{color:var(--fg-3);border-bottom:1px solid var(--ln);padding-bottom:2px;cursor:pointer;transition:color .15s,border-color .15s;}
-.nudge a:hover{color:var(--ac);border-color:var(--ac);}
-.callout{border:1px solid var(--ln);background:var(--bg-card);padding:22px 24px;position:relative;max-width:640px;}
-.callout::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--ac);}
-.callout .tag{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ac);margin-bottom:10px;display:block;}
+.nudge a:hover{color:var(--lime);border-color:var(--lime);}
+.callout{border:1px solid var(--ln);background:var(--panel);padding:22px 24px;position:relative;}
+.callout::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--lime);}
+.callout .tag{font-size:10px;font-weight:600;color:var(--lime);margin-bottom:10px;display:block;}
 .callout p{font-size:clamp(14px,.9vw,15px);color:var(--fg-2);margin:0 0 10px;}
 
 /* MOBILE */
 @media(max-width:860px){
   #top{padding:10px 20px;}
-  #top .nav{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(248,247,244,.98);flex-direction:column;padding:80px 24px 24px;z-index:200;}
+  #top .nav{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(9,10,9,.97);flex-direction:column;padding:80px 24px 24px;z-index:200;backdrop-filter:blur(20px);}
   #top .nav.open{display:flex;}
-  #top .nv{padding:14px 0;font-size:17px;border-bottom:1px solid var(--ln);}
+  #top .nv{padding:16px 0;font-size:17px;border-bottom:1px solid var(--ln);}
   #top .nv:last-child{border-bottom:none;}
   #top .cta-btn{display:none;}
   #top .menu-btn{display:block;position:relative;z-index:210;}
-  #hero{padding:100px 20px 50px;}
-  .section{padding:48px 20px;}
-  .view{padding:40px 20px 32px;}
+  #hero{padding:110px 20px 60px;}
+  #hero .d-l{font-size:clamp(28px,7.5vw,42px);}
+  .section{padding:60px 20px;}
+  .view{padding:48px 20px 36px;}
 }
 @media(max-width:540px){
-  #hero{padding:90px 16px 40px;}
-  .section{padding:40px 16px;}
+  #hero{padding:100px 16px 48px;}
+  #hero .d-l{font-size:clamp(24px,6.5vw,34px);}
+  .section{padding:48px 16px;}
   .ev-row{gap:24px;}
-  .app-grid{gap:1px;}
+  .cap-card{padding:22px;}
+  .sys-card{padding:20px;}
+  #foot{padding:32px 16px 40px;}
 }
 </style>
 </head>
@@ -188,7 +198,7 @@ a{color:inherit;text-decoration:none;}
   <div class="brand">
     <span class="mark"></span>
     <span class="name">LUXVERSO</span>
-    <span class="sub">RESEARCH &amp; BUILD</span>
+    <span class="sub">Research &amp; Build</span>
   </div>
   <div style="display:flex;align-items:center;gap:14px;">
     <nav class="nav" id="mainNav">
@@ -198,7 +208,7 @@ a{color:inherit;text-decoration:none;}
       <a class="nv" onclick="enterView('inteligencia')">Inteligência</a>
       <a class="nv" onclick="enterView('contato')">Contato</a>
     </nav>
-    <a class="cta-btn" href="https://wa.me/5585999798762?text=Ol%C3%A1%2C%20Vini!%20Quero%20entender%20como%20a%20LuxVerso%20pode%20resolver%20um%20problema%20meu." target="_blank">Traga um problema →</a>
+    <a class="cta-btn" href="https://wa.me/5585999798762?text=Quero%20entender%20como%20a%20LuxVerso%20pode%20resolver%20um%20problema" target="_blank">Traga um problema →</a>
     <button class="menu-btn" id="menuBtn" aria-label="Menu">≡</button>
   </div>
 </div>
@@ -210,14 +220,14 @@ a{color:inherit;text-decoration:none;}
   <div class="sub body">Investigamos problemas complexos e desenvolvemos sistemas, métodos e tecnologias para transformá-los em soluções aplicáveis.</div>
   <div class="acts">
     <a class="btn-p" onclick="enterView('pesquisa')">Conheça nossas pesquisas →</a>
-    <a class="btn-s" href="https://wa.me/5585999798762?text=Ol%C3%A1%2C%20Vini!%20Tenho%20um%20problema%20que%20quero%20explorar%20com%20a%20LuxVerso." target="_blank">Traga um problema →</a>
+    <a class="btn-s" href="https://wa.me/5585999798762?text=Quero%20explorar%20um%20problema%20com%20a%20LuxVerso" target="_blank">Traga um problema →</a>
   </div>
 </div>
 
 <!-- CAPACITY -->
 <div class="section" id="capacity">
   <div class="section-eyebrow">Capacidade</div>
-  <div class="d-m">Pesquisa, engenharia e inteligência — <span style="color:var(--ac);">uma mesma infraestrutura.</span></div>
+  <div class="d-m">Pesquisa, engenharia e inteligência — <span style="color:var(--lime);">uma mesma infraestrutura.</span></div>
   <div class="section-lede body">Todo sistema LuxVerso nasce de investigação, passa por engenharia e entrega inteligência aplicada. Essa capacidade se transfere entre domínios.</div>
   <div class="cap-grid">
     <div class="cap-card"><div class="icon">01</div><div class="h-m">Pesquisa</div><div class="body-s">Investigação multi-modelo, coleta e análise de fontes, formulação de hipóteses, validação por evidência.</div></div>
@@ -229,7 +239,7 @@ a{color:inherit;text-decoration:none;}
 <!-- APPLICATIONS -->
 <div class="section" id="applications">
   <div class="section-eyebrow">Aplicações</div>
-  <div class="d-m">A mesma capacidade, <span style="color:var(--ac);">múltiplos problemas.</span></div>
+  <div class="d-m">A mesma capacidade, <span style="color:var(--lime);">múltiplos problemas.</span></div>
   <div class="section-lede body">A infraestrutura de inteligência LuxVerso já foi aplicada a problemas reais em diferentes domínios — com sistemas, dados e resultados públicos.</div>
   <div class="app-grid">
     <div class="app-card"><span class="tag">Território</span><div class="h-m">Transformação territorial</div><div class="body-s">Detecção de mudanças via satélite, monitoramento de ecossistemas.</div><a class="act" onclick="enterView('sistemas')">Ver sistemas →</a></div>
@@ -244,87 +254,102 @@ a{color:inherit;text-decoration:none;}
 <!-- SYSTEMS -->
 <div class="section" id="systems">
   <div class="section-eyebrow">Sistemas</div>
-  <div class="d-m">O que já <span style="color:var(--ac);">construímos.</span></div>
-  <div class="section-lede body">Cada sistema abaixo é um artefato real — com código aberto, dados públicos e resultados verificáveis. Organizados por estágio de maturidade.</div>
+  <div class="d-m">O que já <span style="color:var(--lime);">construímos.</span></div>
+  <div class="section-lede body">Cada sistema abaixo é um artefato real — com código aberto, dados públicos e resultados verificáveis.</div>
   <div class="sys-grid">
-    <div class="sys-card"><span class="stage">PESQUISA → SISTEMA</span><div class="h-m">GhostWorks</div><div class="body-s">Inteligência territorial via embeddings de satélite. Aceito no GlobalSouthAI (IJCAI-ECAI 2026).</div><div class="bot"><span class="tag">Território</span><a class="lk" href="https://viniburilux.github.io/ghostworks/" target="_blank">Abrir →</a></div></div>
-    <div class="sys-card"><span class="stage">PESQUISA → SISTEMA</span><div class="h-m">LuxSense</div><div class="body-s">Sensor Raman com ML — 99,43% acurácia. Paper em revisão, TRL 3-4.</div><div class="bot"><span class="tag">Ciência</span><a class="lk" href="https://viniburilux.github.io/luxsense/" target="_blank">Abrir →</a></div></div>
-    <div class="sys-card"><span class="stage">SISTEMA → APLICAÇÃO</span><div class="h-m">Gastos Reais BA</div><div class="body-s">Pipeline de gastos públicos da Bahia. R$160M+ mapeados.</div><div class="bot"><span class="tag">Dados Públicos</span><a class="lk" href="https://viniburilux.github.io/gastos-reais-ba/" target="_blank">Abrir →</a></div></div>
-    <div class="sys-card"><span class="stage">INFRAESTRUTURA</span><div class="h-m">TraceFoundry</div><div class="body-s">Infraestrutura de evidência com 7 estados epistêmicos. MIT license.</div><div class="bot"><span class="tag">Ciência & P&D</span><a class="lk" href="https://github.com/viniburilux/TraceFoundry" target="_blank">Abrir →</a></div></div>
+    <div class="sys-card"><span class="stage">Pesquisa → Sistema</span><div class="h-m">GhostWorks</div><div class="body-s">Inteligência territorial via embeddings de satélite. Aceito IJCAI-ECAI 2026.</div><div class="bot"><span class="tag">Território</span><a class="lk" href="https://viniburilux.github.io/ghostworks/" target="_blank">Abrir →</a></div></div>
+    <div class="sys-card"><span class="stage">Pesquisa → Sistema</span><div class="h-m">LuxSense</div><div class="body-s">Sensor Raman — 99,43% acurácia. Paper em revisão, TRL 3-4.</div><div class="bot"><span class="tag">Ciência</span><a class="lk" href="https://viniburilux.github.io/luxsense/" target="_blank">Abrir →</a></div></div>
+    <div class="sys-card"><span class="stage">Sistema → Aplicação</span><div class="h-m">Gastos Reais BA</div><div class="body-s">Pipeline de gastos públicos da Bahia. R$160M+ mapeados.</div><div class="bot"><span class="tag">Dados Públicos</span><a class="lk" href="https://viniburilux.github.io/gastos-reais-ba/" target="_blank">Abrir →</a></div></div>
+    <div class="sys-card"><span class="stage">Infraestrutura</span><div class="h-m">TraceFoundry</div><div class="body-s">Infraestrutura de evidência com 7 estados epistêmicos. MIT.</div><div class="bot"><span class="tag">Ciência & P&D</span><a class="lk" href="https://github.com/viniburilux/TraceFoundry" target="_blank">Abrir →</a></div></div>
   </div>
-  <div style="margin-top:20px;"><a class="btn-s" onclick="enterView('sistemas')" style="display:inline-flex;align-items:center;gap:6px;border:1px solid var(--ln);padding:9px 18px;font-size:14px;color:var(--fg-2);cursor:pointer;transition:border-color .15s;">Catálogo completo (16 sistemas) →</a></div>
+  <div style="margin-top:20px;"><a class="btn-s" onclick="enterView('sistemas')" style="display:inline-flex;align-items:center;gap:6px;border:1px solid var(--ln);padding:9px 18px;font-size:14px;font-weight:600;color:var(--fg-2);cursor:pointer;">Catálogo completo (16) →</a></div>
 </div>
 
 <!-- EVIDENCE -->
 <div class="section" id="evidence">
   <div class="section-eyebrow">Produção</div>
-  <div class="d-m">Resultados <span style="color:var(--ac);">verificáveis.</span></div>
+  <div class="d-m">Resultados <span style="color:var(--lime);">verificáveis.</span></div>
   <div class="section-lede body">Cada número abaixo representa algo que existe, foi construído e pode ser acessado.</div>
   <div class="ev-row">
     <span class="ev-item"><span class="n" onclick="enterView('sistemas')">16</span><span class="ct">sistemas públicos</span><span class="sb">código aberto · dados abertos</span></span>
     <span class="ev-item"><span class="n" onclick="enterView('pesquisa')">3</span><span class="ct">papers aceitos</span><span class="sb">CHI 2026 · IJCAI-ECAI 2026</span></span>
     <span class="ev-item"><span class="n" onclick="enterView('inteligencia')">19</span><span class="ct">descobertas documentadas</span><span class="sb">pipeline de inteligência ativo</span></span>
   </div>
-  <div class="ev-obs">Cada número é clicável — leva diretamente ao acervo correspondente.</div>
 </div>
 
 <!-- APPLY -->
 <div class="section" id="apply">
   <div class="section-eyebrow">Colaboração</div>
-  <div class="d-m">Tem um problema <span style="color:var(--ac);">complexo?</span></div>
-  <div class="section-lede body">Trabalhamos com organizações que precisam investigar, desenvolver ou testar novas soluções tecnológicas. Da pesquisa à aplicação.</div>
+  <div class="d-m">Tem um problema <span style="color:var(--lime);">complexo?</span></div>
+  <div class="section-lede body">Trabalhamos com organizações que precisam investigar, desenvolver ou testar novas soluções tecnológicas.</div>
   <div class="apply-grid">
-    <div class="apply-card"><div class="h-m">Empresas</div><div class="body-s">Problemas complexos de dados, decisão, sensoriamento e automação.</div><a class="go" href="https://wa.me/5585999798762?text=Ol%C3%A1%2C%20Vini!%20Represento%20uma%20empresa%20e%20quero%20explorar%20um%20problema." target="_blank">Traga seu problema →</a></div>
-    <div class="apply-card"><div class="h-m">Pesquisa</div><div class="body-s">Parcerias científicas, coautoria, investigação multi-institucional.</div><a class="go" href="https://wa.me/5585999798762?text=Ol%C3%A1%2C%20Vini!%20Quero%20conversar%20sobre%20pesquisa%20ou%20colabora%C3%A7%C3%A3o." target="_blank">Conversar →</a></div>
-    <div class="apply-card"><div class="h-m">Oportunidades</div><div class="body-s">Editais, chamadas, projetos e aplicações da nossa tecnologia.</div><a class="go" onclick="enterView('oportunidades')">Ver em aberto →</a></div>
+    <div class="apply-card"><div class="h-m">Empresas</div><div class="body-s">Problemas de dados, decisão, sensoriamento e automação.</div><a class="go" href="https://wa.me/5585999798762?text=Quero%20explorar%20um%20problema%20empresarial" target="_blank">Traga seu problema →</a></div>
+    <div class="apply-card"><div class="h-m">Pesquisa</div><div class="body-s">Parcerias científicas, coautoria, investigação multi-institucional.</div><a class="go" href="https://wa.me/5585999798762?text=Quero%20conversar%20sobre%20pesquisa" target="_blank">Conversar →</a></div>
+    <div class="apply-card"><div class="h-m">Oportunidades</div><div class="body-s">Editais, chamadas e aplicações da nossa tecnologia.</div><a class="go" onclick="enterView('oportunidades')">Ver em aberto →</a></div>
   </div>
 </div>
 
 <!-- FOOTER -->
 <div id="foot">
-  <span>LuxVerso · <a href="https://github.com/viniburilux" target="_blank">V. Buri</a> · Salvador, BA</span>
-  <span class="fl">
+  <div class="col">
+    <span class="h" style="display:flex;align-items:center;gap:8px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px rgba(214,242,61,.5);display:inline-block;"></span>LUXVERSO</span>
+    <span class="mono">Research &amp; Build</span>
+    <span class="mono" style="margin-top:4px;">Salvador · Bahia · Brasil</span>
+  </div>
+  <div class="col">
+    <span class="h">Navegar</span>
+    <a onclick="enterView('pesquisa')">Pesquisa</a>
+    <a onclick="enterView('sistemas')">Sistemas</a>
+    <a onclick="enterView('dominios')">Domínios</a>
+    <a onclick="enterView('inteligencia')">Inteligência</a>
+  </div>
+  <div class="col">
+    <span class="h">Links</span>
     <a href="https://github.com/viniburilux" target="_blank">GitHub ↗</a>
     <a href="https://openreview.net/profile?id=~Vinicius_Buri_Lux1" target="_blank">OpenReview ↗</a>
     <a href="https://wa.me/5585999798762" target="_blank">Contato ↗</a>
-  </span>
+  </div>
+  <div class="col">
+    <span class="h">Acesso</span>
+    <a onclick="enterView('oportunidades')">Oportunidades</a>
+    <a onclick="enterView('contato')">Fale conosco</a>
+    <a href="https://github.com/viniburilux" target="_blank">Repositórios ↗</a>
+  </div>
+  <div class="divider"></div>
+  <div class="footnote">
+    <span>© 2026 LUXVERSO — Pesquisa, tecnologia e inteligência aplicada</span>
+    <span>Feito em Salvador · Bahia · Brasil</span>
+  </div>
 </div>
 
 <!-- APP (internal views) -->
 <div id="app"><main id="mainContent"></main></div>
 
 <script>
-// Mobile menu
 document.getElementById('menuBtn').addEventListener('click',function(){document.getElementById('mainNav').classList.toggle('open');this.classList.toggle('open');});
-
-// DATA (preserved)
 const SYSTEMS=[
   {id:'si',name:'Sistemas Inteligentes',desc:'Plataforma multi-domínio com 9 capacidades.',tags:['Investigation','Multi-domain'],url:'https://viniburilux.github.io/Sistemas-Inteligentes/',domain:'multi',program:'ciencia'},
-  {id:'gw',name:'GhostWorks',desc:'Inteligência territorial por embeddings de satélite. Aceito IJCAI-ECAI 2026.',tags:['Sensoriamento','Embeddings'],url:'https://viniburilux.github.io/ghostworks/',domain:'territorio',program:'territorio'},
+  {id:'gw',name:'GhostWorks',desc:'Inteligência territorial via satélite. Aceito IJCAI-ECAI 2026.',tags:['Sensoriamento','Embeddings'],url:'https://viniburilux.github.io/ghostworks/',domain:'territorio',program:'territorio'},
   {id:'gwm',name:'GhostWorks Mining',desc:'277 âncoras SIGMINE → 1.001 coordenadas.',tags:['Mineração','SIGMINE'],url:'https://viniburilux.github.io/ghostworks/mining/',domain:'mineracao',program:'mineracao'},
-  {id:'ls',name:'LuxSense',desc:'Sensor Raman — 99,43% acurácia, 3.510 espectros.',tags:['ML','Espectroscopia'],url:'https://viniburilux.github.io/luxsense/',domain:'ciencia',program:'ciencia'},
-  {id:'lr',name:'Lux-Radar',desc:'Motor de oportunidade automatizado — pipeline semanal.',tags:['Automação'],url:'https://viniburilux.github.io/Lux-Radar/',domain:'multi',program:'ciencia'},
+  {id:'ls',name:'LuxSense',desc:'Sensor Raman — 99,43% acurácia.',tags:['ML','Espectroscopia'],url:'https://viniburilux.github.io/luxsense/',domain:'ciencia',program:'ciencia'},
+  {id:'lr',name:'Lux-Radar',desc:'Motor de oportunidade automatizado.',tags:['Automação'],url:'https://viniburilux.github.io/Lux-Radar/',domain:'multi',program:'ciencia'},
   {id:'tf',name:'TraceFoundry',desc:'Infraestrutura de evidência — 7 estados. MIT.',tags:['Proveniência','Evidência'],url:'https://github.com/viniburilux/TraceFoundry',domain:'ciencia',program:'ciencia'},
   {id:'oi',name:'Organoid Intelligence',desc:'Investigação sobre inteligência organoide.',tags:['Neurociência'],url:'https://viniburilux.github.io/organoid-intelligence/',domain:'ciencia',program:'biotecnologia'},
   {id:'tib',name:'Inteligência Biotecnológica',desc:'763 obras, 2.680 atores.',tags:['Biotecnologia'],url:'https://github.com/viniburilux/inteligencia-biotecnologica-agropecuaria',domain:'biotecnologia',program:'biotecnologia'},
-  {id:'ttib',name:'TTI Brazil',desc:'Dataset transformação territorial 2017-2024.',tags:['Dataset','Território'],url:'https://github.com/viniburilux/TTI_Brazil_2017_2024',domain:'territorio',program:'territorio'},
+  {id:'ttib',name:'TTI Brazil',desc:'Dataset transformação territorial 2017-2024.',tags:['Território','Dataset'],url:'https://github.com/viniburilux/TTI_Brazil_2017_2024',domain:'territorio',program:'territorio'},
   {id:'mang',name:'Manguezais SP',desc:'Monitoramento de manguezais.',tags:['Ecossistemas'],url:'https://viniburilux.github.io/Manguezais-Brasil/manguezais-sp/',domain:'territorio',program:'territorio'},
   {id:'cgu',name:'CGU Reuso 2026',desc:'Dados CGU para transparência pública.',tags:['Dados Públicos'],url:'https://viniburilux.github.io/cgu-reuso-2026/',domain:'dados-publicos',program:'dados-publicos'},
-  {id:'grb',name:'Gastos Reais BA',desc:'R$160M+ mapeados — 7 tabelas, 4 cruzamentos.',tags:['Gastos','Bahia'],url:'https://viniburilux.github.io/gastos-reais-ba/',domain:'dados-publicos',program:'dados-publicos'},
+  {id:'grb',name:'Gastos Reais BA',desc:'R$160M+ mapeados.',tags:['Gastos','Bahia'],url:'https://viniburilux.github.io/gastos-reais-ba/',domain:'dados-publicos',program:'dados-publicos'},
   {id:'pncp',name:'Monitor PNCP',desc:'Monitor de contratações via API PNCP.',tags:['Contratos','API'],url:'https://viniburilux.github.io/monitor-gastos-pncp/',domain:'dados-publicos',program:'dados-publicos'},
   {id:'edb',name:'Explorador Dados Bahia',desc:'Explorador multi-fonte de dados públicos.',tags:['Dados','Bahia'],url:'https://viniburilux.github.io/explorador-dados-bahia/',domain:'dados-publicos',program:'dados-publicos'},
   {id:'bar',name:'Barcelona Story',desc:'Trajetória CHI 2026.',tags:['Trajetória','CHI 2026'],url:'https://viniburilux.github.io/barcelona/',domain:'ciencia',program:'ciencia'},
   {id:'scs',name:'Semantic Convergence',desc:'352 conversas com LLMs.',tags:['Dataset','LLMs'],url:'https://github.com/viniburilux/LuxVerso-Semantic-Convergence-Study',domain:'ciencia',program:'ciencia'}
 ];
-const PROGRAMS={biotecnologia:{name:'Biotecnologia',desc:'Bioinsumos, rotas tecnológicas. 763 obras.',systems:['oi','tib']},territorio:{name:'Território',desc:'Transformação territorial.',systems:['gw','ttib','mang']},mineracao:{name:'Mineração',desc:'Patentes, prospecção.',systems:['gwm','ttib']},'dados-publicos':{name:'Dados Públicos',desc:'Contratações, R$529M.',systems:['cgu','grb','pncp','edb']},ciencia:{name:'Ciência & Infra',desc:'TraceFoundry, sensoriamento, discovery.',systems:['si','ls','lr','tf','bar','scs']}};
+const PROGRAMS={biotecnologia:{name:'Biotecnologia',desc:'Bioinsumos, rotas. 763 obras.',systems:['oi','tib']},territorio:{name:'Território',desc:'Transformação territorial.',systems:['gw','ttib','mang']},mineracao:{name:'Mineração',desc:'Patentes, prospecção.',systems:['gwm','ttib']},'dados-publicos':{name:'Dados Públicos',desc:'Contratações, R$529M.',systems:['cgu','grb','pncp','edb']},ciencia:{name:'Ciência & Infra',desc:'TraceFoundry, sensoriamento.',systems:['si','ls','lr','tf','bar','scs']}};
 const DOMAINS={territorio:{name:'Território',desc:'Transformação, energia.',systems:['gw','ttib','mang','gwm']},'dados-publicos':{name:'Dados Públicos',desc:'Transparência, CGU.',systems:['cgu','grb','pncp','edb']},biotecnologia:{name:'Biotecnologia',desc:'Bioinsumos.',systems:['tib','oi']},mineracao:{name:'Mineração',desc:'Materiais críticos.',systems:['gwm','gw','ttib']},energia:{name:'Energia',desc:'Transição energética.',systems:['gw','ttib']},ciencia:{name:'Ciência & P&D',desc:'Scouting, evidência.',systems:['tf','si','ls','lr','oi','scs']}};
-
-// Helpers
-function pubBlock(){const p=[{v:'CHI 2026 · InterAI',t:'The Illusion of Consensus in Human-Centered Interactive AI',h:'https://openreview.net/forum?id=eJtBEBmYGB'},{v:'CHI 2026 · HEAL',t:'When Humans Become Regime Stabilizers',h:'https://openreview.net/forum?id=PJNqpu0fKr'},{v:'IJCAI-ECAI 2026',t:'Territorial Change Detection',h:'https://openreview.net/forum?id=d89iIi3Z2D'}];return `<div class="callout"><span class="tag">Publicações</span>${p.map(x=>`<p><a href="${x.h}" target="_blank" style="color:var(--fg-2);border-bottom:1px solid var(--ac);">${x.t}</a><br><span class="mono">${x.v}</span></p>`).join('')}</div>`;}
+function pubBlock(){const p=[{v:'CHI 2026 · InterAI',t:'The Illusion of Consensus in Human-Centered Interactive AI',h:'https://openreview.net/forum?id=eJtBEBmYGB'},{v:'CHI 2026 · HEAL',t:'When Humans Become Regime Stabilizers',h:'https://openreview.net/forum?id=PJNqpu0fKr'},{v:'IJCAI-ECAI 2026',t:'Territorial Change Detection',h:'https://openreview.net/forum?id=d89iIi3Z2D'}];return `<div class="callout"><span class="tag">Publicações</span>${p.map(x=>`<p><a href="${x.h}" target="_blank" style="color:var(--fg-2);border-bottom:1px solid var(--lime);">${x.t}</a><br><span class="mono">${x.v}</span></p>`).join('')}</div>`;}
 function systemCard(s){const p=PROGRAMS[s.program];return `<div class="card"><div class="card-tag">${p?p.name:'—'}</div><div class="card-title">${s.name}</div><div class="card-body">${s.desc}</div><div class="card-tags">${s.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div><div class="card-foot"><a href="${s.url}" target="_blank">Abrir →</a></div></div>`;}
-function crossLinks(ids){if(!ids||!ids.length)return '';return `<div class="cross-links">${ids.map(id=>{const s=SYSTEMS.find(x=>x.id===id);return s?`<a class="cross-link" href="${s.url}" target="_blank">${s.name}</a>`:'';}).join('')}</div>`;}
-
-// Navigation
+function crossLinks(ids){if(!ids||!ids.length)return'';return `<div class="cross-links">${ids.map(id=>{const s=SYSTEMS.find(x=>x.id===id);return s?`<a class="cross-link" href="${s.url}" target="_blank">${s.name}</a>`:'';}).join('')}</div>`;}
 function enterView(view){
   document.querySelectorAll('#top .nv').forEach(l=>l.classList.remove('active'));
   const a=document.querySelector(`.nv[onclick*="'${view}'"]`);if(a)a.classList.add('active');
@@ -334,41 +359,35 @@ function enterView(view){
   document.getElementById('app').style.display='block';document.getElementById('app').classList.add('open');
   const m=document.getElementById('mainContent');
   const nudge=(links)=>`<div class="nudge"><span>Navegar</span>${links.map(l=>`<a onclick="enterView('${l.v}')">${l.t}</a>`).join('')}</div>`;
-  renderInstitutional(view,m,nudge);
-  window.scrollTo(0,0);
+  renderInstitutional(view,m,nudge);window.scrollTo(0,0);
 }
 function showHome(){
   document.querySelectorAll('#top .nv').forEach(l=>l.classList.remove('active'));
   document.getElementById('mainNav').classList.remove('open');document.getElementById('menuBtn').classList.remove('open');
-  document.getElementById('hero').style.display='block';document.getElementById('foot').style.display='flex';
+  document.getElementById('hero').style.display='block';document.getElementById('foot').style.display='grid';
   document.querySelectorAll('.section').forEach(s=>s.style.display='block');
   document.getElementById('app').style.display='none';document.getElementById('app').classList.remove('open');
   window.scrollTo(0,0);
 }
 document.querySelector('.brand').addEventListener('click',showHome);
-
-// Institutional views
 function renderInstitutional(view,m,nudge){
   if(view==='pesquisa'){
-    m.innerHTML=`<div class="view"><section><div class="d-l">Pesquisa aplicada, <span style="color:var(--ac)">conduzida com rigor.</span></div><div class="view-lede body">A LuxVerso é conduzida por Vinícius Buri, pesquisador independente de Salvador. O rigor está em como investigação e hipótese são estruturadas — nunca dependendo de um único modelo.</div></section><section><div class="view-eyebrow">Programas</div><div class="card-grid grid-2">${Object.keys(PROGRAMS).map(k=>{const p=PROGRAMS[k];const sl=p.systems.filter(i=>SYSTEMS.find(s=>s.id===i)).map(i=>{const s=SYSTEMS.find(x=>x.id===i);return `<a class="cross-link" href="${s.url}" target="_blank">${s.name}</a>`;}).join('');return `<div class="card"><div class="card-title">${p.name}</div><div class="card-body">${p.desc}</div>${sl?`<div class="cross-links">${sl}</div>`:''}</div>`;}).join('')}</div></section><section>${pubBlock()}</section><section><div class="nudge"><span>Navegar</span><a onclick="enterView('sistemas')">Sistemas</a><a onclick="enterView('inteligencia')">Descobertas</a><a onclick="showHome()">← Home</a></div></section></div>`;
+    m.innerHTML=`<div class="view"><section><div class="d-l">Pesquisa aplicada, <span style="color:var(--lime);">conduzida com rigor.</span></div><div class="view-lede body">A LuxVerso é conduzida por Vinícius Buri, pesquisador independente de Salvador.</div></section><section><div class="view-eyebrow">Programas</div><div class="card-grid grid-2">${Object.keys(PROGRAMS).map(k=>{const p=PROGRAMS[k];const sl=p.systems.filter(i=>SYSTEMS.find(s=>s.id===i)).map(i=>{const s=SYSTEMS.find(x=>x.id===i);return `<a class="cross-link" href="${s.url}" target="_blank">${s.name}</a>`;}).join('');return `<div class="card"><div class="card-title">${p.name}</div><div class="card-body">${p.desc}</div>${sl?`<div class="cross-links">${sl}</div>`:''}</div>`;}).join('')}</div></section><section>${pubBlock()}</section><section><div class="nudge"><span>Navegar</span><a onclick="enterView('sistemas')">Sistemas</a><a onclick="enterView('inteligencia')">Descobertas</a><a onclick="showHome()">← Home</a></div></section></div>`;
   }else if(view==='sistemas'){
-    m.innerHTML=`<div class="view"><section><div class="d-l">Catálogo de <span style="color:var(--ac)">sistemas.</span></div><div class="view-lede body">16 sistemas públicos com código aberto, dados abertos e resultados verificáveis.</div></section><section><div class="card-grid grid-2">${SYSTEMS.map(s=>systemCard(s)).join('')}</div></section><section><div class="nudge"><span>Navegar</span><a onclick="enterView('pesquisa')">Pesquisa</a><a onclick="enterView('dominios')">Domínios</a><a onclick="showHome()">← Home</a></div></section></div>`;
+    m.innerHTML=`<div class="view"><section><div class="d-l">Catálogo de <span style="color:var(--lime);">sistemas.</span></div><div class="card-grid grid-2">${SYSTEMS.map(s=>systemCard(s)).join('')}</div></section><section><div class="nudge"><span>Navegar</span><a onclick="enterView('pesquisa')">Pesquisa</a><a onclick="showHome()">← Home</a></div></section></div>`;
   }else if(view==='dominios'){
-    m.innerHTML=`<div class="view"><section><div class="d-l">A mesma capacidade, <span style="color:var(--ac)">múltiplas aplicações.</span></div><div class="card-grid grid-2">${Object.keys(DOMAINS).map(k=>{const d=DOMAINS[k];const sl=d.systems.filter(i=>SYSTEMS.find(s=>s.id===i)).map(i=>{const s=SYSTEMS.find(x=>x.id===i);return `<a class="cross-link" href="${s.url}" target="_blank">${s.name}</a>`;}).join('');return `<div class="card"><div class="card-title">${d.name}</div><div class="card-body">${d.desc}</div>${sl?`<div class="cross-links">${sl}</div>`:''}</div>`;}).join('')}</div></section><section><div class="nudge"><span>Navegar</span><a onclick="enterView('sistemas')">Sistemas</a><a onclick="showHome()">← Home</a></div></section></div>`;
+    m.innerHTML=`<div class="view"><section><div class="d-l">A mesma capacidade, <span style="color:var(--lime);">múltiplas aplicações.</span></div><div class="card-grid grid-2">${Object.keys(DOMAINS).map(k=>{const d=DOMAINS[k];const sl=d.systems.filter(i=>SYSTEMS.find(s=>s.id===i)).map(i=>{const s=SYSTEMS.find(x=>x.id===i);return `<a class="cross-link" href="${s.url}" target="_blank">${s.name}</a>`;}).join('');return `<div class="card"><div class="card-title">${d.name}</div><div class="card-body">${d.desc}</div>${sl?`<div class="cross-links">${sl}</div>`:''}</div>`;}).join('')}</div></section><section><div class="nudge"><span>Navegar</span><a onclick="enterView('sistemas')">Sistemas</a><a onclick="showHome()">← Home</a></div></section></div>`;
   }else if(view==='inteligencia'){
-    m.innerHTML=`<div class="view"><section><div class="d-l">O que <span style="color:var(--ac)">estamos descobrindo.</span></div><div class="card-grid grid-2" id="intelFeed"><div class="card"><div class="card-title">Carregando...</div></div></div></section><section><div class="nudge"><span>Navegar</span><a onclick="enterView('sistemas')">Sistemas</a><a onclick="showHome()">← Home</a></div></section></div>`;
-    fetch('https://luxverso.com/intel-feed.json').then(r=>r.json()).then(d=>{const f=document.getElementById('intelFeed');if(d.entries){f.innerHTML=d.entries.slice(0,4).map(e=>`<div class="card"><div class="card-title">${e.title.length>60?e.title.slice(0,60)+'…':e.title}</div><div class="card-body" style="font-size:13px;">${e.summary||''}</div><div class="card-foot"><a href="https://luxverso.com/intelligence/${e.slug}.md" target="_blank">Ler →</a></div></div>`).join('');}}).catch(()=>{});
+    m.innerHTML=`<div class="view"><section><div class="d-l">O que <span style="color:var(--lime);">estamos descobrindo.</span></div><div class="card-grid grid-2" id="intelFeed"><div class="card"><div class="card-title">Carregando...</div></div></div></section><section><div class="nudge"><span>Navegar</span><a onclick="enterView('sistemas')">Sistemas</a><a onclick="showHome()">← Home</a></div></section></div>`;
+    fetch('https://luxverso.com/intel-feed.json').then(r=>r.json()).then(d=>{const f=document.getElementById('intelFeed');if(d.entries){f.innerHTML=d.entries.slice(0,4).map(e=>`<div class="card"><div class="card-title">${e.title.length>60?e.title.slice(0,60)+'…':e.title}</div><div class="card-body">${e.summary||''}</div><div class="card-foot"><a href="https://luxverso.com/intelligence/${e.slug}.md" target="_blank">Ler →</a></div></div>`).join('');}}).catch(()=>{});
   }else if(view==='oportunidades'){
-    m.innerHTML=`<div class="view"><section><div class="d-l">Oportunidades <span style="color:var(--ac)">em aberto.</span></div><div class="view-lede body">O Lux-Radar monitora continuamente editais, chamadas e oportunidades.</div><div style="margin-top:20px;"><a class="btn-s" onclick="enterView('contato')" style="display:inline-flex;align-items:center;gap:6px;border:1px solid var(--ln);padding:9px 18px;font-size:14px;color:var(--fg-2);cursor:pointer;">Fale conosco →</a></div></section></div>`;
+    m.innerHTML=`<div class="view"><section><div class="d-l">Oportunidades <span style="color:var(--lime);">em aberto.</span></div><div style="margin-top:20px;"><a class="btn-s" onclick="enterView('contato')" style="display:inline-flex;gap:6px;border:1px solid var(--ln);padding:10px 18px;font-size:14px;font-weight:600;color:var(--fg-2);cursor:pointer;">Fale conosco →</a></div></section></div>`;
   }else if(view==='contato'){
-    m.innerHTML=`<div class="view"><section><div class="d-l">Vamos <span style="color:var(--ac)">conversar.</span></div><div class="card-grid grid-3"><div class="card"><div class="card-title">WhatsApp</div><div class="card-body">Canal principal.</div><div class="card-foot"><a href="https://wa.me/5585999798762" target="_blank">(85) 99979-8762 →</a></div></div><div class="card"><div class="card-title">GitHub</div><div class="card-body">Código aberto.</div><div class="card-foot"><a href="https://github.com/viniburilux" target="_blank">@viniburilux →</a></div></div><div class="card"><div class="card-title">OpenReview</div><div class="card-body">Perfil acadêmico.</div><div class="card-foot"><a href="https://openreview.net/profile?id=~Vinicius_Buri_Lux1" target="_blank">Ver →</a></div></div></div><div class="nudge"><a onclick="showHome()">← Home</a></div></div>`;
+    m.innerHTML=`<div class="view"><section><div class="d-l">Vamos <span style="color:var(--lime);">conversar.</span></div><div class="card-grid grid-3"><div class="card"><div class="card-title">WhatsApp</div><div class="card-body">Canal principal.</div><div class="card-foot"><a href="https://wa.me/5585999798762" target="_blank">(85) 99979-8762 →</a></div></div><div class="card"><div class="card-title">GitHub</div><div class="card-body">Código aberto.</div><div class="card-foot"><a href="https://github.com/viniburilux" target="_blank">@viniburilux →</a></div></div><div class="card"><div class="card-title">OpenReview</div><div class="card-body">Perfil acadêmico.</div><div class="card-foot"><a href="https://openreview.net/profile?id=~Vinicius_Buri_Lux1" target="_blank">Ver →</a></div></div></div><div class="nudge"><a onclick="showHome()">← Home</a></div></div>`;
   }
 }
-
-// Deep links
 const views=['pesquisa','sistemas','dominios','inteligencia','oportunidades','contato'];
-const h=location.hash.replace('#','');
-if(views.includes(h))enterView(h);
+const h=location.hash.replace('#','');if(views.includes(h))enterView(h);
 window.addEventListener('hashchange',()=>{const v=location.hash.replace('#','');if(views.includes(v))enterView(v);else showHome();});
 </script>
 </body>
