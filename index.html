@@ -58,6 +58,19 @@
   .gate-direct{margin-top:32px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--fg-dimmer); text-decoration:none; border-bottom:1px solid transparent; cursor:pointer; transition:color .15s,border-color .15s;}
   .gate-direct:hover{color:var(--fg); border-color:var(--fg-dimmer);}
 
+  /* GATE QUICK STATS — evidência mais cedo */
+  .gate-stats{display:flex; flex-wrap:wrap; justify-content:center; gap:28px; margin:18px auto 34px; max-width:660px;}
+  .gate-stat{display:flex; flex-direction:column; align-items:center; gap:2px;}
+  .gate-stat-n{font-family:'Space Grotesk',sans-serif; font-size:clamp(24px,3.2vw,32px); font-weight:600; color:var(--amber); line-height:1;}
+  .gate-stat-l{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--fg-dimmer); letter-spacing:.08em; text-transform:uppercase;}
+  .gate-stat-l2{font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--fg-dimmer); letter-spacing:.04em; opacity:.6;}
+
+  /* GATE PIPELINE — barra visual */
+  .gate-pipeline{margin:0 auto 22px; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:2px; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--fg-dimmer);}
+  .gate-pipeline .pipe-step{display:flex; align-items:center; gap:6px; padding:6px 12px; border:1px solid var(--line); border-radius:12px; background:var(--ink-2); color:var(--fg-dim);}
+  .gate-pipeline .pipe-step.active{color:var(--amber); border-color:var(--amber-dim); background:var(--amber-glow);}
+  .gate-pipeline .pipe-arrow{color:var(--fg-dimmer); font-size:12px; padding:0 4px;}
+
   /* ===== APP ===== */
   #app{display:none;}
   #app.open{display:block;}
@@ -79,6 +92,7 @@
   main{position:relative; z-index:1;}
   section{max-width:1100px; margin:0 auto; padding:80px 40px; border-top:1px solid var(--line);}
   section:first-of-type{border-top:none;}
+  .level-indicator{margin-top:4px; font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--fg-dimmer); letter-spacing:.12em; text-transform:uppercase; opacity:.4;}
   h1,h2{font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.015em; margin:0;}
   h1{font-size:clamp(29px,4.4vw,50px); line-height:1.1;}
   h2{font-size:clamp(24px,3.2vw,35px); line-height:1.18;}
@@ -174,7 +188,21 @@
     <span class="gate-sub">RESEARCH &amp; TECH</span>
   </div>
   <div class="gate-vision">A LuxVerso constrói <strong>infraestrutura de inteligência</strong> para transformar problemas complexos em sistemas que podem ser investigados, testados e colocados para funcionar.</div>
-  <div class="gate-cycle"><span>Research</span><span>Build</span><span>Test</span><span>Apply</span></div>
+  <div class="gate-pipeline">
+    <span class="pipe-step active">🔬 Research</span>
+    <span class="pipe-arrow">→</span>
+    <span class="pipe-step">⚙️ Build</span>
+    <span class="pipe-arrow">→</span>
+    <span class="pipe-step">🧪 Test</span>
+    <span class="pipe-arrow">→</span>
+    <span class="pipe-step">🚀 Apply</span>
+  </div>
+  <div class="gate-stats">
+    <span class="gate-stat"><span class="gate-stat-n">16</span><span class="gate-stat-l">Sistemas</span><span class="gate-stat-l2">código + dados abertos</span></span>
+    <span class="gate-stat"><span class="gate-stat-n">3</span><span class="gate-stat-l">Papers</span><span class="gate-stat-l2">peer review aceitos</span></span>
+    <span class="gate-stat"><span class="gate-stat-n">R$529M</span><span class="gate-stat-l">Dados Públicos</span><span class="gate-stat-l2">mapeados em pipelines</span></span>
+    <span class="gate-stat"><span class="gate-stat-n">99,4%</span><span class="gate-stat-l">LuxSense</span><span class="gate-stat-l2">acurácia ML</span></span>
+  </div>
   <div class="gate-title">O que você quer descobrir <em>sobre a LuxVerso?</em></div>
   <div class="gate-grid" id="gateGrid"></div>
   <div class="gate-signals"><span><b>Visão</b> Research &amp; Build</span><span><b>Evidência</b> sistemas e artefatos públicos</span><span><b>Trajetória</b> construção independente</span></div>
