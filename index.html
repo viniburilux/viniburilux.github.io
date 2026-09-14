@@ -3,750 +3,732 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="A LuxVerso constrói infraestrutura de inteligência para transformar problemas complexos em sistemas investigáveis, testáveis e colocados para funcionar.">
+<meta name="description" content="LuxVerso — infraestrutura independente de pesquisa, engenharia e inteligência artificial aplicada a problemas complexos.">
 <meta property="og:title" content="LuxVerso — Research & Build">
-<meta property="og:description" content="Infraestrutura de inteligência para transformar problemas complexos em sistemas que podem ser investigados, testados e colocados para funcionar.">
+<meta property="og:description" content="Laboratório independente que investiga, constrói e descobre — transformando problemas complexos em sistemas inteligentes.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://luxverso.com/">
-<title>LuxVerso — Research & Build | Infraestrutura de inteligência</title>
+<title>LuxVerso — Research & Build</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#0a0a08; --ink-2:#11110e; --ink-3:#1a1a15;
-    --line:#2a2620; --line-soft:rgba(42,38,32,.5);
-    --fg:#f2efe9; --fg-dim:#a8a196; --fg-dimmer:#6b655a;
-    --amber:#f0b429; --amber-dim:#8a6d1f; --amber-glow:rgba(240,180,41,.18);
-    --radius:2px;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{margin:0; background:var(--ink); color:var(--fg); font-family:'IBM Plex Sans',sans-serif; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;}
-  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation-duration:.01ms!important; transition-duration:.01ms!important;} }
-  a{color:inherit;}
-  .mono{font-family:'IBM Plex Mono',monospace;}
+:root{
+  --bk:#0a0a08; --bk-2:#11110e; --bk-3:#1c1c17;
+  --line:#2a2620; --line-soft:rgba(42,38,32,.45);
+  --fg:#f0ece6; --fg-2:#c2bbb0; --fg-3:#8a8378;
+  --accent:#e8a92a; --accent-dim:#7a5e1e; --accent-glow:rgba(232,169,42,.15);
+  --ink:1px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bk);color:var(--fg);font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;}
+a{color:inherit;text-decoration:none;}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
-  /* ===== GATE ===== */
-  #gate{min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:48px 24px; text-align:center; position:relative;}
-  #gate::before{content:''; position:absolute; inset:0; background:repeating-linear-gradient(0deg,transparent 0 31px,rgba(242,239,233,.012) 31px 32px); pointer-events:none;}
-  .gate-brand{display:flex; align-items:baseline; gap:10px; margin-bottom:56px; position:relative;}
-  .gate-mark{width:9px; height:9px; background:var(--amber); box-shadow:0 0 14px var(--amber),0 0 28px var(--amber-glow);}
-  .gate-name{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; letter-spacing:.02em;}
-  .gate-sub{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--fg-dimmer); letter-spacing:.04em;}
-  .gate-vision{max-width:760px; margin:0 auto 20px; font-family:'Space Grotesk',sans-serif; font-size:clamp(19px,2.6vw,25px); line-height:1.4; letter-spacing:-.02em;}
-  .gate-vision strong{color:var(--amber); font-weight:600;}
-  .gate-cycle{display:flex; flex-wrap:wrap; justify-content:center; margin:0 auto 34px; color:var(--fg-dim); font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase;}
-  .gate-cycle span:not(:last-child)::after{content:'→'; margin:0 12px; color:var(--amber-dim);}
-  .gate-title{font-family:'Space Grotesk',sans-serif; font-size:clamp(15px,2vw,18px); font-weight:400; color:var(--fg-dimmer); max-width:620px; line-height:1.4; margin-bottom:26px; letter-spacing:.01em;}
-  .gate-title em{font-style:normal; color:var(--fg); font-weight:500;}
-  .gate-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); max-width:760px; width:100%; overflow:hidden;}
-  @media(max-width:640px){.gate-grid{grid-template-columns:1fr;}}
-  .gate-card{background:var(--ink); padding:30px 28px; text-align:left; cursor:pointer; color:inherit; text-decoration:none; display:flex; flex-direction:column; gap:9px; transition:background .2s; position:relative;}
-  .gate-card::after{content:''; position:absolute; left:0; top:0; bottom:0; width:2px; background:var(--amber); transform:scaleY(0); transform-origin:center; transition:transform .2s;}
-  .gate-card:hover::after,.gate-card:focus-visible::after{transform:scaleY(1);}
-  .gate-card:hover{background:var(--ink-2);}
-  .gate-card:focus-visible{box-shadow:inset 0 0 0 1px var(--amber); outline:none;}
-  .gate-icon{font-size:20px; color:var(--fg-dimmer); transition:color .2s;}
-  .gate-card:hover .gate-icon{color:var(--amber);}
-  .gate-card-title{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; letter-spacing:-.01em;}
-  .gate-card-desc{font-size:13px; color:var(--fg-dim); line-height:1.55;}
-  .gate-signals{display:flex; flex-wrap:wrap; justify-content:center; gap:18px; max-width:760px; margin:28px auto 0; padding-top:18px; border-top:1px solid var(--line); color:var(--fg-dimmer); font-family:'IBM Plex Mono',monospace; font-size:11px;}
-  .gate-signals b{color:var(--fg); font-weight:500;}
-  .gate-signals span{display:inline-flex; gap:6px; align-items:center;}
-  .gate-signals span::before{content:'·'; color:var(--amber);}
-  .gate-direct{margin-top:32px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--fg-dimmer); text-decoration:none; border-bottom:1px solid transparent; cursor:pointer; transition:color .15s,border-color .15s;}
-  .gate-direct:hover{color:var(--fg); border-color:var(--fg-dimmer);}
+/* === TYPOGRAPHY === */
+.display{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-.025em;line-height:1.05;}
+.display-l{font-size:clamp(34px,5.5vw,72px);}
+.display-m{font-size:clamp(26px,3.8vw,48px);}
+.display-s{font-size:clamp(20px,2.6vw,30px);}
+.heading{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-.015em;line-height:1.15;}
+.heading-l{font-size:clamp(24px,3.4vw,38px);}
+.heading-m{font-size:clamp(20px,2.6vw,28px);}
+.body{font-size:clamp(15px,1.1vw,16.5px);line-height:1.7;color:var(--fg-2);}
+.body-s{font-size:clamp(13px,.95vw,14.5px);line-height:1.65;color:var(--fg-3);}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:clamp(11px,.75vw,12.5px);letter-spacing:.03em;color:var(--fg-3);}
+.meta{font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,.65vw,11.5px);letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3);}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,.6vw,11px);padding:3px 10px;border:1px solid var(--line-soft);border-radius:100px;color:var(--fg-3);display:inline-block;}
 
-  /* GATE QUICK STATS — evidência mais cedo */
-  .gate-stats{display:flex; flex-wrap:wrap; justify-content:center; gap:28px; margin:18px auto 34px; max-width:660px;}
-  .gate-stat{display:flex; flex-direction:column; align-items:center; gap:2px;}
-  .gate-stat-n{font-family:'Space Grotesk',sans-serif; font-size:clamp(24px,3.2vw,32px); font-weight:600; color:var(--amber); line-height:1;}
-  .gate-stat-l{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--fg-dimmer); letter-spacing:.08em; text-transform:uppercase;}
-  .gate-stat-l2{font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--fg-dimmer); letter-spacing:.04em; opacity:.6;}
+/* === GATE === */
+#gate{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 20px;position:relative;overflow:hidden;}
+#gate::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 39px,rgba(200,190,180,.012) 39px 40px);pointer-events:none;}
+.gate-brand{display:flex;align-items:center;gap:12px;margin-bottom:44px;position:relative;}
+.gate-mark{width:10px;height:10px;background:var(--accent);box-shadow:0 0 20px var(--accent),0 0 40px var(--accent-glow);}
+.gate-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(16px,1.3vw,19px);letter-spacing:.03em;}
+.gate-sub{font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,.7vw,11.5px);color:var(--fg-3);letter-spacing:.05em;}
 
-  /* GATE PIPELINE — barra visual */
-  .gate-pipeline{margin:0 auto 22px; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:2px; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--fg-dimmer);}
-  .gate-pipeline .pipe-step{display:flex; align-items:center; gap:6px; padding:6px 12px; border:1px solid var(--line); border-radius:12px; background:var(--ink-2); color:var(--fg-dim);}
-  .gate-pipeline .pipe-step.active{color:var(--amber); border-color:var(--amber-dim); background:var(--amber-glow);}
-  .gate-pipeline .pipe-arrow{color:var(--fg-dimmer); font-size:12px; padding:0 4px;}
+.gate-vision{max-width:640px;margin:0 auto 32px;text-align:center;}
+.gate-vision .display-m{color:var(--fg-2);font-weight:500;}
+.gate-vision .display-m strong{color:var(--fg);}
 
-  /* ===== APP ===== */
-  #app{display:none;}
-  #app.open{display:block;}
-  header.topbar{position:sticky; top:0; z-index:60; display:flex; align-items:center; justify-content:space-between; padding:14px 40px; background:rgba(10,10,8,.9); backdrop-filter:blur(12px); border-bottom:1px solid var(--line);}
-  .brand{display:flex; align-items:baseline; gap:10px; cursor:pointer;}
-  .brand-mark{width:9px; height:9px; background:var(--amber); box-shadow:0 0 12px var(--amber);}
-  .brand-name{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; letter-spacing:.02em;}
-  .brand-sub{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--fg-dimmer); letter-spacing:.04em;}
-  .nav-wrap{display:flex; align-items:center; gap:18px;}
-  .main-nav{display:flex; gap:4px;}
-  .nav-link{padding:6px 12px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--fg-dim); text-decoration:none; border-radius:2px; cursor:pointer; transition:color .15s,background .15s;}
-  .nav-link:hover{color:var(--fg); background:rgba(242,239,233,.05);}
-  .nav-link.active{color:var(--amber); background:var(--amber-glow);}
-  .switch-perspective{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--fg-dimmer); text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:2px; cursor:pointer; transition:color .15s,border-color .15s; white-space:nowrap;}
-  .switch-perspective:hover{color:var(--amber); border-color:var(--amber-dim);}
-  .mobile-nav-toggle{display:none; background:none; border:1px solid var(--line); color:var(--fg-dim); font-size:1.1rem; cursor:pointer; padding:6px 10px; border-radius:2px;}
-  .mobile-nav-toggle:hover{color:var(--amber); border-color:var(--amber-dim);}
+/* Pipeline */
+.gate-pipeline{margin:0 auto 28px;display:flex;flex-wrap:wrap;justify-content:center;gap:4px;width:100%;max-width:440px;}
+.pipe-wrap{display:flex;align-items:center;gap:4px;flex-wrap:nowrap;}
+.pipe-step{display:flex;align-items:center;gap:6px;padding:5px 12px;border:1px solid var(--line-soft);background:var(--bk-2);color:var(--fg-3);font-family:'IBM Plex Mono',monospace;font-size:clamp(9px,.65vw,11px);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;}
+.pipe-step svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.5;}
+.pipe-step.active{color:var(--accent);border-color:var(--accent-dim);background:var(--accent-glow);}
+.pipe-arrow{color:var(--fg-3);font-family:'IBM Plex Mono',monospace;font-size:14px;padding:0 2px;}
 
-  main{position:relative; z-index:1;}
-  section{max-width:1100px; margin:0 auto; padding:80px 40px; border-top:1px solid var(--line);}
-  section:first-of-type{border-top:none;}
-  .level-indicator{margin-top:4px; font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--fg-dimmer); letter-spacing:.12em; text-transform:uppercase; opacity:.4;}
-  h1,h2{font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.015em; margin:0;}
-  h1{font-size:clamp(29px,4.4vw,50px); line-height:1.1;}
-  h2{font-size:clamp(24px,3.2vw,35px); line-height:1.18;}
-  h1 em,h2 em{font-style:normal; color:var(--amber);}
-  .lede{font-size:16px; line-height:1.75; color:var(--fg-dim); max-width:660px; margin-top:22px;}
-  .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--amber); letter-spacing:.12em; text-transform:uppercase; margin-bottom:18px; display:flex; align-items:center; gap:10px;}
-  .eyebrow::before{content:''; width:20px; height:1px; background:var(--amber);}
-  .h2-eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--fg-dimmer); letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px;}
+/* Stats / proof layer */
+.gate-proof{display:flex;flex-wrap:wrap;justify-content:center;gap:24px 40px;margin:0 auto 36px;max-width:640px;width:100%;}
+.proof-item{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;}
+.proof-num{font-family:'Space Grotesk',sans-serif;font-size:clamp(30px,4vw,44px);font-weight:600;color:var(--accent);line-height:1;}
+.proof-label{font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,.65vw,11px);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2);}
+.proof-sub{font-family:'IBM Plex Mono',monospace;font-size:clamp(9px,.55vw,10px);color:var(--fg-3);opacity:.6;}
 
-  /* CARDS & GRIDS */
-  .card-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:34px; overflow:hidden;}
-  @media(max-width:700px){.card-grid{grid-template-columns:1fr;}}
-  .card-grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:34px; overflow:hidden;}
-  @media(max-width:860px){.card-grid-3{grid-template-columns:1fr 1fr;}}
-  @media(max-width:480px){.card-grid-3{grid-template-columns:1fr;}}
-  .card{background:var(--ink); padding:26px; display:flex; flex-direction:column; gap:10px; transition:background .2s;}
-  .card:hover{background:var(--ink-2);}
-  .card-icon{font-size:18px; color:var(--amber-dim);}
-  .card-title{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15.5px; letter-spacing:-.01em;}
-  .card-body{font-size:13.5px; color:var(--fg-dim); line-height:1.6;}
-  .card-tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;}
-  .card-tags span{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--fg-dimmer); border:1px solid var(--line); padding:3px 9px; border-radius:12px;}
-  .card-foot{display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid var(--line); font-family:'IBM Plex Mono',monospace; font-size:11.5px; gap:10px; flex-wrap:wrap;}
-  .card-src{color:var(--amber);}
-  .card-links{display:flex; gap:12px; flex-wrap:wrap;}
-  .card-links a{color:var(--fg-dim); text-decoration:none; transition:color .15s;}
-  .card-links a:hover,.card-links a:focus{color:var(--amber);}
-  .card-link{color:var(--amber); text-decoration:none; font-family:'IBM Plex Mono',monospace; font-size:12px; transition:color .15s;}
-  .card-link:hover{color:var(--fg);}
-  .card-link-arrow{color:var(--fg-dimmer); font-family:'IBM Plex Mono',monospace; font-size:12px; text-decoration:none; transition:color .15s;}
-  .card-link-arrow:hover{color:var(--amber);}
+.gate-title{margin-bottom:28px;text-align:center;font-family:'Space Grotesk',sans-serif;font-size:clamp(14px,1.3vw,17px);font-weight:400;color:var(--fg-3);letter-spacing:.01em;}
+.gate-title span{color:var(--fg-2);font-weight:500;}
 
-  .callout{margin-top:34px; padding:30px 32px; border:1px solid var(--amber-dim); border-radius:var(--radius); background:var(--ink-2); max-width:780px; position:relative;}
-  .callout::before{content:''; position:absolute; left:0; top:0; bottom:0; width:2px; background:var(--amber);}
-  .callout .tag{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--amber); text-transform:uppercase; letter-spacing:.1em; margin-bottom:14px; display:block;}
-  .callout p{font-size:15px; line-height:1.75; color:var(--fg); margin:0 0 12px;}
-  .callout p:last-of-type{margin-bottom:0;}
-  .callout .go{display:inline-block; margin-top:16px; font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--amber); text-decoration:none; border-bottom:1px solid var(--amber-dim); padding-bottom:2px; transition:border-color .15s;}
-  .callout .go:hover{border-color:var(--amber);}
+/* 5 portas numeradas */
+.gate-doors{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);max-width:640px;width:100%;overflow:hidden;}
+@media(max-width:540px){.gate-doors{grid-template-columns:1fr;}}
+.door{background:var(--bk);padding:22px 24px;cursor:pointer;display:grid;grid-template-columns:auto 1fr;gap:8px 14px;transition:background .25s;position:relative;}
+.door::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity .25s;pointer-events:none;box-shadow:inset 3px 0 0 var(--accent);}
+.door:hover{background:var(--bk-2);}
+.door:hover::after{opacity:1;}
+.door-num{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(20px,1.8vw,26px);color:var(--accent);line-height:1;grid-row:span 2;display:flex;align-items:flex-start;}
+.door-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(14px,1.1vw,16px);letter-spacing:-.01em;}
+.door-desc{font-size:clamp(12px,.85vw,13.5px);color:var(--fg-3);line-height:1.5;}
 
-  .mirror-list{list-style:none; margin:28px 0 0; padding:0; display:flex; flex-direction:column; max-width:680px;}
-  .mirror-list li{padding:15px 0; border-bottom:1px solid var(--line); font-size:15px; color:var(--fg-dim); display:flex; gap:14px; line-height:1.6;}
-  .mirror-list li:last-child{border-bottom:none;}
-  .mirror-list li::before{content:'—'; color:var(--amber-dim); flex-shrink:0;}
-  .mirror-list li b{color:var(--fg); font-weight:500;}
-  .tech-band{margin-top:34px; display:flex; flex-wrap:wrap; gap:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--fg-dim); padding:18px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-  .tech-band span:not(:last-child)::after{content:'·'; margin:0 12px; color:var(--fg-dimmer);}
-  .method-flow{display:flex; flex-wrap:wrap; margin-top:34px; font-family:'IBM Plex Mono',monospace; font-size:13px; align-items:center;}
-  .method-flow .step{color:var(--fg); padding:10px 0;}
-  .method-flow .arrow{color:var(--amber-dim); padding:0 14px;}
-  .cta-row{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:28px; margin-top:44px;}
-  .cta-main{font-family:'IBM Plex Mono',monospace; font-size:14.5px; color:var(--amber); text-decoration:none; border-bottom:1px solid var(--amber-dim); padding-bottom:3px; transition:border-color .15s,color .15s;}
-  .cta-main:hover{border-color:var(--amber); color:var(--fg);}
-  .cta-secondary{font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--fg-dim); text-decoration:none; border-bottom:1px solid var(--line); transition:color .15s;}
-  .cta-secondary:hover{color:var(--fg);}
-  .nudge{margin-top:56px; padding:24px 0 0; border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:18px; align-items:center;}
-  .nudge span{font-size:13px; color:var(--fg-dimmer); font-family:'IBM Plex Mono',monospace;}
-  .nudge a{font-size:13px; color:var(--fg-dim); text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:2px; cursor:pointer; transition:color .15s,border-color .15s;}
-  .nudge a:hover{color:var(--amber); border-color:var(--amber-dim);}
-  .quick-stat{color:var(--amber); font-family:'IBM Plex Mono',monospace; font-size:12px;}
-  .cross-links{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;}
-  .cross-link{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--fg-dimmer); text-decoration:none; border:1px solid var(--line-soft); padding:4px 10px; border-radius:2px; transition:color .15s,border-color .15s;}
-  .cross-link:hover,.cross-link:focus{color:var(--amber); border-color:var(--amber-dim);}
+.gate-signals{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;max-width:640px;margin:24px auto 0;padding-top:18px;border-top:1px solid var(--line-soft);width:100%;}
+.gate-signals span{display:inline-flex;gap:6px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,.65vw,11px);color:var(--fg-3);}
+.gate-signals span::before{content:'▸';color:var(--accent-dim);font-size:8px;}
+.gate-signals b{color:var(--fg-2);font-weight:500;}
+.gate-direct{display:inline-flex;align-items:center;gap:6px;margin-top:26px;font-family:'IBM Plex Mono',monospace;font-size:clamp(11px,.75vw,13px);color:var(--fg-3);text-decoration:none;border-bottom:1px solid transparent;cursor:pointer;transition:color .2s,border-color .2s;}
+.gate-direct:hover{color:var(--fg-2);border-color:var(--fg-3);}
+.gate-direct svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;}
 
-  footer{max-width:1100px; margin:0 auto; padding:36px 40px 60px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--fg-dimmer);}
-  footer a{color:var(--fg-dim); text-decoration:none; transition:color .15s;}
-  footer a:hover{color:var(--amber);}
-  footer .foot-links{display:flex; gap:20px; flex-wrap:wrap;}
+/* === APP === */
+#app{display:none;}
+#app.open{display:block;}
+.topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:12px 36px;background:rgba(10,10,8,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft);}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.brand-mark{width:8px;height:8px;background:var(--accent);box-shadow:0 0 12px var(--accent);}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;}
+.brand-sub{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--fg-3);letter-spacing:.04em;}
+.nav-wrap{display:flex;align-items:center;gap:16px;}
+.nav{display:flex;gap:2px;}
+.nav-item{padding:5px 11px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--fg-3);border-radius:2px;cursor:pointer;transition:color .18s,background .18s;}
+.nav-item:hover{color:var(--fg-2);background:rgba(242,239,233,.04);}
+.nav-item.active{color:var(--accent);background:var(--accent-glow);}
+.perspective-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--fg-3);text-decoration:none;border-bottom:1px solid var(--line-soft);padding-bottom:2px;cursor:pointer;transition:color .18s,border-color .18s;white-space:nowrap;}
+.perspective-btn:hover{color:var(--accent);border-color:var(--accent-dim);}
+.mobile-toggle{display:none;background:none;border:1px solid var(--line-soft);color:var(--fg-3);padding:6px 10px;border-radius:2px;cursor:pointer;font-size:1rem;line-height:1;transition:color .18s,border-color .18s;}
+.mobile-toggle:hover{color:var(--accent);border-color:var(--accent-dim);}
 
-  @media(max-width:860px){
-    .main-nav{display:none; position:absolute; top:100%; left:0; right:0; background:rgba(10,10,8,.97); flex-direction:column; padding:14px 18px; border-bottom:1px solid var(--line); backdrop-filter:blur(12px);}
-    .main-nav.open{display:flex;}
-    .main-nav .nav-link{padding:12px 8px; font-size:13px; border-bottom:1px solid var(--line-soft);}
-    .main-nav .nav-link:last-child{border-bottom:none;}
-    .mobile-nav-toggle{display:block;}
-    .topbar{padding:14px 20px;}
-    section{padding:64px 24px;}
-    .switch-perspective{display:none;}
-  }
-  @media(max-width:480px){
-    section{padding:52px 20px;}
-    .gate-card{padding:24px 20px;}
-  }
+/* === CONTEÚDO === */
+main{position:relative;z-index:1;}
+.view{max-width:1040px;margin:0 auto;padding:72px 36px 56px;border-top:1px solid var(--line-soft);}
+.view:first-of-type{border-top:none;}
+.view section{margin-bottom:60px;}
+.view section:last-child{margin-bottom:0;}
+.view-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,.7vw,11.5px);letter-spacing:.15em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.view-eyebrow::before{content:'';width:18px;height:1px;background:var(--accent-dim);}
+.view-lede{margin-top:18px;max-width:620px;}
+.view-lede .body{color:var(--fg-2);}
+.view-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px;}
+.view-actions a{font-family:'IBM Plex Mono',monospace;font-size:clamp(12px,.8vw,13.5px);color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-dim);padding-bottom:2px;cursor:pointer;transition:color .18s,border-color .18s;}
+.view-actions a:hover{color:var(--fg-2);border-color:var(--accent);}
+
+/* Cards — grid base */
+.card-grid{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);overflow:hidden;}
+.grid-2{grid-template-columns:repeat(2,1fr);}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+@media(max-width:780px){.grid-3{grid-template-columns:1fr 1fr;}}
+@media(max-width:540px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+.card{background:var(--bk);padding:24px;display:flex;flex-direction:column;gap:10px;transition:background .2s;}
+.card:hover{background:var(--bk-2);}
+.card-tag{font-family:'IBM Plex Mono',monospace;font-size:clamp(9px,.55vw,10px);letter-spacing:.12em;text-transform:uppercase;color:var(--accent-dim);display:flex;align-items:center;gap:6px;}
+.card-tag::before{content:'';width:14px;height:1px;background:var(--accent-dim);}
+.card-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(15px,1.1vw,17px);letter-spacing:-.01em;line-height:1.3;}
+.card-body{font-size:clamp(13px,.92vw,14.5px);color:var(--fg-3);line-height:1.65;}
+.card-tags{display:flex;flex-wrap:wrap;gap:5px;}
+.card-tags .tag{font-size:clamp(9px,.5vw,10px);padding:2px 8px;border-radius:100px;color:var(--fg-3);border:1px solid var(--line-soft);}
+.card-foot{display:flex;justify-content:space-between;align-items:center;padding-top:11px;border-top:1px solid var(--line-soft);font-size:clamp(11px,.7vw,12px);gap:10px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;}
+.card-foot .card-source{color:var(--accent-dim);}
+.card-foot .card-links{display:flex;gap:14px;flex-wrap:wrap;}
+.card-foot .card-links a{color:var(--fg-3);transition:color .18s;}
+.card-foot .card-links a:hover{color:var(--accent);}
+.card-action{font-family:'IBM Plex Mono',monospace;font-size:clamp(12px,.8vw,13.5px);color:var(--accent);text-decoration:none;cursor:pointer;transition:color .18s;}
+.card-action:hover{color:var(--fg-2);}
+
+/* Callout */
+.callout{border:1px solid var(--accent-dim);background:var(--bk-2);padding:26px 28px;position:relative;max-width:720px;}
+.callout::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);}
+.callout .tag{font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,.65vw,11px);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:block;}
+.callout p{font-size:clamp(14px,1vw,15.5px);line-height:1.7;color:var(--fg-2);margin:0 0 10px;}
+.callout p:last-of-type{margin-bottom:0;}
+.callout .go{display:inline-block;margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:clamp(12px,.8vw,13.5px);color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-dim);padding-bottom:2px;transition:border-color .18s;}
+.callout .go:hover{border-color:var(--accent);}
+
+/* Mirror list */
+.mirror-list{list-style:none;padding:0;display:flex;flex-direction:column;max-width:620px;margin-top:22px;}
+.mirror-list li{padding:14px 0;border-bottom:1px solid var(--line-soft);display:flex;gap:14px;font-size:clamp(14px,1vw,15.5px);color:var(--fg-3);line-height:1.65;}
+.mirror-list li:last-child{border-bottom:none;}
+.mirror-list li::before{content:'—';color:var(--accent-dim);flex-shrink:0;}
+.mirror-list li b{color:var(--fg-2);font-weight:500;}
+
+/* CTA row */
+.cta-row{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px;margin-top:40px;}
+.cta-primary{font-family:'IBM Plex Mono',monospace;font-size:clamp(13px,.95vw,15px);color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-dim);padding-bottom:3px;transition:color .18s,border-color .18s;}
+.cta-primary:hover{color:var(--fg-2);border-color:var(--accent);}
+.cta-secondary{font-family:'IBM Plex Mono',monospace;font-size:clamp(11px,.75vw,13px);color:var(--fg-3);text-decoration:none;border-bottom:1px solid var(--line-soft);transition:color .18s;}
+.cta-secondary:hover{color:var(--fg-2);}
+
+/* Nudge / nav */
+.nudge{margin-top:48px;padding-top:20px;border-top:1px solid var(--line-soft);display:flex;flex-wrap:wrap;gap:16px;align-items:center;}
+.nudge span{font-family:'IBM Plex Mono',monospace;font-size:clamp(11px,.75vw,12.5px);color:var(--fg-3);}
+.nudge a{font-family:'IBM Plex Mono',monospace;font-size:clamp(11px,.75vw,12.5px);color:var(--fg-3);text-decoration:none;border-bottom:1px solid var(--line-soft);padding-bottom:2px;cursor:pointer;transition:color .18s,border-color .18s;}
+.nudge a:hover{color:var(--accent);border-color:var(--accent-dim);}
+
+/* Cross-links */
+.cross-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.cross-link{font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,.6vw,11px);color:var(--fg-3);border:1px solid var(--line-soft);padding:4px 10px;transition:color .18s,border-color .18s;}
+.cross-link:hover{color:var(--accent);border-color:var(--accent-dim);}
+
+/* Footer */
+footer{max-width:1040px;margin:0 auto;padding:32px 36px 56px;border-top:1px solid var(--line-soft);display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,.65vw,11.5px);color:var(--fg-3);}
+footer a{color:var(--fg-3);transition:color .18s;}
+footer a:hover{color:var(--accent);}
+footer .foot-links{display:flex;gap:20px;flex-wrap:wrap;}
+
+/* Gap warning */
+.gap-box{border:1px solid var(--line);background:var(--bk-2);padding:18px 22px;margin-top:28px;border-left:2px solid var(--accent-dim);}
+.gap-box .body-s{color:var(--fg-3);}
+.gap-box .body-s b{color:var(--fg-2);}
+.gap-box .body-s code{font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,.6vw,11px);color:var(--accent-dim);background:var(--bk);padding:2px 5px;}
+
+/* System card variant */
+.system-card .card-title{font-size:clamp(16px,1.2vw,18px);}
+.system-card .card-tag{margin-bottom:2px;}
+
+/* === MOBILE === */
+@media(max-width:860px){
+  .nav{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,10,8,.97);flex-direction:column;padding:80px 28px 28px;z-index:70;backdrop-filter:blur(20px);}
+  .nav.open{display:flex;}
+  .nav .nav-item{padding:16px 8px;font-size:clamp(15px,4.2vw,18px);border-bottom:1px solid var(--line-soft);}
+  .nav .nav-item:last-child{border-bottom:none;}
+  .mobile-toggle{display:block;position:relative;z-index:80;}
+  .mobile-toggle.open{border-color:var(--accent-dim);color:var(--accent);}
+  .perspective-btn{display:none;}
+  .topbar{padding:10px 20px;}
+  .view{padding:48px 20px 40px;}
+  #gate{padding:36px 18px;}
+  .gate-proof{gap:16px 28px;}
+}
+@media(max-width:540px){
+  .view{padding:36px 16px 32px;}
+  .card{padding:18px;}
+  .callout{padding:20px;}
+  .gate-doors{margin:0 -2px;width:calc(100% + 4px);}
+  .door{padding:18px 20px;}
+  .gate-pipeline{max-width:100%;}
+  .pipe-wrap{flex-wrap:wrap;justify-content:center;}
+  .pipe-arrow{display:none;}
+  .pipe-step{padding:4px 10px;font-size:10px;}
+}
+@media(max-width:400px){
+  .door{padding:14px 16px;}
+  .door-num{font-size:18px;}
+  .gate-proof{gap:12px 20px;}
+  .proof-num{font-size:clamp(24px,8vw,30px);}
+}
 </style>
 </head>
 <body>
 
-<!-- ===== GATE ===== -->
+<!-- GATE -->
 <div id="gate">
   <div class="gate-brand">
     <span class="gate-mark"></span>
     <span class="gate-name">LUXVERSO</span>
-    <span class="gate-sub">RESEARCH &amp; TECH</span>
+    <span class="gate-sub">RESEARCH &amp; BUILD</span>
   </div>
-  <div class="gate-vision">A LuxVerso constrói <strong>infraestrutura de inteligência</strong> para transformar problemas complexos em sistemas que podem ser investigados, testados e colocados para funcionar.</div>
+  <div class="gate-vision">
+    <div class="display-m">Infraestrutura independente de <strong>pesquisa, engenharia</strong> e <strong>inteligência</strong> aplicada a problemas complexos.</div>
+  </div>
   <div class="gate-pipeline">
-    <span class="pipe-step active">🔬 Research</span>
-    <span class="pipe-arrow">→</span>
-    <span class="pipe-step">⚙️ Build</span>
-    <span class="pipe-arrow">→</span>
-    <span class="pipe-step">🧪 Test</span>
-    <span class="pipe-arrow">→</span>
-    <span class="pipe-step">🚀 Apply</span>
+    <div class="pipe-wrap">
+      <span class="pipe-step active">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><line x1="8" y1="8" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="8"/></svg>
+        Research
+      </span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-step">
+        <svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="10" rx="2"/><line x1="8" y1="7" x2="8" y2="17"/><line x1="16" y1="7" x2="16" y2="17"/></svg>
+        Build
+      </span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-step">
+        <svg viewBox="0 0 24 24"><path d="M2 12 L8 8 L12 4 L16 8 L22 12 L16 16 L12 20 L8 16 Z"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+        Test
+      </span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-step">
+        <svg viewBox="0 0 24 24"><path d="M5 14 L9 18 L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Apply
+      </span>
+    </div>
   </div>
-  <div class="gate-stats">
-    <span class="gate-stat"><span class="gate-stat-n">16</span><span class="gate-stat-l">Sistemas</span><span class="gate-stat-l2">código + dados abertos</span></span>
-    <span class="gate-stat"><span class="gate-stat-n">3</span><span class="gate-stat-l">Papers</span><span class="gate-stat-l2">peer review aceitos</span></span>
-    <span class="gate-stat"><span class="gate-stat-n">R$529M</span><span class="gate-stat-l">Dados Públicos</span><span class="gate-stat-l2">mapeados em pipelines</span></span>
-    <span class="gate-stat"><span class="gate-stat-n">99,4%</span><span class="gate-stat-l">LuxSense</span><span class="gate-stat-l2">acurácia ML</span></span>
+  <div class="gate-proof">
+    <span class="proof-item">
+      <span class="proof-num">16</span>
+      <span class="proof-label">Sistemas</span>
+      <span class="proof-sub">código e dados abertos</span>
+    </span>
+    <span class="proof-item">
+      <span class="proof-num">3</span>
+      <span class="proof-label">Papers</span>
+      <span class="proof-sub">peer review aceitos</span>
+    </span>
+    <span class="proof-item">
+      <span class="proof-num">R$529M</span>
+      <span class="proof-label">Dados Públicos</span>
+      <span class="proof-sub">mapeados em pipelines</span>
+    </span>
+    <span class="proof-item">
+      <span class="proof-num">99,4%</span>
+      <span class="proof-label">LuxSense</span>
+      <span class="proof-sub">acurácia ML</span>
+    </span>
   </div>
-  <div class="gate-title">O que você quer descobrir <em>sobre a LuxVerso?</em></div>
-  <div class="gate-grid" id="gateGrid"></div>
-  <div class="gate-signals"><span><b>Visão</b> Research &amp; Build</span><span><b>Evidência</b> sistemas e artefatos públicos</span><span><b>Trajetória</b> construção independente</span></div>
-  <a class="gate-direct" href="#rapido">Entrar direto →</a>
+  <div class="gate-title"><span>Escolha uma perspectiva</span></div>
+  <div class="gate-doors" id="gateGrid"></div>
+  <div class="gate-signals"><span><b>Visão</b> Research &amp; Build</span><span><b>Evidência</b> 16 sistemas públicos</span><span><b>Trajetória</b> CHI 2026 · IJCAI 2026</span></div>
+  <a class="gate-direct" href="#rapido">
+    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    Entrar
+  </a>
 </div>
 
-<!-- ===== APP ===== -->
+<!-- APP -->
 <div id="app">
   <header class="topbar">
-    <div class="brand" onclick="showGate()" title="Voltar ao início">
+    <div class="brand" onclick="showGate()">
       <span class="brand-mark"></span>
       <span class="brand-name">LUXVERSO</span>
-      <span class="brand-sub">RESEARCH &amp; TECH</span>
+      <span class="brand-sub">RESEARCH &amp; BUILD</span>
     </div>
     <div class="nav-wrap">
-      <nav class="main-nav">
-        <a class="nav-link" onclick="enterView('sobre')">Sobre</a>
-        <a class="nav-link" onclick="enterView('pesquisa')">Pesquisa</a>
-        <a class="nav-link" onclick="enterView('inteligencia')">Inteligência</a>
-        <a class="nav-link" onclick="enterView('sistemas')">Sistemas</a>
-        <a class="nav-link" onclick="enterView('dominios')">Domínios</a>
-        <a class="nav-link" onclick="enterView('oportunidades')">Oportunidades</a>
-        <a class="nav-link" onclick="enterView('contato')">Contato</a>
+      <nav class="nav" id="mainNav">
+        <a class="nav-item" onclick="enterView('sobre')">Sobre</a>
+        <a class="nav-item" onclick="enterView('pesquisa')">Pesquisa</a>
+        <a class="nav-item" onclick="enterView('inteligencia')">Inteligência</a>
+        <a class="nav-item" onclick="enterView('sistemas')">Sistemas</a>
+        <a class="nav-item" onclick="enterView('dominios')">Domínios</a>
+        <a class="nav-item" onclick="enterView('oportunidades')">Oportunidades</a>
+        <a class="nav-item" onclick="enterView('contato')">Contato</a>
       </nav>
-      <a class="switch-perspective" onclick="showGate()">Perspectivas</a>
-      <button class="mobile-nav-toggle" onclick="this.parentElement.parentElement.querySelector('.main-nav').classList.toggle('open')" aria-label="Menu">☰</button>
+      <a class="perspective-btn" onclick="showGate()">Portas</a>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">≡</button>
     </div>
   </header>
-
   <main id="mainContent"></main>
-
   <footer>
-    <span>LuxVerso Research Initiative · <a href="https://github.com/viniburilux" target="_blank">Vinícius Buri</a> · Salvador, Bahia</span>
+    <span>LuxVerso Research Initiative · <a href="https://github.com/viniburilux" target="_blank">V. Buri</a> · Salvador, BA</span>
     <span class="foot-links">
       <a href="https://github.com/viniburilux" target="_blank">GitHub ↗</a>
       <a href="https://openreview.net/profile?id=~Vinicius_Buri_Lux1" target="_blank">OpenReview ↗</a>
-      <a href="https://wa.me/5585999798762" target="_blank">WhatsApp ↗</a>
+      <a href="https://wa.me/5585999798762" target="_blank">Contato ↗</a>
     </span>
   </footer>
 </div>
 
 <script>
+// Mobile toggle
+document.getElementById('mobileToggle').addEventListener('click', function(){
+  document.getElementById('mainNav').classList.toggle('open');
+  this.classList.toggle('open');
+});
+
 // ============================================================
-// DATA: All systems in the ecosystem
+// DATA
 // ============================================================
 const SYSTEMS = [
-  { id:'si', icon:'🔧', name:'Sistemas Inteligentes', desc:'Plataforma de investigação multi-domínio com 9 capacidades — descoberta, proveniência, representação, agentes, sensoriamento, predição, simulação, otimização, decisão.', tags:['Investigation','Multi-domain'], url:'https://viniburilux.github.io/Sistemas-Inteligentes/', domain:'multi', program:'ciencia' },
-  { id:'gw', icon:'🛰️', name:'GhostWorks', desc:'Inteligência territorial por embeddings de satélite e séries temporais. Mapa vivo, ranking e caminho de inspeção. Paper aceito no GlobalSouthAI (IJCAI-ECAI 2026).', tags:['Sensoriamento Remoto','Embeddings','Mineração','Energia'], url:'https://viniburilux.github.io/ghostworks/', domain:'territorio', program:'territorio' },
-  { id:'gwm', icon:'⛏️', name:'GhostWorks Mining', desc:'Componente de mineração: 277 âncoras → 1.001 coordenadas ranqueadas. SIGMINE, prospecção e materiais críticos.', tags:['Mineração','Materiais Críticos','SIGMINE'], url:'https://viniburilux.github.io/ghostworks/mining/', domain:'mineracao', program:'mineracao' },
-  { id:'ls', icon:'🔬', name:'LuxSense', desc:'Sensor Raman com classificação por ML (99,43% acurácia, 3.510 espectros). Demonstração pública, paper em revisão, TRL 3-4.', tags:['ML','Espectroscopia','Sensoriamento'], url:'https://viniburilux.github.io/luxsense/', domain:'ciencia', program:'ciencia' },
-  { id:'lr', icon:'📡', name:'Lux-Radar', desc:'Motor de oportunidade automatizado. Pipeline semanal de captura, classificação e distribuição de oportunidades, editais e chamadas.', tags:['Automação','Oportunidade','Pipeline'], url:'https://viniburilux.github.io/Lux-Radar/', domain:'multi', program:'ciencia' },
-  { id:'tf', icon:'🔍', name:'TraceFoundry', desc:'Infraestrutura de evidência com 7 estados epistêmicos. Proveniência, rastreabilidade e reconstrução de descobertas. Licença MIT.', tags:['Proveniência','Evidência','Epistemologia'], url:'https://github.com/viniburilux/TraceFoundry', domain:'ciencia', program:'ciencia' },
-  { id:'oi', icon:'🧬', name:'Organoid Intelligence', desc:'Página de investigação sobre inteligência organoide. 4 achados documentados, incluindo 1 negativo. Hipóteses, referências e próximos passos.', tags:['Organoide','Neurociência','Hipóteses'], url:'https://viniburilux.github.io/organoid-intelligence/', domain:'ciencia', program:'biotecnologia' },
-  { id:'tib', icon:'🌱', name:'Inteligência Biotecnológica', desc:'Corpus público de 763 obras, 2.680 atores, 767 instituições, 4.045 relações. Bioinsumos, controle biológico, rotas tecnológicas.', tags:['Biotecnologia','Agro','Corpus'], url:'https://github.com/viniburilux/inteligencia-biotecnologica-agropecuaria', domain:'biotecnologia', program:'biotecnologia' },
-  { id:'ttib', icon:'🗺️', name:'TTI Brazil', desc:'Dataset de transformação territorial no Brasil (2017-2024) com registros por município, classe e bioma. Preprint disponível.', tags:['Território','Dataset','Preprint'], url:'https://github.com/viniburilux/TTI_Brazil_2017_2024', domain:'territorio', program:'territorio' },
-  { id:'mang', icon:'🌿', name:'Manguezais SP', desc:'Monitoramento de manguezais com divergências entre classificação de cenas, câmeras e períodos.', tags:['Ecossistemas','Monitoramento'], url:'https://viniburilux.github.io/Manguezais-Brasil/manguezais-sp/', domain:'territorio', program:'territorio' },
-  { id:'cgu', icon:'🏛️', name:'CGU Reuso 2026', desc:'Análise e visualização de dados da CGU para reuso em transparência pública. Bases abertas.', tags:['Dados Públicos','Transparência'], url:'https://viniburilux.github.io/cgu-reuso-2026/', domain:'dados-publicos', program:'dados-publicos' },
-  { id:'grb', icon:'📊', name:'Gastos Reais BA', desc:'Pipeline de gastos reais da Bahia com 7 tabelas de agregação, R$160M+ mapeados. 4 cruzamentos CGU.', tags:['Gastos','Bahia','Pipeline'], url:'https://viniburilux.github.io/gastos-reais-ba/', domain:'dados-publicos', program:'dados-publicos' },
-  { id:'pncp', icon:'📋', name:'Monitor PNCP', desc:'Monitor de contratações públicas via API do PNCP. Classificação automática, integração com indicadores.', tags:['Contratos','PNCP','API'], url:'https://viniburilux.github.io/monitor-gastos-pncp/', domain:'dados-publicos', program:'dados-publicos' },
-  { id:'edb', icon:'🔎', name:'Explorador Dados Bahia', desc:'Explorador multi-fonte de dados públicos da Bahia. Unifica PNCP, gastos, contratos e indicadores.', tags:['Dados','Bahia','Explorador'], url:'https://viniburilux.github.io/explorador-dados-bahia/', domain:'dados-publicos', program:'dados-publicos' },
-  { id:'bar', icon:'✈️', name:'Barcelona Story', desc:'Trajetória de pesquisador independente de Salvador aceito na CHI 2026. Submissão majoritariamente pelo celular.', tags:['Trajetória','CHI 2026','Pesquisa'], url:'https://viniburilux.github.io/barcelona/', domain:'ciencia', program:'ciencia' },
-  { id:'scs', icon:'💬', name:'Semantic Convergence', desc:'Dataset longitudinal de 352 conversas e 34.626 mensagens sobre convergência semântica em interação com LLMs.', tags:['Dataset','LLMs','Conversas'], url:'https://github.com/viniburilux/LuxVerso-Semantic-Convergence-Study', domain:'ciencia', program:'ciencia' }
+  { id:'si', name:'Sistemas Inteligentes', desc:'Plataforma de investigação multi-domínio com 9 capacidades — descoberta, proveniência, representação, agentes, sensoriamento, predição, simulação, otimização, decisão.', tags:['Investigation','Multi-domain'], url:'https://viniburilux.github.io/Sistemas-Inteligentes/', domain:'multi', program:'ciencia' },
+  { id:'gw', name:'GhostWorks', desc:'Inteligência territorial por embeddings de satélite e séries temporais. Mapa vivo, ranking e caminho de inspeção. Aceito no GlobalSouthAI (IJCAI-ECAI 2026).', tags:['Sensoriamento Remoto','Embeddings','Mineração','Energia'], url:'https://viniburilux.github.io/ghostworks/', domain:'territorio', program:'territorio' },
+  { id:'gwm', name:'GhostWorks Mining', desc:'Componente de mineração: 277 âncoras SIGMINE → 1.001 coordenadas ranqueadas para inspeção.', tags:['Mineração','Materiais Críticos','SIGMINE'], url:'https://viniburilux.github.io/ghostworks/mining/', domain:'mineracao', program:'mineracao' },
+  { id:'ls', name:'LuxSense', desc:'Sensor Raman com classificação ML (99,43% acurácia, 3.510 espectros). Paper em revisão, TRL 3-4.', tags:['ML','Espectroscopia','Sensoriamento'], url:'https://viniburilux.github.io/luxsense/', domain:'ciencia', program:'ciencia' },
+  { id:'lr', name:'Lux-Radar', desc:'Motor de oportunidade automatizado. Pipeline semanal de captura, classificação e distribuição de editais e chamadas.', tags:['Automação','Oportunidade','Pipeline'], url:'https://viniburilux.github.io/Lux-Radar/', domain:'multi', program:'ciencia' },
+  { id:'tf', name:'TraceFoundry', desc:'Infraestrutura de evidência com 7 estados epistêmicos. Proveniência, rastreabilidade e reconstrução de descobertas. Licença MIT.', tags:['Proveniência','Evidência','Epistemologia'], url:'https://github.com/viniburilux/TraceFoundry', domain:'ciencia', program:'ciencia' },
+  { id:'oi', name:'Organoid Intelligence', desc:'Página de investigação sobre inteligência organoide. 4 achados documentados, incluindo 1 negativo.', tags:['Organoide','Neurociência','Hipóteses'], url:'https://viniburilux.github.io/organoid-intelligence/', domain:'ciencia', program:'biotecnologia' },
+  { id:'tib', name:'Inteligência Biotecnológica', desc:'Corpus público de 763 obras, 2.680 atores, 767 instituições, 4.045 relações — bioinsumos e rotas tecnológicas.', tags:['Biotecnologia','Agro','Corpus'], url:'https://github.com/viniburilux/inteligencia-biotecnologica-agropecuaria', domain:'biotecnologia', program:'biotecnologia' },
+  { id:'ttib', name:'TTI Brazil', desc:'Dataset de transformação territorial no Brasil (2017-2024) — registros por município, classe e bioma. Preprint disponível.', tags:['Território','Dataset','Preprint'], url:'https://github.com/viniburilux/TTI_Brazil_2017_2024', domain:'territorio', program:'territorio' },
+  { id:'mang', name:'Manguezais SP', desc:'Monitoramento de manguezais com divergências entre classificação de cenas, câmeras e períodos.', tags:['Ecossistemas','Monitoramento'], url:'https://viniburilux.github.io/Manguezais-Brasil/manguezais-sp/', domain:'territorio', program:'territorio' },
+  { id:'cgu', name:'CGU Reuso 2026', desc:'Análise e visualização de dados da CGU para reuso em transparência pública.', tags:['Dados Públicos','Transparência'], url:'https://viniburilux.github.io/cgu-reuso-2026/', domain:'dados-publicos', program:'dados-publicos' },
+  { id:'grb', name:'Gastos Reais BA', desc:'Pipeline de gastos públicos da Bahia — 7 tabelas de agregação, R$160M+ mapeados, 4 cruzamentos CGU.', tags:['Gastos','Bahia','Pipeline'], url:'https://viniburilux.github.io/gastos-reais-ba/', domain:'dados-publicos', program:'dados-publicos' },
+  { id:'pncp', name:'Monitor PNCP', desc:'Monitor de contratações públicas via API do PNCP — classificação automática e indicadores fiscais.', tags:['Contratos','PNCP','API'], url:'https://viniburilux.github.io/monitor-gastos-pncp/', domain:'dados-publicos', program:'dados-publicos' },
+  { id:'edb', name:'Explorador Dados Bahia', desc:'Explorador multi-fonte de dados públicos da Bahia — PNCP, gastos, contratos e indicadores.', tags:['Dados','Bahia','Explorador'], url:'https://viniburilux.github.io/explorador-dados-bahia/', domain:'dados-publicos', program:'dados-publicos' },
+  { id:'bar', name:'Barcelona Story', desc:'Trajetória de pesquisador independente de Salvador aceito na CHI 2026 — submissão majoritariamente pelo celular.', tags:['Trajetória','CHI 2026','Pesquisa'], url:'https://viniburilux.github.io/barcelona/', domain:'ciencia', program:'ciencia' },
+  { id:'scs', name:'Semantic Convergence', desc:'Dataset longitudinal de 352 conversas e 34.626 mensagens sobre convergência semântica com LLMs.', tags:['Dataset','LLMs','Conversas'], url:'https://github.com/viniburilux/LuxVerso-Semantic-Convergence-Study', domain:'ciencia', program:'ciencia' }
 ];
 
 const PROGRAMS = {
-  biotecnologia:{ icon:'🧬', name:'Biotecnologia e Agro', desc:'Bioinsumos, controle biológico, rotas tecnológicas. Corpus de 763 obras, 2.680 atores.', systems:['oi','tib'] },
-  territorio:{ icon:'🛰️', name:'Território, Energia e Meio Ambiente', desc:'Detecção de transformação territorial, monitoramento de mineração, energia e ecossistemas.', systems:['gw','ttib','mang'] },
-  mineracao:{ icon:'⛏️', name:'Mineração e Materiais Críticos', desc:'Patentes minerais, prospecção, reciclagem de baterias. Corpus de 72 arquivos, 22 datasets.', systems:['gwm','ttib'] },
-  'dados-publicos':{ icon:'🏛️', name:'Dados Públicos e Transparência', desc:'Contratações públicas, cruzamento multi-fonte, dashboards. R$529,5M mapeados.', systems:['cgu','grb','pncp','edb'] },
-  ciencia:{ icon:'🔬', name:'Ciência, Tecnologia e Infraestrutura', desc:'TraceFoundry, representações R4-R6, experimento Lux-vs-LLM, sensoriamento inteligente, discovery.', systems:['si','ls','lr','tf','bar','scs'] }
+  biotecnologia:{ name:'Biotecnologia', desc:'Bioinsumos, controle biológico, rotas tecnológicas. Corpus de 763 obras, 2.680 atores.', systems:['oi','tib'] },
+  territorio:{ name:'Território', desc:'Detecção de transformação territorial, monitoramento de mineração, energia e ecossistemas.', systems:['gw','ttib','mang'] },
+  mineracao:{ name:'Mineração', desc:'Patentes minerais, prospecção, reciclagem de baterias. Corpus de 72 arquivos, 22 datasets.', systems:['gwm','ttib'] },
+  'dados-publicos':{ name:'Dados Públicos', desc:'Contratações públicas, cruzamento multi-fonte, dashboards. R$529,5M mapeados.', systems:['cgu','grb','pncp','edb'] },
+  ciencia:{ name:'Ciência & Infra', desc:'TraceFoundry, representações R4-R6, experimento Lux-vs-LLM, sensoriamento, discovery.', systems:['si','ls','lr','tf','bar','scs'] }
 };
 
 const DOMAINS = {
-  territorio:{ icon:'🛰️', name:'Território e Meio Ambiente', desc:'Transformação territorial, manguezais, queimadas, monitoramento costeiro, energia, mineração.', systems:['gw','ttib','mang','gwm'] },
-  'dados-publicos':{ icon:'🏛️', name:'Dados Públicos', desc:'Transparência, contratações, cruzamento multi-fonte, controle social. API PNCP, CGU, gastos.', systems:['cgu','grb','pncp','edb'] },
-  biotecnologia:{ icon:'🧬', name:'Biotecnologia e Agro', desc:'Bioinsumos, controle biológico, prospecção de rotas, organismos, patentes. Corpus multi-fonte.', systems:['tib','oi'] },
-  mineracao:{ icon:'⛏️', name:'Mineração e Materiais', desc:'Prospecção mineral, materiais críticos, reciclagem de baterias, patentes, SIGMINE.', systems:['gwm','gw','ttib'] },
-  energia:{ icon:'⚡', name:'Energia', desc:'Expansão renovável, impacto territorial, transição energética. Acelen, Candeias/BA.', systems:['gw','ttib'] },
-  ciencia:{ icon:'🔬', name:'Ciência e P&D', desc:'Technology intelligence, R&D scouting, investigação científica, sensoriamento, epistemologia.', systems:['tf','si','ls','lr','oi','scs'] }
+  territorio:{ name:'Território', desc:'Transformação territorial, manguezais, queimadas, monitoramento costeiro, energia, mineração.', systems:['gw','ttib','mang','gwm'] },
+  'dados-publicos':{ name:'Dados Públicos', desc:'Transparência, contratações, cruzamento multi-fonte. API PNCP, CGU, gastos.', systems:['cgu','grb','pncp','edb'] },
+  biotecnologia:{ name:'Biotecnologia', desc:'Bioinsumos, controle biológico, prospecção de rotas, organismos, patentes.', systems:['tib','oi'] },
+  mineracao:{ name:'Mineração', desc:'Prospecção mineral, materiais críticos, reciclagem de baterias, patentes, SIGMINE.', systems:['gwm','gw','ttib'] },
+  energia:{ name:'Energia', desc:'Expansão renovável, impacto territorial, transição energética. Acelen, Candeias/BA.', systems:['gw','ttib'] },
+  ciencia:{ name:'Ciência & P&D', desc:'Technology intelligence, R&D scouting, investigação científica, sensoriamento, epistemologia.', systems:['tf','si','ls','lr','oi','scs'] }
 };
 
 // ============================================================
-// HELPERS
+// HELPERS (same logic, SVG-less icons replaced)
 // ============================================================
 function pubBlock(){
   const pubs = [
-    { venue:'CHI 2026 · Workshop InterAI (3ª edição)', title:'The Illusion of Consensus in Human-Centered Interactive AI', href:'https://openreview.net/forum?id=eJtBEBmYGB' },
+    { venue:'CHI 2026 · Workshop InterAI', title:'The Illusion of Consensus in Human-Centered Interactive AI', href:'https://openreview.net/forum?id=eJtBEBmYGB' },
     { venue:'CHI 2026 · Workshop HEAL', title:'When Humans Become Regime Stabilizers', href:'https://openreview.net/forum?id=PJNqpu0fKr' },
-    { venue:'IJCAI-ECAI 2026 · Workshop GlobalSouthAI', title:'Territorial Change Detection Under Zero-Budget Constraints', href:'https://openreview.net/forum?id=d89iIi3Z2D' }
+    { venue:'IJCAI-ECAI 2026 · GlobalSouthAI', title:'Territorial Change Detection Under Zero-Budget Constraints', href:'https://openreview.net/forum?id=d89iIi3Z2D' }
   ];
-  return `<div class="callout"><span class="tag">Publicações com peer review — aceitas</span>
-    ${pubs.map(p=>`<p><a href="${p.href}" target="_blank" style="color:var(--fg);text-decoration:none;border-bottom:1px solid var(--amber-dim);">${p.title}</a><br><span style="color:var(--fg-dimmer);font-family:'IBM Plex Mono',monospace;font-size:12px;">${p.venue}</span></p>`).join('')}
-    <a class="go" href="https://openreview.net/profile?id=~Vinicius_Buri_Lux1" target="_blank">Ver as 33 submissões no OpenReview ↗</a></div>`;
+  return `<div class="callout"><span class="tag">Publicações com peer review</span>
+    ${pubs.map(p=>`<p><a href="${p.href}" target="_blank" style="color:var(--fg-2);text-decoration:none;border-bottom:1px solid var(--accent-dim);">${p.title}</a><br><span class="mono">${p.venue}</span></p>`).join('')}
+    <a class="go" href="https://openreview.net/profile?id=~Vinicius_Buri_Lux1" target="_blank">Ver submissões →</a></div>`;
 }
 
 function systemCard(sys){
   const p = PROGRAMS[sys.program];
-  return `<div class="card">
-    <div style="display:flex;gap:14px;align-items:flex-start;">
-      <span style="font-size:22px;line-height:1;">${sys.icon}</span>
-      <div><div class="card-title">${sys.name}</div>
-      <div class="card-body">${sys.desc}</div></div>
-    </div>
-    <div class="card-tags">${sys.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+  return `<div class="card system-card">
+    <div class="card-tag">${p ? p.name : '—'}</div>
+    <div class="card-title">${sys.name}</div>
+    <div class="card-body">${sys.desc}</div>
+    <div class="card-tags">${sys.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
     <div class="card-foot">
-      <span class="card-links"><a href="${sys.url}" target="_blank">Abrir ↗</a></span>
-      <span style="font-size:10.5px;color:var(--fg-dimmer);">${p ? p.icon+' '+p.name : '—'}</span>
+      <span class="card-links"><a href="${sys.url}" target="_blank">Abrir →</a></span>
     </div>
   </div>`;
 }
 
 function crossLinks(ids){
-  if(!ids || !ids.length) return '';
+  if(!ids||!ids.length) return '';
   return `<div class="cross-links">${ids.map(id=>{
     const s = SYSTEMS.find(x=>x.id===id);
-    return s ? `<a class="cross-link" href="${s.url}" target="_blank">${s.icon} ${s.name} ↗</a>` : '';
+    return s ? `<a class="cross-link" href="${s.url}" target="_blank">${s.name} →</a>` : '';
   }).join('')}</div>`;
 }
 
 // ============================================================
-// PERSPECTIVE RENDERERS (preserved from original)
+// PERSPECTIVE RENDERERS
 // ============================================================
 function render(view){
   const m = document.getElementById('mainContent');
   const evidence = [
-    { title:'Inteligência territorial a partir de dados de satélite', body:'Sistema construído sobre embeddings de satélite e séries temporais para revelar transformações no território — da mineração e energia aos ecossistemas.', tags:['Sensoriamento Remoto','Embeddings','Séries Temporais'], src:'GhostWorks · Casos executados · IJCAI-ECAI 2026', url:'https://viniburilux.github.io/ghostworks/', deep:'GhostWorks transforma observações da Terra em sinais, trajetórias e padrões legíveis. Casos executados: entorno da Acelen (Candeias/BA, 2019–2023) e busca operacional SIGMINE no Pará (277 âncoras → 1.001 coordenadas ranqueadas).' },
-    { title:'Dados públicos transformados em sistemas de inteligência', body:'Fontes públicas distintas (PNCP, contratos, gastos) unificadas em pipelines, exploradores e interfaces de monitoramento — aplicadas a contratação e transparência na Bahia.', tags:['APIs','ETL','Engenharia de Dados'], src:'Public Data Intelligence · R$529,5M mapeados', url:'https://viniburilux.github.io/gastos-reais-ba/', deep:'Infraestrutura aberta e contínua: coleta via API do PNCP, classificação automática, integração com indicadores fiscais e demográficos. Código e dados abertos.' },
-    { title:'Discovery científico e tecnológico', body:'Conecta literatura, datasets, patentes e ativos de pesquisa para descobrir oportunidades, relações e caminhos de decisão — sem se perder no ruído da informação fragmentada.', tags:['Metadata','Cross-source','Scouting'], src:'TraceFoundry · High-stakes discovery', url:'https://github.com/viniburilux/TraceFoundry', deep:'Motor de discovery que normaliza metadados de fontes distintas, aplica critérios explícitos de seleção e registra por que candidatos foram aceitos ou rejeitados.' },
-    { title:'Pesquisa experimental que vira método e sistema', body:'Da formulação de hipótese à construção de dataset, protocolo e artefato público — incluindo avaliação de LLMs, estudos longitudinais e ML aplicado a sinal físico.', tags:['Avaliação de IA','Datasets','ML Aplicado'], src:'AI / Scientific Research', url:'https://viniburilux.github.io/luxsense/', deep:'MISB: benchmark público de estabilidade metacognitiva em LLMs. Semantic Convergence: 352 conversas, 34.626 mensagens. LuxSense: ML sobre espectro Raman bruto.' }
+    { title:'GhostWorks — Inteligência Territorial', d:'Sistema construído sobre embeddings de satélite e séries temporais para revelar transformações no território — do entorno da Acelen (Candeias/BA) ao Pará.', tags:['Sensoriamento Remoto','Embeddings','Séries Temporais'], src:'GhostWorks · Aceito IJCAI-ECAI 2026', url:'https://viniburilux.github.io/ghostworks/' },
+    { title:'Dados Públicos — Infraestrutura de Transparência', d:'Fontes públicas distintas (PNCP, CGU, gastos) unificadas em pipelines e dashboards — R$529,5M mapeados em contratações e gastos na Bahia.', tags:['APIs','ETL','Engenharia de Dados'], src:'Public Data Intelligence', url:'https://viniburilux.github.io/gastos-reais-ba/' },
+    { title:'TraceFoundry — Evidência e Proveniência', d:'Motor de discovery que conecta literatura, datasets, patentes — com critérios explícitos de seleção e rastreabilidade completa.', tags:['Metadata','Cross-source','Scouting'], src:'TraceFoundry · High-stakes discovery', url:'https://github.com/viniburilux/TraceFoundry' },
+    { title:'LuxSense — ML em Espectro Raman', d:'Classificação automática de espectros brutos com 99,43% de acurácia (3.510 amostras). Demonstração pública, paper em revisão, TRL 3-4.', tags:['ML','Espectroscopia','Sensoriamento'], src:'LuxSense · 99,43% acurácia', url:'https://viniburilux.github.io/luxsense/' }
   ];
-  function evidCard(e,d){
-    return `<div class="card"><div class="card-title">${e.title}</div>
-      <div class="card-body">${d&&e.deep?e.deep:e.body}</div>
-      <div class="card-tags">${e.tags.map(t=>`<span>${t}</span>`).join('')}</div>
-      <div class="card-foot"><span class="card-src">${e.src}</span><a class="card-link" href="${e.url}" target="_blank">Ver sistema ↗</a></div></div>`;
-  }
+  function ec(e){return `<div class="card"><div class="card-title">${e.title}</div><div class="card-body">${e.d}</div><div class="card-tags">${e.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div><div class="card-foot"><span class="card-source">${e.src}</span><span class="card-links"><a href="${e.url}" target="_blank">Abrir →</a></span></div></div>`;}
 
   if(view==='rapido'){
     m.innerHTML = `
-    <section>
-      <h1>Projetamos sistemas inteligentes capazes de transformar <em>problemas complexos</em> em soluções executáveis.</h1>
-      <p class="lede">Ciência aplicada, engenharia de dados e inteligência artificial, combinadas para transformar problema difícil em sistema que funciona.</p>
-      <div class="tech-band"><span>IA</span><span>Dados</span><span>Engenharia</span><span>Ciência Aplicada</span><span>Visão Computacional</span><span>Automação</span></div>
-      <div style="margin-top:28px;display:flex;gap:24px;flex-wrap:wrap;">
-        <a class="card-link-arrow" onclick="enterView('sistemas')">Ver sistemas existentes →</a>
-        <a class="card-link-arrow" onclick="enterView('pesquisa')">Ver programas de pesquisa →</a>
-      </div>
+    <div class="view"><section>
+      <div class="display-l">Projetamos sistemas capazes de transformar <span style="color:var(--accent)">problemas complexos</span> em soluções executáveis.</div>
+      <div class="view-lede"><p class="body">Ciência aplicada, engenharia de dados e inteligência artificial combinados — para transformar um problema difícil em um sistema que funciona de verdade.</p></div>
     </section>
     <section>
-      <div class="eyebrow">Evidência</div>
-      <div class="card-grid">${evidence.slice(0,3).map(e=>evidCard(e,0)).join('')}</div>
+      <div class="view-eyebrow">Evidência</div>
+      <div class="card-grid grid-2" style="margin-top:0;">${evidence.slice(0,2).map(ec).join('')}</div>
+      <div class="view-actions"><a onclick="enterView('sistemas')">Ver todos os sistemas →</a><a onclick="enterView('pesquisa')">Programas de pesquisa →</a></div>
     </section>
     <section>
-      <h2>Tem um problema difícil?</h2>
-      <p class="lede">A gente descobre o que pode ser construído.</p>
+      <div class="heading-l">Tem um problema difícil?</div>
+      <div class="view-lede"><p class="body">A gente descobre o que pode ser construído.</p></div>
       <div class="cta-row">
-        <a class="cta-main" href="https://wa.me/5585999798762?text=Ol%C3%A1%2C%20Vini!%20Quero%20entender%20melhor%20o%20que%20a%20LuxVerso%20faz." target="_blank">Quero explorar meu problema ↗</a>
+        <a class="cta-primary" href="https://wa.me/5585999798762?text=Quero%20explorar%20um%20problema" target="_blank">Quero explorar →</a>
         <a class="cta-secondary" onclick="enterView('sistemas')">Ver o que já construímos</a>
       </div>
-      <div class="nudge"><span>Navegar:</span><a onclick="enterView('inteligencia')">Descobertas recentes</a><a onclick="enterView('dominios')">Aplicações por domínio</a></div>
-    </section>`;
+    </section></div>`;
   }
   else if(view==='tecnologia'){
     m.innerHTML = `
-    <section><div class="eyebrow">Como pensamos</div>
-      <h1>Da representação do problema à <em>arquitetura do sistema.</em></h1>
-      <p class="lede">Não começamos pela tecnologia. Começamos entendendo como o problema pode ser representado — quais dados importam, que estrutura existe, que modelo captura aquilo. Só depois entra a construção.</p>
-    </section>
-    <section><div class="eyebrow">Método</div>
-      <div class="method-flow"><span class="step">Entender</span><span class="arrow">→</span><span class="step">Representar</span><span class="arrow">→</span><span class="step">Projetar</span><span class="arrow">→</span><span class="step">Construir</span><span class="arrow">→</span><span class="step">Testar</span><span class="arrow">→</span><span class="step">Colocar para funcionar</span></div>
-    </section>
-    <section><div class="eyebrow">Stack</div>
-      <p class="lede" style="margin-top:0;">Embeddings, visão computacional, grafos de conhecimento, sistemas multiagentes, LLMs, sensoriamento remoto — combinados quando o problema exige.</p>
-      <div class="tech-band"><span>Embeddings</span><span>Visão Computacional</span><span>Grafos</span><span>Multiagentes</span><span>LLMs</span><span>Sensoriamento Remoto</span><span>Modelos Preditivos</span></div>
-      <div style="margin-top:28px;display:flex;gap:24px;flex-wrap:wrap;">
-        <a class="card-link-arrow" onclick="enterView('sistemas')">Ver sistemas que usam essa stack →</a>
-      </div>
-    </section>
-    <section><div class="eyebrow">Evidência detalhada</div>
-      <div class="card-grid">${evidence.map(e=>evidCard(e,1)).join('')}</div>
+    <div class="view"><section>
+      <div class="view-eyebrow">Método</div>
+      <div class="display-l">Da representação do problema à <span style="color:var(--accent)">arquitetura do sistema.</span></div>
+      <div class="view-lede"><p class="body">Não começamos pela tecnologia. Começamos entendendo como o problema pode ser representado — dados, estrutura, modelo, sistema. Só depois entra a construção.</p></div>
     </section>
     <section>
-      <div class="nudge"><span>Aprofundar:</span><a onclick="enter('empresa')">Resolver um problema</a><a onclick="enter('pesquisa')">O que existe por trás</a></div>
-    </section>`;
+      <div class="view-eyebrow">Fluxo</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:clamp(12px,.85vw,14px);color:var(--fg-3);"><span style="color:var(--fg-2);">Entender</span><span style="color:var(--accent-dim);">→</span><span style="color:var(--fg-2);">Representar</span><span style="color:var(--accent-dim);">→</span><span style="color:var(--fg-2);">Projetar</span><span style="color:var(--accent-dim);">→</span><span style="color:var(--fg-2);">Construir</span><span style="color:var(--accent-dim);">→</span><span style="color:var(--fg-2);">Testar</span><span style="color:var(--accent-dim);">→</span><span style="color:var(--fg-2);">Aplicar</span></div>
+    </section>
+    <section>
+      <div class="view-eyebrow">Stack</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">${['Embeddings','Visão Computacional','Grafos','Multiagentes','LLMs','Sensoriamento Remoto','Modelos Preditivos'].map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      <div class="view-actions"><a onclick="enterView('sistemas')">Ver sistemas →</a></div>
+    </section>
+    <section>
+      <div class="view-eyebrow">Evidência</div>
+      <div class="card-grid grid-2">${evidence.map(ec).join('')}</div>
+    </section></div>`;
   }
   else if(view==='empresa'){
     m.innerHTML = `
-    <section><div class="eyebrow">Para sua empresa</div>
-      <h1>Sua empresa já tem tecnologia. <em>Está tirando dela tudo que ela pode dar?</em></h1>
+    <div class="view"><section>
+      <div class="display-l">Sua empresa já tem tecnologia. <span style="color:var(--accent)">Está tirando dela tudo que ela pode dar?</span></div>
       <ul class="mirror-list">
-        <li>Seus dados existem, mas <b>não chegam à decisão</b> na velocidade que deveriam?</li>
-        <li>Seu processo depende de gente que sabe fazer algo que <b>ninguém mais sabe reproduzir</b>?</li>
-        <li>Sua equipe tem tecnologia, mas <b>continua descobrindo problema tarde demais</b>?</li>
-        <li>Existe muita informação, mas pouca capacidade de <b>transformar isso em ação</b>?</li>
+        <li>Dados existem mas <b>não chegam à decisão</b> na velocidade necessária</li>
+        <li>Processos dependem de gente que sabe algo <b>que ninguém mais reproduz</b></li>
+        <li>Tecnologia existe mas <b>problemas continuam aparecendo tarde</b></li>
+        <li>Informação abundante, <b>mas pouca capacidade de transformar em ação</b></li>
       </ul>
-      <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;">
-        <a class="card-link-arrow" onclick="enterView('sistemas')">Ver sistemas existentes →</a>
-        <a class="card-link-arrow" onclick="enterView('dominios')">Aplicações por domínio →</a>
-      </div>
+      <div class="view-actions"><a onclick="enterView('sistemas')">Ver sistemas →</a><a onclick="enterView('dominios')">Aplicações por domínio →</a></div>
     </section>
-    <section><div class="eyebrow">Como reduzimos risco</div>
-      <h2>Do problema à solução <em>sem apostar no escuro.</em></h2>
-      <div class="card-grid-3">
-        <div class="card"><span style="color:var(--amber-dim);font-family:'IBM Plex Mono',monospace;font-size:12px;">01</span><div class="card-title">Começamos pequeno</div><div class="card-body">Escopo controlado, fronteira clara do que será testado.</div></div>
-        <div class="card"><span style="color:var(--amber-dim);font-family:'IBM Plex Mono',monospace;font-size:12px;">02</span><div class="card-title">Medimos o que importa</div><div class="card-body">Critério de sucesso definido antes de construir.</div></div>
-        <div class="card"><span style="color:var(--amber-dim);font-family:'IBM Plex Mono',monospace;font-size:12px;">03</span><div class="card-title">Construímos rápido</div><div class="card-body">Testamos contra a realidade antes de qualquer decisão maior.</div></div>
-        <div class="card"><span style="color:var(--amber-dim);font-family:'IBM Plex Mono',monospace;font-size:12px;">04</span><div class="card-title">Só ampliamos o que funciona</div><div class="card-body">Evidência antes de investimento maior.</div></div>
+    <section>
+      <div class="view-eyebrow">Como reduzimos risco</div>
+      <div class="card-grid grid-3">
+        <div class="card"><span class="card-tag">01</span><div class="card-title">Começamos pequeno</div><div class="card-body">Escopo controlado, fronteira clara do que será testado.</div></div>
+        <div class="card"><span class="card-tag">02</span><div class="card-title">Medimos resultados</div><div class="card-body">Critério de sucesso definido antes de construir.</div></div>
+        <div class="card"><span class="card-tag">03</span><div class="card-title">Construímos rápido</div><div class="card-body">Testamos contra a realidade antes de decisões maiores.</div></div>
+        <div class="card"><span class="card-tag">04</span><div class="card-title">Escalamos só evidência</div><div class="card-body">Avanço baseado em dados, não em intuição.</div></div>
       </div>
     </section>
     <section>
-      <div class="cta-row">
-        <a class="cta-main" href="https://wa.me/5585999798762?text=Ol%C3%A1%2C%20Vini!%20Tenho%20um%20problema%20na%20minha%20empresa%20que%20quero%20explorar." target="_blank">Quero explorar meu problema ↗</a>
-      </div>
-      <div class="nudge"><span>Outras portas:</span><a onclick="enter('tecnologia')">Ver a tecnologia</a><a onclick="enter('investidor')">Avaliar a empresa</a></div>
-    </section>`;
+      <div class="cta-row"><a class="cta-primary" href="https://wa.me/5585999798762?text=Quero%20explorar%20um%20problema%20empresarial" target="_blank">Quero explorar meu problema →</a></div>
+    </section></div>`;
   }
   else if(view==='pesquisa'||view==='pesquisa-view'){
     m.innerHTML = `
-    <section><div class="eyebrow">Por trás da LuxVerso</div>
-      <h1>Pesquisa aplicada, <em>conduzida com rigor.</em></h1>
-      <p class="lede">A LuxVerso é conduzida por Vinícius Buri, pesquisador independente de Salvador, sem laboratório ou vínculo institucional. O rigor está em como investigação, comparação e falsificação de hipótese são estruturadas — nunca dependendo de um único modelo.</p>
-      <div class="method-flow"><span class="step">Entender</span><span class="arrow">→</span><span class="step">Representar</span><span class="arrow">→</span><span class="step">Projetar</span><span class="arrow">→</span><span class="step">Construir</span><span class="arrow">→</span><span class="step">Testar</span><span class="arrow">→</span><span class="step">Colocar para funcionar</span></div>
+    <div class="view"><section>
+      <div class="display-l">Pesquisa aplicada, <span style="color:var(--accent)">conduzida com rigor.</span></div>
+      <div class="view-lede"><p class="body">A LuxVerso é conduzida por Vinícius Buri, pesquisador independente de Salvador. O rigor está em como investigação, comparação e falsificação de hipótese são estruturadas — nunca dependendo de um único modelo.</p></div>
     </section>
-    <section><div class="eyebrow">Programas</div>
-      <div class="card-grid">${Object.entries(PROGRAMS).map(([k,p])=>{
-        const sysLinks = p.systems.filter(id=>SYSTEMS.find(s=>s.id===id)).map(id=>{
-          const s = SYSTEMS.find(x=>x.id===id);
-          return `<a class="cross-link" href="${s.url}" target="_blank">${s.icon} ${s.name} ↗</a>`;
-        }).join('');
-        return `<div class="card"><div class="card-title" style="font-size:16px;">${p.icon} ${p.name}</div>
-          <div class="card-body">${p.desc}</div>
-          ${sysLinks ? `<div class="cross-links">${sysLinks}</div>` : ''}
-          <div class="card-foot"><span class="card-link-arrow" onclick="enterView('sistemas')">Ver todos os sistemas →</span></div></div>`;
+    <section>
+      <div class="view-eyebrow">5 Programas</div>
+      <div class="card-grid grid-2">${Object.keys(PROGRAMS).map(k=>{
+        const p=PROGRAMS[k];const sl=p.systems.filter(i=>SYSTEMS.find(s=>s.id===i)).map(i=>{const s=SYSTEMS.find(x=>x.id===i);return `<a class="cross-link" href="${s.url}" target="_blank">${s.name} →</a>`;}).join('');
+        return `<div class="card"><div class="card-title">${p.name}</div><div class="card-body">${p.desc}</div>${sl?`<div class="cross-links">${sl}</div>`:''}</div>`;
       }).join('')}</div>
     </section>
-    <section><div class="eyebrow">Publicações</div>${pubBlock()}</section>
-    <section><div class="eyebrow">Trajetória</div>
-      <div class="callout"><span class="tag">Barcelona 2026</span><p>Pesquisador independente de Salvador, sem laboratório, sem vínculo institucional, sem financiamento — aceito para apresentar 2 trabalhos na CHI 2026, com submissão feita majoritariamente pelo celular.</p><a class="go" href="https://viniburilux.github.io/barcelona/" target="_blank">Ver história completa ↗</a></div>
+    <section>
+      <div class="view-eyebrow">Publicações</div>
+      ${pubBlock()}
     </section>
-    <section><div class="nudge"><span>Navegar:</span><a onclick="enterView('inteligencia')">Descobertas</a><a onclick="enterView('sistemas')">Sistemas</a><a onclick="showGate()">← Início</a></div></section>`;
+    <section>
+      <div class="view-eyebrow">Trajetória</div>
+      <div class="callout"><span class="tag">Barcelona 2026</span><p>Pesquisador independente de Salvador, sem laboratório ou financiamento — aceito para apresentar 2 trabalhos na CHI 2026. Submissão feita majoritariamente pelo celular.</p><a class="go" href="https://viniburilux.github.io/barcelona/" target="_blank">Ver história →</a></div>
+    </section>
+    <section><div class="nudge"><span>Navegar</span><a onclick="enterView('sistemas')">Sistemas</a><a onclick="enterView('inteligencia')">Descobertas</a></div></section></div>`;
   }
   else if(view==='investidor'){
     m.innerHTML = `
-    <section><div class="eyebrow">Visão institucional</div>
-      <h1>LuxVerso é uma empresa de <em>tecnologia e ciência aplicada</em> dedicada a transformar problemas complexos em sistemas inteligentes executáveis.</h1>
-      <p class="lede">Operação independente, com produção científica publicada, infraestrutura de pesquisa multi-modelo, aplicada a projetos próprios e problemas corporativos.</p>
+    <div class="view"><section>
+      <div class="display-l">LuxVerso — <span style="color:var(--accent)">tecnologia e ciência aplicada</span> para transformar problemas complexos em sistemas executáveis.</div>
+      <div class="view-lede"><p class="body">Operação independente com produção científica publicada e infraestrutura de pesquisa multi-modelo.</p></div>
     </section>
-    <section><div class="card-grid-3">
-        <div class="card"><span class="h2-eyebrow">Tecnologia</span><div class="card-body">IA, engenharia de dados, visão computacional, grafos, sensoriamento remoto, automação.</div></div>
-        <div class="card"><span class="h2-eyebrow">Capacidade</span><div class="card-body">Do diagnóstico do problema à arquitetura e construção do sistema, em ciclo curto.</div></div>
-        <div class="card"><span class="h2-eyebrow">Evidência</span><div class="card-body">16 sistemas com prova pública, dataset e repositório abertos.</div></div>
-        <div class="card"><span class="h2-eyebrow">Execução</span><div class="card-body">35 desafios corporativos analisados na Jornada Sebrae 2026.</div></div>
-        <div class="card"><span class="h2-eyebrow">Publicação</span><div class="card-body">3 trabalhos aceitos com peer review — CHI 2026 (2x) e IJCAI-ECAI 2026.</div></div>
-        <div class="card"><span class="h2-eyebrow">Sede</span><div class="card-body">Salvador, Bahia — Brasil.</div></div>
-    </div>
-    <div style="margin-top:28px;">
-      <a class="card-link-arrow" onclick="enterView('sistemas')">Ver todos os sistemas →</a>
-    </div>
-    </section>
-    <section><div class="eyebrow">Publicações</div>${pubBlock()}</section>
     <section>
-      <div class="cta-row">
-        <a class="cta-main" href="https://wa.me/5585999798762?text=Ol%C3%A1%2C%20Vini!%20Represento%20uma%20institui%C3%A7%C3%A3o%20e%20gostaria%20de%20agendar%20uma%20conversa%20sobre%20a%20LuxVerso." target="_blank">Agendar conversa ↗</a>
+      <div class="card-grid grid-3">
+        <div class="card"><span class="card-tag">Tecnologia</span><div class="card-body">IA, engenharia de dados, visão computacional, grafos, sensoriamento remoto, automação.</div></div>
+        <div class="card"><span class="card-tag">Capacidade</span><div class="card-body">Do diagnóstico à arquitetura e construção do sistema, em ciclo curto.</div></div>
+        <div class="card"><span class="card-tag">Evidência</span><div class="card-body">16 sistemas públicos com código, dados e datasets abertos.</div></div>
+        <div class="card"><span class="card-tag">Execução</span><div class="card-body">35 desafios corporativos analisados na Jornada Sebrae 2026.</div></div>
+        <div class="card"><span class="card-tag">Publicação</span><div class="card-body">3 trabalhos com peer review — CHI 2026 (2x), IJCAI-ECAI 2026.</div></div>
+        <div class="card"><span class="card-tag">Sede</span><div class="card-body">Salvador, Bahia — Brasil.</div></div>
       </div>
-      <div class="nudge"><span>Outras portas:</span><a onclick="enter('pesquisa')">O que existe por trás</a><a onclick="enter('empresa')">Resolver um problema</a></div>
-    </section>`;
-  }
-  else if(view==='rapido2'){
-    m.innerHTML = `<section><h1>Rápido</h1><p class="lede">(perspectiva encurtada — visão geral rápida do ecossistema.)</p></section>`;
+      <div class="view-actions"><a onclick="enterView('sistemas')">Ver sistemas →</a></div>
+    </section>
+    <section>${pubBlock()}</section>
+    <section>
+      <div class="cta-row"><a class="cta-primary" href="https://wa.me/5585999798762?text=Agendar%20conversa%20institucional" target="_blank">Agendar conversa →</a></div>
+    </section></div>`;
   }
 }
 
 // ============================================================
-// INSTITUTIONAL VIEWS (hub)
+// INSTITUTIONAL VIEWS
 // ============================================================
 function renderInstitutional(view){
   const m = document.getElementById('mainContent');
-  const nudge = (links) => `<div class="nudge"><span>Navegar:</span>${links.map(l=>`<a onclick="enterView('${l.view}')">${l.label}</a>`).join('')}<a onclick="showGate()">← Início</a></div>`;
+  const nudge = (links) => `<div class="nudge"><span>Navegar</span>${links.map(l=>`<a onclick="enterView('${l.v}')">${l.t}</a>`).join('')}</div>`;
 
   if(view==='sobre'){
     m.innerHTML = `
-    <section>
-      <div class="eyebrow">Sobre</div>
-      <h1>Um ecossistema de pesquisa e construção <em>aplicado a problemas complexos.</em></h1>
-      <p class="lede">A LuxVerso não é uma empresa de tecnologia comum. É um laboratório independente que investiga, constrói e descobre — transformando problemas que não cabem em respostas prontas em sistemas, inteligência e aplicação.</p>
-      <div class="method-flow"><span class="step">Pesquisar</span><span class="arrow">→</span><span class="step">Construir</span><span class="arrow">→</span><span class="step">Descobrir</span><span class="arrow">→</span><span class="step">Aplicar</span></div>
+    <div class="view"><section>
+      <div class="display-l">Um ecossistema independente de <span style="color:var(--accent)">pesquisa, descoberta</span> e <span style="color:var(--accent)">aplicação.</span></div>
+      <div class="view-lede"><p class="body">A LuxVerso não é uma empresa de tecnologia comum. É um laboratório que investiga, constrói e descobre — transformando problemas complexos em sistemas, inteligência e aplicação.</p></div>
     </section>
     <section>
-      <div class="eyebrow">O ecossistema em números</div>
-      <div class="card-grid-3">
-        <div class="card"><span style="font-size:28px;font-family:'Space Grotesk',sans-serif;color:var(--amber);">${SYSTEMS.length}</span><div class="card-title">Sistemas</div><div class="card-body">Páginas públicas ativas no ecossistema</div></div>
-        <div class="card"><span style="font-size:28px;font-family:'Space Grotesk',sans-serif;color:var(--amber);">${Object.keys(PROGRAMS).length}</span><div class="card-title">Programas</div><div class="card-body">Verticais de pesquisa aplicada</div></div>
-        <div class="card"><span style="font-size:28px;font-family:'Space Grotesk',sans-serif;color:var(--amber);">${Object.keys(DOMAINS).length}</span><div class="card-title">Domínios</div><div class="card-body">Áreas de aplicação</div></div>
+      <div class="card-grid grid-3">
+        <div class="card"><span class="display-s" style="color:var(--accent)">${SYSTEMS.length}</span><div class="card-title">Sistemas</div><div class="card-body">Páginas públicas ativas no ecossistema</div></div>
+        <div class="card"><span class="display-s" style="color:var(--accent)">${Object.keys(PROGRAMS).length}</span><div class="card-title">Programas</div><div class="card-body">Verticais de pesquisa aplicada</div></div>
+        <div class="card"><span class="display-s" style="color:var(--accent)">${Object.keys(DOMAINS).length}</span><div class="card-title">Domínios</div><div class="card-body">Áreas de aplicação</div></div>
       </div>
     </section>
     <section>
-      <div class="eyebrow">Como funciona</div>
-      <p class="lede" style="margin-top:0;">Research &amp; Build é o método: diante de um problema difícil, em vez de esperar pela infraestrutura ideal, começar a construí-la. O domínio muda — biotecnologia, território, energia, dados públicos, ciência. O modo de investigar permanece.</p>
-      <div style="margin-top:28px;display:flex;flex-wrap:wrap;gap:10px;">
-        <a class="card-link-arrow" onclick="enterView('pesquisa')">Ver programas de pesquisa →</a>
-        <a class="card-link-arrow" onclick="enterView('sistemas')">Ver sistemas →</a>
-      </div>
+      <div class="display-m" style="font-weight:500;color:var(--fg-2);">Research &amp; Build</div>
+      <div class="view-lede"><p class="body">Diante de um problema difícil, em vez de esperar infraestrutura, começar a construir. O domínio muda — biotecnologia, território, energia, dados públicos. O modo de investigar permanece.</p></div>
     </section>
-    <section>${nudge([{view:'pesquisa',label:'Programas'},{view:'sistemas',label:'Sistemas'},{view:'inteligencia',label:'Descobertas'}])}</section>`;
+    <section>${nudge([{v:'pesquisa',t:'Programas'},{v:'sistemas',t:'Sistemas'},{v:'inteligencia',t:'Descobertas'}])}</section></div>`;
   }
-
-  else if(view==='pesquisa'){
-    render('pesquisa');
-  }
-
+  else if(view==='pesquisa'){render('pesquisa');}
   else if(view==='inteligencia'||view==='inteligencia-view'){
     m.innerHTML = `
-    <section>
-      <div class="eyebrow">Inteligência</div>
-      <h1>O que <em>estamos descobrindo.</em></h1>
-      <p class="lede">Descobertas recentes produzidas pelos nossos sistemas — com pergunta, evidência, implicação e próximo passo. Cada entrada tem fonte rastreável e nível de publicação definido.</p>
+    <div class="view"><section>
+      <div class="display-l">O que <span style="color:var(--accent)">estamos descobrindo.</span></div>
+      <div class="view-lede"><p class="body">Descobertas do pipeline de inteligência — cada entrada com pergunta, evidência e sistema relacionado.</p></div>
     </section>
     <section>
-      <div class="eyebrow">Descobertas recentes</div>
-      <div id="intelFeed" class="card-grid" style="margin-top:0;">
-        <div class="card"><div class="card-title">— Carregando...</div></div>
-      </div>
-      <p style="margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--fg-dimmer);">
-        <a href="https://github.com/viniburilux/Sistemas-Inteligentes/tree/main/intelligence-pipeline" style="color:var(--amber);" target="_blank">Intelligence Pipeline →</a>
-      </p>
+      <div class="card-grid grid-2" id="intelFeed"><div class="card"><div class="card-title">Carregando descobertas...</div></div></div>
+      <div class="view-actions" style="margin-top:16px;"><a href="https://github.com/viniburilux/Sistemas-Inteligentes/tree/main/intelligence-pipeline" target="_blank">Pipeline completo →</a></div>
     </section>
-    <section>
-      <div class="eyebrow">Biblioteca</div>
-      <p class="lede" style="margin-top:0;">Páginas completas de cada descoberta com referências, evidências e implicações.</p>
-      <div id="intelLibrary" style="margin-top:24px;">
-        <a class="card-link-arrow" href="https://viniburilux.github.io/Sistemas-Inteligentes/intelligence/" target="_blank">Abrir biblioteca completa →</a>
-      </div>
-    </section>
-    <section>${nudge([{view:'sistemas',label:'Sistemas'},{view:'pesquisa',label:'Pesquisa'},{view:'dominios',label:'Domínios'}])}</section>`;
-    fetch('https://luxverso.com/intel-feed.json').then(r=>r.json()).then(data=>{
-      const feed = document.getElementById('intelFeed');
-      if(data.entries){
-        feed.innerHTML = data.entries.slice(0,6).map(e=>{
-          // Try to find a related system by matching domain keywords
-          const domainKey = Object.keys(DOMAINS).find(k => e.domain?.toLowerCase().includes(k) || k.includes(e.domain?.toLowerCase().split('/')[0]));
-          const sysMatch = domainKey ? DOMAINS[domainKey].systems.slice(0,2) : [];
-          const sysLinks = sysMatch.map(id=>{
-            const s = SYSTEMS.find(x=>x.id===id);
-            return s ? `<a class="cross-link" href="${s.url}" target="_blank">${s.icon} ${s.name}</a>` : '';
-          }).join('');
-          return `<div class="card"><div class="card-title">${e.title.length>70?e.title.slice(0,70)+'…':e.title}</div>
-            <div class="card-body" style="font-size:13.5px;">${e.summary||''}</div>
-            ${sysLinks ? `<div class="cross-links">${sysLinks}</div>` : ''}
-            <div class="card-foot"><span class="card-src">${e.domain||''} · ${e.status||''}</span>
-              <span class="card-links"><a href="https://luxverso.com/intelligence/${e.slug}.md" target="_blank">Ler descoberta ↗</a></span></div></div>`;
-        }).join('');
-      } else {
-        feed.innerHTML = `<div class="card"><div class="card-title">Nenhuma descoberta publicada ainda</div></div>`;
-      }
-    }).catch(()=>{
-      document.getElementById('intelFeed').innerHTML = `<div class="card"><div class="card-title">Pipeline ativo</div><div class="card-body">O Intelligence Pipeline está disponível no GitHub.</div><div class="card-foot"><a class="card-link" href="https://github.com/viniburilux/Sistemas-Inteligentes/tree/main/intelligence-pipeline" target="_blank">Ver pipeline ↗</a></div></div>`;
-    });
+    <section>${nudge([{v:'sistemas',t:'Sistemas'},{v:'pesquisa',t:'Pesquisa'}])}</section></div>`;
+    fetch('https://luxverso.com/intel-feed.json').then(r=>r.json()).then(d=>{
+      const f=document.getElementById('intelFeed');
+      if(d.entries){f.innerHTML=d.entries.slice(0,6).map(e=>{
+        const dk=Object.keys(DOMAINS).find(k=>e.domain?.toLowerCase().includes(k)||k.includes(e.domain?.toLowerCase().split('/')[0]));
+        const sm=dk?DOMAINS[dk].systems.slice(0,2):[];
+        const sl=sm.map(id=>{const s=SYSTEMS.find(x=>x.id===id);return s?`<a class="cross-link" href="${s.url}" target="_blank">${s.name}</a>`:''}).join('');
+        return `<div class="card"><div class="card-title">${e.title.length>70?e.title.slice(0,70)+'…':e.title}</div><div class="card-body" style="font-size:clamp(13px,.9vw,14px);">${e.summary||''}</div>${sl?`<div class="cross-links">${sl}</div>`:''}<div class="card-foot"><span class="card-source">${e.domain||''}</span><span class="card-links"><a href="https://luxverso.com/intelligence/${e.slug}.md" target="_blank">Ler →</a></span></div></div>`;
+      }).join('');}else{f.innerHTML=`<div class="card"><div class="card-title">Nenhuma descoberta publicada</div></div>`;}
+    }).catch(()=>{document.getElementById('intelFeed').innerHTML=`<div class="card"><div class="card-title">Pipeline disponível no GitHub</div><div class="card-body">O Intelligence Pipeline está disponível em github.com/viniburilux/Sistemas-Inteligentes.</div></div>`;});
   }
-
   else if(view==='sistemas'||view==='sistemas-view'){
     m.innerHTML = `
-    <section>
-      <div class="eyebrow">Sistemas</div>
-      <h1>Produtos e plataformas <em>construídos pelo laboratório.</em></h1>
-      <p class="lede">Cada sistema representa uma capacidade real, com código público, dados abertos e resultados verificáveis. Clique para acessar cada página.</p>
+    <div class="view"><section>
+      <div class="display-l">Produtos e plataformas <span style="color:var(--accent)">construídos pelo laboratório.</span></div>
+      <div class="view-lede"><p class="body">Cada sistema representa uma capacidade real — código público, dados abertos e resultados verificáveis.</p></div>
     </section>
     <section>
-      <div class="eyebrow">Catálogo completo</div>
-      <div class="card-grid">${SYSTEMS.map(s=>systemCard(s)).join('')}</div>
+      <div class="card-grid grid-2">${SYSTEMS.map(s=>systemCard(s)).join('')}</div>
     </section>
     <section>
-      <div class="eyebrow">Por programa de pesquisa</div>
-      ${Object.entries(PROGRAMS).map(([k,p])=>{
-        const sysCards = p.systems.filter(id=>SYSTEMS.find(s=>s.id===id)).map(id=>{
-          const s = SYSTEMS.find(x=>x.id===id);
-          return `<a class="cross-link" href="${s.url}" target="_blank" style="font-size:12px;">${s.icon} ${s.name}</a>`;
-        }).join('');
-        return `<div class="card" style="margin-bottom:1px;"><div class="card-title" style="font-size:15px;">${p.icon} ${p.name}</div>
-          <div class="card-body" style="font-size:13px;">${p.desc}</div>
-          <div class="cross-links">${sysCards}</div></div>`;
-      }).join('')}
-    </section>
-    <section>
-      <div class="eyebrow">Gap identificado</div>
-      <div class="card" style="border-left:2px solid var(--amber-dim);">
-        <div class="card-body" style="font-size:13px;">
-          <b>Desafio-Sebrae</b> — página existia em gh-pages, não foi migrada para o perfil repo. Os 35 desafios analisados estão indisponíveis em <code>luxverso.com/Desafio-Sebrae/</code> (404).<br>
-          <span style="color:var(--fg-dimmer);">Resolução: copiar conteúdo de <code>LuxVerso gh-pages/Desafio-Sebrae/</code> para o profile repo.</span>
-        </div>
-      </div>
-    </section>
-    <section>${nudge([{view:'pesquisa',label:'Pesquisa'},{view:'dominios',label:'Domínios'},{view:'inteligencia',label:'Descobertas'}])}</section>`;
-  }
-
-  else if(view==='dominios'||view==='dominios-view'){
-    m.innerHTML = `
-    <section>
-      <div class="eyebrow">Domínios</div>
-      <h1>A mesma capacidade, <em>múltiplas aplicações.</em></h1>
-      <p class="lede">Domínio é aplicação. Capacidade é o produto. Não somos 'IA para X' — construímos sistemas inteligentes aplicados a qualquer domínio com fontes fragmentadas e perguntas complexas.</p>
-    </section>
-    <section>
-      <div class="card-grid">${Object.entries(DOMAINS).map(([k,d])=>{
-        const sysLinks = d.systems.filter(id=>SYSTEMS.find(s=>s.id===id)).map(id=>{
-          const s = SYSTEMS.find(x=>x.id===id);
-          return `<a class="cross-link" href="${s.url}" target="_blank">${s.icon} ${s.name}</a>`;
-        }).join('');
-        return `<div class="card"><div class="card-title" style="font-size:16px;">${d.icon} ${d.name}</div>
-          <div class="card-body">${d.desc}</div>
-          <div class="cross-links">${sysLinks}</div></div>`;
+      <div class="display-m" style="font-weight:500;color:var(--fg-2);">Por programa</div>
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:1px;">${Object.keys(PROGRAMS).map(k=>{
+        const p=PROGRAMS[k];const sl=p.systems.filter(i=>SYSTEMS.find(s=>s.id===i)).map(i=>{const s=SYSTEMS.find(x=>x.id===i);return `<a class="cross-link" href="${s.url}" target="_blank">${s.name}</a>`;}).join('');
+        return `<div class="card" style="padding:16px 20px;background:var(--bk-2);"><div class="card-title" style="font-size:15px;">${p.name}</div><div class="card-body" style="font-size:13px;">${p.desc}</div>${sl?`<div class="cross-links">${sl}</div>`:''}</div>`;
       }).join('')}</div>
     </section>
-    <section>${nudge([{view:'sistemas',label:'Sistemas'},{view:'pesquisa',label:'Pesquisa'},{view:'inteligencia',label:'Descobertas'}])}</section>`;
+    <section>
+      <div class="gap-box"><div class="body-s"><b>Desafio-Sebrae</b> — página existia em gh-pages. Indisponível em <code>luxverso.com/Desafio-Sebrae/</code> (404). Resolução: copiar conteúdo de <code>LuxVerso gh-pages/Desafio-Sebrae/</code> para o profile repo.</div></div>
+    </section>
+    <section>${nudge([{v:'pesquisa',t:'Pesquisa'},{v:'dominios',t:'Domínios'}])}</section></div>`;
   }
-
+  else if(view==='dominios'||view==='dominios-view'){
+    m.innerHTML = `
+    <div class="view"><section>
+      <div class="display-l">A mesma capacidade, <span style="color:var(--accent)">múltiplas aplicações.</span></div>
+      <div class="view-lede"><p class="body">Domínio é aplicação. Capacidade é o produto. Construímos sistemas inteligentes para qualquer domínio com fontes fragmentadas e perguntas complexas.</p></div>
+    </section>
+    <section>
+      <div class="card-grid grid-2">${Object.keys(DOMAINS).map(k=>{
+        const d=DOMAINS[k];const sl=d.systems.filter(i=>SYSTEMS.find(s=>s.id===i)).map(i=>{const s=SYSTEMS.find(x=>x.id===i);return `<a class="cross-link" href="${s.url}" target="_blank">${s.name}</a>`;}).join('');
+        return `<div class="card"><div class="card-title">${d.name}</div><div class="card-body">${d.desc}</div>${sl?`<div class="cross-links">${sl}</div>`:''}</div>`;
+      }).join('')}</div>
+    </section>
+    <section>${nudge([{v:'sistemas',t:'Sistemas'},{v:'pesquisa',t:'Pesquisa'}])}</section></div>`;
+  }
   else if(view==='oportunidades'||view==='oportunidades-view'){
     m.innerHTML = `
-    <section>
-      <div class="eyebrow">Oportunidades</div>
-      <h1>Você tem um problema <em>que dados convencionais não resolvem?</em></h1>
-      <p class="lede">Traga seu desafio. Investigamos, construímos e testamos um sistema para ele.</p>
+    <div class="view"><section>
+      <div class="display-l">Você tem um problema <span style="color:var(--accent)">que dados convencionais não resolvem?</span></div>
+      <div class="view-lede"><p class="body">Traga seu desafio. Investigamos, construímos e testamos um sistema para ele.</p></div>
     </section>
     <section>
-      <div class="eyebrow">Caminho</div>
-      <div class="card-grid-3">
-        <div class="card"><span style="color:var(--amber-dim);font-family:'IBM Plex Mono',monospace;font-size:12px;">01</span><div class="card-title">Você apresenta o problema</div><div class="card-body">Contexto, dados disponíveis, perguntas que precisam de resposta.</div></div>
-        <div class="card"><span style="color:var(--amber-dim);font-family:'IBM Plex Mono',monospace;font-size:12px;">02</span><div class="card-title">Investigamos</div><div class="card-body">Mapeamos fontes, estruturamos a investigação, identificamos o que existe.</div></div>
-        <div class="card"><span style="color:var(--amber-dim);font-family:'IBM Plex Mono',monospace;font-size:12px;">03</span><div class="card-title">Construímos o sistema</div><div class="card-body">Arquitetura, componentes, integração com o problema real.</div></div>
-        <div class="card"><span style="color:var(--amber-dim);font-family:'IBM Plex Mono',monospace;font-size:12px;">04</span><div class="card-title">Testamos e aplicamos</div><div class="card-body">Critério de sucesso definido antes de construir. Só ampliamos o que funciona.</div></div>
+      <div class="card-grid grid-3">
+        <div class="card"><span class="card-tag">01</span><div class="card-title">Apresente o problema</div><div class="card-body">Contexto, dados, perguntas que precisa responder.</div></div>
+        <div class="card"><span class="card-tag">02</span><div class="card-title">Investigamos</div><div class="card-body">Fontes, investigação estruturada, identificação do que existe.</div></div>
+        <div class="card"><span class="card-tag">03</span><div class="card-title">Construímos</div><div class="card-body">Arquitetura, componentes, integração com o problema real.</div></div>
+        <div class="card"><span class="card-tag">04</span><div class="card-title">Testamos</div><div class="card-body">Critério de sucesso antes de construir. Só ampliamos o que funciona.</div></div>
       </div>
     </section>
     <section>
-      <div class="eyebrow">Capacidades aplicáveis</div>
-      <p class="lede" style="margin-top:0;">Nossos sistemas existentes já cobrem inteligência territorial, dados públicos, biotecnologia, sensoriamento, automação e discovery. Qualquer capacidade pode ser adaptada para um novo problema.</p>
-      <div style="margin-top:22px;display:flex;flex-wrap:wrap;gap:10px;">
-        <a class="card-link-arrow" onclick="enterView('sistemas')">Ver catálogo completo →</a>
-        <a class="card-link-arrow" onclick="enterView('dominios')">Ver aplicações por domínio →</a>
-      </div>
+      <div class="view-eyebrow">Capacidades</div>
+      <div class="view-lede"><p class="body">Sistemas existentes cobrem inteligência territorial, dados públicos, biotecnologia, sensoriamento, automação e discovery. Adaptáveis a novos problemas.</p></div>
+      <div class="view-actions"><a onclick="enterView('sistemas')">Ver catálogo →</a><a onclick="enterView('dominios')">Aplicações →</a></div>
     </section>
     <section>
-      <div class="eyebrow">Editais e chamadas</div>
-      <p class="lede" style="margin-top:0;">O Lux-Radar monitora continuamente fontes de oportunidade.</p>
-      <div style="margin-top:18px;">
-        <a class="cross-link" href="https://viniburilux.github.io/Lux-Radar/" target="_blank">📡 Lux-Radar ↗</a>
-      </div>
+      <div class="cta-row"><a class="cta-primary" href="https://wa.me/5585999798762?text=Quero%20investigar%20um%20desafio" target="_blank">Traga seu problema →</a></div>
     </section>
-    <section>
-      <div class="cta-row">
-        <a class="cta-main" href="https://wa.me/5585999798762?text=Ol%C3%A1%2C%20Vini!%20Tenho%20um%20desafio%20que%20quero%20investigar%20com%20voc%C3%AAs." target="_blank">Traga seu problema ↗</a>
-      </div>
-    </section>
-    <section>${nudge([{view:'sistemas',label:'Sistemas'},{view:'dominios',label:'Domínios'}])}</section>`;
+    <section>${nudge([{v:'sistemas',t:'Sistemas'}])}</section></div>`;
   }
-
   else if(view==='contato'){
     m.innerHTML = `
-    <section>
-      <div class="eyebrow">Contato</div>
-      <h1>Vamos <em>conversar.</em></h1>
-      <p class="lede">Problemas complexos, perguntas de pesquisa, parcerias, editais — qualquer assunto. Cada conversa começa com um problema, e a gente descobre junto o que pode ser construído.</p>
+    <div class="view"><section>
+      <div class="display-l">Vamos <span style="color:var(--accent)">conversar.</span></div>
+      <div class="view-lede"><p class="body">Problemas complexos, perguntas de pesquisa, parcerias, editais — cada conversa começa com um problema.</p></div>
     </section>
     <section>
-      <div class="eyebrow">Canais</div>
-      <div class="card-grid-3">
-        <div class="card"><div class="card-title">📱 WhatsApp</div><div class="card-body">Canal principal. Resposta em horas.</div><div class="card-foot"><a class="card-link" href="https://wa.me/5585999798762" target="_blank">(85) 99979-8762 ↗</a></div></div>
-        <div class="card"><div class="card-title">🐙 GitHub</div><div class="card-body">Código, datasets, pipelines — tudo público.</div><div class="card-foot"><a class="card-link" href="https://github.com/viniburilux" target="_blank">@viniburilux ↗</a></div></div>
-        <div class="card"><div class="card-title">📄 OpenReview</div><div class="card-body">Perfil acadêmico com 33 submissões.</div><div class="card-foot"><a class="card-link" href="https://openreview.net/profile?id=~Vinicius_Buri_Lux1" target="_blank">Ver perfil ↗</a></div></div>
+      <div class="card-grid grid-3">
+        <div class="card"><div class="card-title">WhatsApp</div><div class="card-body">Canal principal. Resposta em horas.</div><div class="card-foot"><a href="https://wa.me/5585999798762" target="_blank" class="card-links">(85) 99979-8762 →</a></div></div>
+        <div class="card"><div class="card-title">GitHub</div><div class="card-body">Código, datasets, pipelines.</div><div class="card-foot"><a href="https://github.com/viniburilux" target="_blank" class="card-links">@viniburilux →</a></div></div>
+        <div class="card"><div class="card-title">OpenReview</div><div class="card-body">Perfil acadêmico — 33 submissões.</div><div class="card-foot"><a href="https://openreview.net/profile?id=~Vinicius_Buri_Lux1" target="_blank" class="card-links">Ver perfil →</a></div></div>
       </div>
     </section>
     <section>
-      <div class="eyebrow">Antes de entrar em contato</div>
-      <p class="lede" style="margin-top:0;">Se quiser já ir preparado: explore os sistemas existentes, veja as descobertas já publicadas e entenda os domínios onde atuamos. O Lux-Radar também mostra oportunidades abertas.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;">
-        <a class="card-link-arrow" onclick="enterView('sistemas')">Sistemas →</a>
-        <a class="card-link-arrow" onclick="enterView('inteligencia')">Descobertas →</a>
-        <a class="card-link-arrow" onclick="enterView('dominios')">Domínios →</a>
-      </div>
-    </section>`;
+      <div class="view-eyebrow">Antes de contato</div>
+      <div class="view-lede"><p class="body">Explore sistemas existentes e descobertas publicadas para entender o escopo do laboratório.</p></div>
+      <div class="view-actions"><a onclick="enterView('sistemas')">Sistemas →</a><a onclick="enterView('inteligencia')">Descobertas →</a></div>
+    </section></div>`;
   }
 }
 
 // ============================================================
 // NAVIGATION
 // ============================================================
+const navLinks = document.querySelectorAll('.nav-item');
+function setActive(view){
+  navLinks.forEach(l=>l.classList.remove('active'));
+  navLinks.forEach(l=>{if(l.textContent.toLowerCase().includes(view.toLowerCase())) l.classList.add('active');});
+}
+
 function enterView(view){
-  const activeItem = document.querySelector('.nav-link.active');
-  if(activeItem) activeItem.classList.remove('active');
-  const navLink = document.querySelector(`.nav-link[onclick*="'${view}'"]`);
-  if(navLink) navLink.classList.add('active');
-  history.replaceState(null, '', view==='sobre' ? window.location.pathname : `#${view}`);
-  document.getElementById('gate').style.display = 'none';
+  setActive(view);
+  history.replaceState(null,'',view==='sobre'?window.location.pathname:`#${view}`);
+  document.getElementById('gate').style.display='none';
   document.getElementById('app').classList.add('open');
-  // Close mobile nav
-  const mn = document.querySelector('.main-nav');
-  if(mn) mn.classList.remove('open');
+  document.getElementById('mainNav').classList.remove('open');
+  document.getElementById('mobileToggle').classList.remove('open');
   renderInstitutional(view);
   window.scrollTo(0,0);
 }
 
 function enter(view){
-  document.getElementById('gate').style.display = 'none';
+  document.getElementById('gate').style.display='none';
   document.getElementById('app').classList.add('open');
-  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
-  history.replaceState(null, '', `#${view}`);
-  const mn = document.querySelector('.main-nav');
-  if(mn) mn.classList.remove('open');
+  navLinks.forEach(l=>l.classList.remove('active'));
+  history.replaceState(null,'',`#${view}`);
+  document.getElementById('mainNav').classList.remove('open');
+  document.getElementById('mobileToggle').classList.remove('open');
   render(view);
   window.scrollTo(0,0);
 }
 
 function showGate(){
-  history.replaceState(null, '', window.location.pathname+window.location.search);
+  history.replaceState(null,'',window.location.pathname+window.location.search);
   document.getElementById('app').classList.remove('open');
-  document.getElementById('gate').style.display = 'flex';
-  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  document.getElementById('gate').style.display='flex';
+  navLinks.forEach(l=>l.classList.remove('active'));
+  document.getElementById('mainNav').classList.remove('open');
+  document.getElementById('mobileToggle').classList.remove('open');
   window.scrollTo(0,0);
 }
 
 // ============================================================
-// DEEP LINK & GATE
+// GATE DOORS
 // ============================================================
 const doors = [
-  { key:'rapido', icon:'⚡', title:'O que vocês fazem', desc:'Visão rápida e direta do que fazemos, tecnologias e resultados.' },
-  { key:'tecnologia', icon:'🧠', title:'Como vocês resolvem problemas', desc:'Tecnologia, ciência aplicada e método, sem rodeio.' },
-  { key:'empresa', icon:'🏢', title:'O que podem fazer pela minha empresa', desc:'Problemas, casos reais e caminhos concretos de solução.' },
-  { key:'pesquisa', icon:'🔬', title:'O que existe por trás da LuxVerso', desc:'Projetos, pesquisa, metodologia e evidência.' },
-  { key:'investidor', icon:'📈', title:'Quero avaliar a empresa', desc:'Visão institucional, capacidade, trajetória e evidência.' }
+  { key:'rapido', num:'01', title:'O que fazemos', desc:'Sistemas, tecnologias e resultados — direto.' },
+  { key:'tecnologia', num:'02', title:'Como resolvemos', desc:'Método, engenharia e stack.' },
+  { key:'empresa', num:'03', title:'Para sua empresa', desc:'Problemas, riscos e soluções concretas.' },
+  { key:'pesquisa', num:'04', title:'Por trás', desc:'Programas, publicações e trajetória.' },
+  { key:'investidor', num:'05', title:'Avaliar', desc:'Capacidade, execução e evidência.' }
 ];
 const gateGrid = document.getElementById('gateGrid');
 doors.forEach(d=>{
   const el = document.createElement('a');
-  el.className='gate-card'; el.href=`#${d.key}`;
+  el.className='door'; el.href=`#${d.key}`;
   el.setAttribute('aria-label',`${d.title}: ${d.desc}`);
   el.addEventListener('click',()=>enter(d.key));
-  el.innerHTML=`<div class="gate-icon">${d.icon}</div><div class="gate-card-title">${d.title}</div><div class="gate-card-desc">${d.desc}</div>`;
+  el.innerHTML=`<span class="door-num">${d.num}</span><span class="door-title">${d.title}</span><span class="door-desc">${d.desc}</span>`;
   gateGrid.appendChild(el);
 });
 
+// Deep link handling
 const instViews = ['sobre','pesquisa','inteligencia','sistemas','dominios','oportunidades','contato'];
-const requestedView = location.hash.replace('#','');
-if(instViews.includes(requestedView)) enterView(requestedView);
-else if(doors.some(d=>d.key===requestedView)) enter(requestedView);
-window.addEventListener('hashchange', ()=>{
-  const v = location.hash.replace('#','');
+const reqView = location.hash.replace('#','');
+if(instViews.includes(reqView)) enterView(reqView);
+else if(doors.some(d=>d.key===reqView)) enter(reqView);
+window.addEventListener('hashchange',()=>{
+  const v=location.hash.replace('#','');
   if(instViews.includes(v)) enterView(v);
   else if(doors.some(d=>d.key===v)) enter(v);
   else showGate();
