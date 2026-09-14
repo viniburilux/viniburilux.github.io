@@ -14,151 +14,169 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#0a0a08; --ink-2:#141410; --line:#2a2620;
-    --fg:#f2efe9; --fg-dim:#a8a196; --fg-dimmer:#635d52;
-    --amber:#f0b429; --amber-dim:#7a5c1a;
+    --ink:#0a0a08; --ink-2:#11110e; --ink-3:#1a1a15;
+    --line:#2a2620; --line-soft:rgba(42,38,32,.5);
+    --fg:#f2efe9; --fg-dim:#a8a196; --fg-dimmer:#6b655a;
+    --amber:#f0b429; --amber-dim:#8a6d1f; --amber-glow:rgba(240,180,41,.18);
     --radius:2px;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{margin:0; background:var(--ink); color:var(--fg); font-family:'IBM Plex Sans',sans-serif; -webkit-font-smoothing:antialiased;}
+  body{margin:0; background:var(--ink); color:var(--fg); font-family:'IBM Plex Sans',sans-serif; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;}
   @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation-duration:.01ms !important; transition-duration:.01ms !important;} }
   a{color:inherit;}
   .mono{font-family:'IBM Plex Mono',monospace;}
 
-  /* ===== GATE ===== */
-  #gate{
-    min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    padding:40px; text-align:center; position:relative;
-  }
-  .gate-brand{display:flex; align-items:baseline; gap:10px; margin-bottom:60px;}
-  .gate-mark{width:9px; height:9px; background:var(--amber); box-shadow:0 0 14px var(--amber);}
+  /* ============ GATE ============ */
+  #gate{min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:48px 24px; text-align:center; position:relative;}
+  #gate::before{content:''; position:absolute; inset:0; background:repeating-linear-gradient(0deg, transparent 0 31px, rgba(242,239,233,.012) 31px 32px); pointer-events:none;}
+  .gate-brand{display:flex; align-items:baseline; gap:10px; margin-bottom:56px; position:relative;}
+  .gate-mark{width:9px; height:9px; background:var(--amber); box-shadow:0 0 14px var(--amber), 0 0 28px var(--amber-glow);}
   .gate-name{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; letter-spacing:.02em;}
   .gate-sub{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--fg-dimmer); letter-spacing:.04em;}
-  .gate-title{font-family:'Space Grotesk',sans-serif; font-size:clamp(24px,4vw,36px); font-weight:600; max-width:620px; line-height:1.25; margin-bottom:22px;}
-  .gate-title em{font-style:normal; color:var(--amber);}
-  .gate-vision{max-width:720px; margin:0 auto 22px; color:var(--fg); font-family:'Space Grotesk',sans-serif; font-size:clamp(18px,2.6vw,24px); line-height:1.35; letter-spacing:-.02em;}
+  .gate-vision{max-width:760px; margin:0 auto 20px; color:var(--fg); font-family:'Space Grotesk',sans-serif; font-size:clamp(19px,2.6vw,25px); line-height:1.4; letter-spacing:-.02em;}
   .gate-vision strong{color:var(--amber); font-weight:600;}
-  .gate-cycle{display:flex; flex-wrap:wrap; justify-content:center; gap:0; margin:0 auto 38px; color:var(--fg-dim); font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase;}
-  .gate-cycle span:not(:last-child)::after{content:'→'; margin:0 10px; color:var(--amber-dim);}
-  .gate-signals{display:flex; flex-wrap:wrap; justify-content:center; gap:18px; max-width:760px; margin:28px auto 0; padding-top:18px; border-top:1px solid var(--line); color:var(--fg-dim); font-family:'IBM Plex Mono',monospace; font-size:11px;}
-  .gate-signals b{color:var(--fg); font-weight:500;}
-  .gate-signals span{display:inline-flex; gap:5px; align-items:center;}
-  .gate-signals span::before{content:'·'; color:var(--amber);}
-  .gate-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); max-width:760px; width:100%;}
+  .gate-cycle{display:flex; flex-wrap:wrap; justify-content:center; gap:0; margin:0 auto 34px; color:var(--fg-dim); font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase;}
+  .gate-cycle span:not(:last-child)::after{content:'→'; margin:0 12px; color:var(--amber-dim);}
+  .gate-title{font-family:'Space Grotesk',sans-serif; font-size:clamp(15px,2vw,18px); font-weight:400; color:var(--fg-dimmer); max-width:620px; line-height:1.4; margin-bottom:26px; letter-spacing:.01em;}
+  .gate-title em{font-style:normal; color:var(--fg); font-weight:500;}
+  .gate-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); max-width:760px; width:100%; overflow:hidden;}
   @media (max-width:640px){ .gate-grid{grid-template-columns:1fr;} }
-  .gate-card{
-    background:var(--ink); padding:30px 26px; text-align:left; cursor:pointer; color:inherit; text-decoration:none;
-    display:flex; flex-direction:column; gap:8px; transition:background .18s;
-  }
+  .gate-card{background:var(--ink); padding:30px 28px; text-align:left; cursor:pointer; color:inherit; text-decoration:none; display:flex; flex-direction:column; gap:9px; transition:background .2s ease, transform .2s ease; position:relative;}
+  .gate-card::after{content:''; position:absolute; left:0; top:0; bottom:0; width:2px; background:var(--amber); transform:scaleY(0); transform-origin:center; transition:transform .2s ease;}
+  .gate-card:hover::after{transform:scaleY(1);}
   .gate-card:hover,.gate-card:focus-visible{background:var(--ink-2); outline:none;}
-  .gate-card:focus-visible{box-shadow:inset 0 0 0 2px var(--amber);}
-  .gate-card:hover .gate-icon{color:var(--amber);}
-  .gate-icon{font-size:20px; color:var(--fg-dim); transition:color .18s;}
-  .gate-card-title{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px;}
-  .gate-card-desc{font-size:13px; color:var(--fg-dim); line-height:1.5;}
-  .gate-direct{margin-top:36px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--fg-dimmer); text-decoration:none; border-bottom:1px solid transparent; cursor:pointer;}
-  .gate-direct:hover{color:var(--fg-dim); border-color:var(--fg-dimmer);}
+  .gate-card:focus-visible{box-shadow:inset 0 0 0 1px var(--amber);}
+  .gate-card:hover .gate-icon{color:var(--amber); transform:translateY(-1px);}
+  .gate-icon{font-size:20px; color:var(--fg-dimmer); transition:color .2s, transform .2s;}
+  .gate-card-title{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; letter-spacing:-.01em;}
+  .gate-card-desc{font-size:13px; color:var(--fg-dim); line-height:1.55;}
+  .gate-signals{display:flex; flex-wrap:wrap; justify-content:center; gap:18px; max-width:760px; margin:28px auto 0; padding-top:18px; border-top:1px solid var(--line); color:var(--fg-dimmer); font-family:'IBM Plex Mono',monospace; font-size:11px;}
+  .gate-signals b{color:var(--fg); font-weight:500;}
+  .gate-signals span{display:inline-flex; gap:6px; align-items:center;}
+  .gate-signals span::before{content:'·'; color:var(--amber);}
+  .gate-direct{margin-top:32px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--fg-dimmer); text-decoration:none; border-bottom:1px solid transparent; cursor:pointer; transition:color .15s, border-color .15s;}
+  .gate-direct:hover{color:var(--fg); border-color:var(--fg-dimmer);}
 
-  /* ===== APP SHELL ===== */
+  /* ============ APP SHELL ============ */
   #app{display:none;}
   #app.open{display:block;}
-  header.topbar{
-    position:sticky; top:0; z-index:60;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:16px 40px; background:rgba(10,10,8,0.92); backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-  }
+  header.topbar{position:sticky; top:0; z-index:60; display:flex; align-items:center; justify-content:space-between; padding:14px 40px; background:rgba(10,10,8,.9); backdrop-filter:blur(12px); border-bottom:1px solid var(--line);}
   .brand{display:flex; align-items:baseline; gap:10px;}
   .brand-mark{width:9px; height:9px; background:var(--amber); box-shadow:0 0 12px var(--amber);}
-  .brand-name{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px;}
+  .brand-name{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; letter-spacing:.02em;}
   .brand-sub{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--fg-dimmer); letter-spacing:.04em;}
-  .switch-perspective{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--fg-dim); text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:2px; cursor:pointer; transition:color .15s, border-color .15s;}
-  .switch-perspective:hover{color:var(--amber); border-color:var(--amber-dim);}
 
+  /* NAVEGAÇÃO */
+  .nav-wrap{display:flex; align-items:center; gap:18px;}
+  .main-nav{display:flex; gap:4px;}
+  .nav-link{padding:6px 12px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--fg-dim); text-decoration:none; border-radius:2px; cursor:pointer; transition:color .15s, background .15s; letter-spacing:.01em;}
+  .nav-link:hover{color:var(--fg); background:rgba(242,239,233,.05);}
+  .nav-link.active{color:var(--amber); background:var(--amber-glow);}
+  .switch-perspective{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--fg-dimmer); text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:2px; cursor:pointer; transition:color .15s, border-color .15s; white-space:nowrap;}
+  .switch-perspective:hover{color:var(--amber); border-color:var(--amber-dim);}
+  .mobile-nav-toggle{display:none; background:none; border:1px solid var(--line); color:var(--fg-dim); font-size:1.1rem; cursor:pointer; padding:6px 10px; border-radius:2px; line-height:1;}
+  .mobile-nav-toggle:hover{color:var(--amber); border-color:var(--amber-dim);}
+
+  /* CONTEÚDO */
   main{position:relative; z-index:1;}
-  section{max-width:1100px; margin:0 auto; padding:90px 40px; border-top:1px solid var(--line);}
+  section{max-width:1100px; margin:0 auto; padding:88px 40px; border-top:1px solid var(--line);}
   section:first-of-type{border-top:none;}
-  h1,h2{font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.01em; margin:0;}
-  h1{font-size:clamp(28px,4.4vw,48px); line-height:1.14;}
-  h2{font-size:clamp(23px,3.2vw,34px); line-height:1.2;}
+  h1,h2{font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.015em; margin:0;}
+  h1{font-size:clamp(29px,4.4vw,50px); line-height:1.1;}
+  h2{font-size:clamp(24px,3.2vw,35px); line-height:1.18;}
   h1 em, h2 em{font-style:normal; color:var(--amber);}
-  .lede{font-size:16px; line-height:1.7; color:var(--fg-dim); max-width:660px; margin-top:20px;}
-  .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--amber); letter-spacing:.1em; text-transform:uppercase; margin-bottom:18px; display:flex; align-items:center; gap:10px;}
+  .lede{font-size:16px; line-height:1.75; color:var(--fg-dim); max-width:660px; margin-top:22px;}
+  .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--amber); letter-spacing:.12em; text-transform:uppercase; margin-bottom:18px; display:flex; align-items:center; gap:10px;}
   .eyebrow::before{content:''; width:20px; height:1px; background:var(--amber);}
 
-  .tech-band{margin-top:32px; display:flex; flex-wrap:wrap; gap:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--fg-dim); padding:18px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .tech-band{margin-top:34px; display:flex; flex-wrap:wrap; gap:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--fg-dim); padding:18px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
   .tech-band span:not(:last-child)::after{content:'·'; margin:0 12px; color:var(--fg-dimmer);}
 
-  .mirror-list{list-style:none; margin:26px 0 0; padding:0; display:flex; flex-direction:column; max-width:680px;}
-  .mirror-list li{padding:14px 0; border-bottom:1px solid var(--line); font-size:15px; color:var(--fg-dim); display:flex; gap:12px;}
+  .mirror-list{list-style:none; margin:28px 0 0; padding:0; display:flex; flex-direction:column; max-width:680px;}
+  .mirror-list li{padding:15px 0; border-bottom:1px solid var(--line); font-size:15px; color:var(--fg-dim); display:flex; gap:14px; line-height:1.6;}
+  .mirror-list li:last-child{border-bottom:none;}
   .mirror-list li::before{content:'—'; color:var(--amber-dim); flex-shrink:0;}
   .mirror-list li b{color:var(--fg); font-weight:500;}
 
-  .evid-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:40px;}
+  .evid-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:40px; overflow:hidden;}
   @media (max-width:760px){ .evid-grid{grid-template-columns:1fr;} }
-  .evid-card{background:var(--ink); padding:26px; display:flex; flex-direction:column; gap:12px;}
-  .evid-title{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; line-height:1.3;}
-  .evid-body{font-size:13.5px; color:var(--fg-dim); line-height:1.6;}
+  .evid-card{background:var(--ink); padding:30px; display:flex; flex-direction:column; gap:13px; transition:background .2s;}
+  .evid-card:hover{background:var(--ink-2);}
+  .evid-title{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16.5px; line-height:1.35; letter-spacing:-.01em;}
+  .evid-body{font-size:13.5px; color:var(--fg-dim); line-height:1.65;}
   .evid-how{display:flex; flex-wrap:wrap; gap:6px;}
-  .evid-how span{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--fg-dimmer); border:1px solid var(--line); padding:3px 8px; border-radius:12px;}
-  .evid-foot{display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid var(--line); font-family:'IBM Plex Mono',monospace; font-size:11.5px;}
+  .evid-how span{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--fg-dimmer); border:1px solid var(--line); padding:3px 9px; border-radius:12px;}
+  .evid-foot{display:flex; justify-content:space-between; align-items:center; padding-top:13px; border-top:1px solid var(--line); font-family:'IBM Plex Mono',monospace; font-size:11.5px; gap:10px; flex-wrap:wrap;}
   .evid-src{color:var(--amber);}
-  .evid-links a{color:var(--fg-dim); text-decoration:none; margin-left:10px;}
+  .evid-links{display:flex; gap:12px; flex-wrap:wrap;}
+  .evid-links a{color:var(--fg-dim); text-decoration:none; transition:color .15s;}
   .evid-links a:hover{color:var(--amber);}
 
-  .method-flow{display:flex; flex-wrap:wrap; margin-top:36px; font-family:'IBM Plex Mono',monospace; font-size:13px;}
+  .method-flow{display:flex; flex-wrap:wrap; margin-top:38px; font-family:'IBM Plex Mono',monospace; font-size:13px; align-items:center;}
   .method-flow .step{color:var(--fg); padding:10px 0;}
   .method-flow .arrow{color:var(--amber-dim); padding:0 14px;}
 
-  .risk-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:40px;}
+  .risk-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:40px; overflow:hidden;}
   @media (max-width:860px){ .risk-grid{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:480px){ .risk-grid{grid-template-columns:1fr;} }
-  .risk-card{background:var(--ink); padding:22px;}
-  .risk-card .n{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--fg-dimmer);}
-  .risk-card h3{font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:600; margin:10px 0 8px;}
-  .risk-card p{font-size:13px; color:var(--fg-dim); line-height:1.55; margin:0;}
+  .risk-card{background:var(--ink); padding:24px; transition:background .2s;}
+  .risk-card:hover{background:var(--ink-2);}
+  .risk-card .n{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--amber-dim); letter-spacing:.08em;}
+  .risk-card h3{font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:600; margin:12px 0 8px;}
+  .risk-card p{font-size:13px; color:var(--fg-dim); line-height:1.6; margin:0;}
 
-  .sebrae-callout{margin-top:36px; padding:30px 32px; border:1px solid var(--amber-dim); border-radius:var(--radius); background:var(--ink-2); max-width:760px;}
-  .sebrae-callout .tag{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--amber); text-transform:uppercase; letter-spacing:.08em; margin-bottom:12px; display:block;}
-  .sebrae-callout p{font-size:15px; line-height:1.7; color:var(--fg); margin:0 0 10px;}
-  .sebrae-callout p:last-of-type{margin-bottom:0;}
-  .sebrae-callout .go{display:inline-block; margin-top:16px; font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--amber); text-decoration:none; border-bottom:1px solid var(--amber-dim); padding-bottom:2px;}
-  .sebrae-callout .go:hover{border-color:var(--amber);}
+  .callout{margin-top:36px; padding:32px 34px; border:1px solid var(--amber-dim); border-radius:var(--radius); background:var(--ink-2); max-width:780px; position:relative;}
+  .callout::before{content:''; position:absolute; left:0; top:0; bottom:0; width:2px; background:var(--amber);}
+  .callout .tag{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--amber); text-transform:uppercase; letter-spacing:.1em; margin-bottom:14px; display:block;}
+  .callout p{font-size:15px; line-height:1.75; color:var(--fg); margin:0 0 12px;}
+  .callout p:last-of-type{margin-bottom:0;}
+  .callout .go{display:inline-block; margin-top:16px; font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--amber); text-decoration:none; border-bottom:1px solid var(--amber-dim); padding-bottom:2px; transition:border-color .15s;}
+  .callout .go:hover{border-color:var(--amber);}
 
-  .onepager{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:40px;}
+  .onepager{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:40px; overflow:hidden;}
   @media (max-width:760px){ .onepager{grid-template-columns:1fr 1fr;} }
   @media (max-width:480px){ .onepager{grid-template-columns:1fr;} }
-  .onepager-item{background:var(--ink); padding:22px 20px;}
-  .onepager-item .k{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--fg-dimmer); text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px; display:block;}
-  .onepager-item .v{font-size:14px; color:var(--fg); line-height:1.5;}
+  .onepager-item{background:var(--ink); padding:24px 22px;}
+  .onepager-item .k{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--amber-dim); text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px; display:block;}
+  .onepager-item .v{font-size:14px; color:var(--fg); line-height:1.55;}
 
-  .cta-row{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:26px; margin-top:44px;}
-  .cta-main{font-family:'IBM Plex Mono',monospace; font-size:14.5px; color:var(--amber); text-decoration:none; border-bottom:1px solid var(--amber-dim); padding-bottom:3px;}
-  .cta-main:hover{border-color:var(--amber);}
-  .cta-secondary{font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--fg-dim); text-decoration:none; border-bottom:1px solid var(--line);}
+  .cta-row{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:28px; margin-top:48px;}
+  .cta-main{font-family:'IBM Plex Mono',monospace; font-size:14.5px; color:var(--amber); text-decoration:none; border-bottom:1px solid var(--amber-dim); padding-bottom:3px; transition:border-color .15s, color .15s;}
+  .cta-main:hover{border-color:var(--amber); color:var(--fg);}
+  .cta-secondary{font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--fg-dim); text-decoration:none; border-bottom:1px solid var(--line); transition:color .15s;}
   .cta-secondary:hover{color:var(--fg);}
 
-  .perspective-nudge{margin-top:60px; padding:26px 0 0; border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:16px; align-items:center;}
+  .perspective-nudge{margin-top:64px; padding:26px 0 0; border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:18px; align-items:center;}
   .perspective-nudge span{font-size:13px; color:var(--fg-dimmer); font-family:'IBM Plex Mono',monospace;}
-  .perspective-nudge a{font-size:13px; color:var(--fg-dim); text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:2px;}
+  .perspective-nudge a{font-size:13px; color:var(--fg-dim); text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:2px; cursor:pointer; transition:color .15s, border-color .15s;}
   .perspective-nudge a:hover{color:var(--amber); border-color:var(--amber-dim);}
 
-  footer{max-width:1100px; margin:0 auto; padding:30px 40px 60px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--fg-dimmer);}
+  footer{max-width:1100px; margin:0 auto; padding:36px 40px 64px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--fg-dimmer);}
+  footer a{color:var(--fg-dim); text-decoration:none; transition:color .15s;}
+  footer a:hover{color:var(--amber);}
+  footer .foot-links{display:flex; gap:20px; flex-wrap:wrap;}
 
-  /* ===== NAVEGAÇÃO INSTITUCIONAL ===== */
-  .main-nav{display:flex;gap:8px;}
-  .nav-link{padding:6px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--fg-dim);text-decoration:none;border-radius:2px;cursor:pointer;transition:all .15s;}
-  .nav-link:hover{color:var(--fg);background:rgba(242,239,233,0.06);}
-  .nav-link.active{color:var(--amber);background:rgba(240,180,41,0.08);}
+  .intro-band{display:flex; gap:34px; align-items:flex-start; margin-bottom:44px;}
+  @media(max-width:760px){ .intro-band{flex-direction:column; gap:18px;} }
+  .intro-band .eyebrow{margin-bottom:0; flex-shrink:0;}
+
+  /* RESPONSIVO */
   @media(max-width:860px){
-    .main-nav{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(10,10,8,0.98);flex-direction:column;padding:12px;border-bottom:1px solid var(--line);}
+    .main-nav{display:none; position:absolute; top:100%; left:0; right:0; background:rgba(10,10,8,.97); flex-direction:column; padding:14px 18px; border-bottom:1px solid var(--line); backdrop-filter:blur(12px);}
     .main-nav.open{display:flex;}
-    .mobile-nav-toggle{display:block !important;}
-    .topbar{flex-wrap:wrap;}
+    .main-nav .nav-link{padding:12px 8px; font-size:13px; border-bottom:1px solid var(--line-soft);}
+    .main-nav .nav-link:last-child{border-bottom:none;}
+    .mobile-nav-toggle{display:block;}
+    .topbar{padding:14px 20px;}
+    section{padding:72px 24px;}
+    .switch-perspective{display:none;}
+  }
+  @media(max-width:480px){
+    section{padding:60px 20px;}
+    .gate-card{padding:24px 20px;}
   }
 </style>
-<script src="https://luxverso.com/_nav.js" defer></script>
 </head>
 <body>
 
@@ -185,42 +203,46 @@
       <span class="brand-name">LUXVERSO</span>
       <span class="brand-sub">RESEARCH &amp; TECH</span>
     </div>
-    <!-- NEW: NAVEGAÇÃO INSTITUCIONAL -->
-    <nav class="main-nav" aria-label="Navegação principal">
-      <a class="nav-link" onclick="enterView('sobre')">Sobre</a>
-      <a class="nav-link" onclick="enterView('pesquisa-view')">Pesquisa</a>
-      <a class="nav-link" onclick="enterView('inteligencia-view')">Inteligência</a>
-      <a class="nav-link" onclick="enterView('sistemas-view')">Sistemas</a>
-      <a class="nav-link" onclick="enterView('dominios-view')">Domínios</a>
-      <a class="nav-link" onclick="enterView('oportunidades-view')">Oportunidades</a>
-    </nav>
-    <div style="display:flex;align-items:center;gap:14px;">
+    <div class="nav-wrap">
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a class="nav-link" onclick="enterView('sobre')">Sobre</a>
+        <a class="nav-link" onclick="enterView('pesquisa-view')">Pesquisa</a>
+        <a class="nav-link" onclick="enterView('inteligencia-view')">Inteligência</a>
+        <a class="nav-link" onclick="enterView('sistemas-view')">Sistemas</a>
+        <a class="nav-link" onclick="enterView('dominios-view')">Domínios</a>
+        <a class="nav-link" onclick="enterView('oportunidades-view')">Oportunidades</a>
+      </nav>
       <a class="switch-perspective" onclick="showGate()">Mudar perspectiva</a>
-      <button class="mobile-nav-toggle" onclick="document.querySelector('.main-nav').classList.toggle('open')" aria-label="Menu" style="display:none;background:none;border:none;color:var(--fg-dim);font-size:1.2rem;cursor:pointer">☰</button>
+      <button class="mobile-nav-toggle" onclick="document.querySelector('.main-nav').classList.toggle('open')" aria-label="Menu">☰</button>
     </div>
   </header>
+
   <main id="mainContent"></main>
+
   <footer>
-    <span>LuxVerso Research Initiative · <a href="https://github.com/viniburilux" target="_blank" style="text-decoration:none;">Vinícius Buri</a> · Salvador, Bahia</span>
-    <span><a href="https://luxverso.com/Desafio-Sebrae/" style="text-decoration:none; color:var(--fg-dim);">Ver os 35 desafios Sebrae ↗</a></span>
+    <span>LuxVerso Research Initiative · <a href="https://github.com/viniburilux" target="_blank">Vinícius Buri</a> · Salvador, Bahia</span>
+    <span class="foot-links">
+      <a href="./Desafio-Sebrae/">35 desafios Sebrae ↗</a>
+      <a href="https://github.com/viniburilux" target="_blank">GitHub ↗</a>
+      <a href="https://openreview.net/profile?id=~Vinicius_Buri_Lux1" target="_blank">OpenReview ↗</a>
+    </span>
   </footer>
 </div>
 
 <script>
 /* ============ DATA: shared evidence blocks ============ */
 const evidence = [
-  { title:"Inteligência territorial a partir de dados de satélite", body:"Sistema construído sobre embeddings de satélite e séries temporais para revelar transformações no território — da mineração e energia aos ecossistemas. Mapas, rankings e casos executados em Bahia e Pará.", how:["Sensoriamento Remoto","Embeddings","Séries Temporais","Mineração"], src:"GhostWorks · Casos executados · IJCAI-ECAI 2026", links:[{t:"GhostWorks ↗", href:"https://luxverso.com/ghostworks/"},{t:"Mining ↗", href:"https://luxverso.com/ghostworks/mining/"},{t:"TTI Brazil — pesquisa e dados ↗", href:"https://github.com/viniburilux/TTI_Brazil_2017_2024"},{t:"Manguezais SP ↗", href:"https://luxverso.com/Manguezais-Brasil/manguezais-sp/"}],
+  { title:"Inteligência territorial a partir de dados de satélite", body:"Sistema construído sobre embeddings de satélite e séries temporais para revelar transformações no território — da mineração e energia aos ecossistemas. Mapas, rankings e casos executados em Bahia e Pará.", how:["Sensoriamento Remoto","Embeddings","Séries Temporais","Mineração"], src:"GhostWorks · Casos executados · IJCAI-ECAI 2026", links:[{t:"GhostWorks ↗", href:"https://viniburilux.github.io/ghostworks/"},{t:"Mining ↗", href:"https://viniburilux.github.io/ghostworks/mining/"},{t:"TTI Brazil ↗", href:"https://github.com/viniburilux/TTI_Brazil_2017_2024"},{t:"Manguezais SP ↗", href:"https://viniburilux.github.io/Manguezais-Brasil/manguezais-sp/"}],
     deep:"GhostWorks transforma observações da Terra em sinais, trajetórias e padrões legíveis. Casos executados: entorno da Acelen (Candeias/BA, 2019–2023) e busca operacional SIGMINE no Pará (277 âncoras → 1.001 coordenadas ranqueadas). Inclui mapa vivo, ranking e caminho de inspeção. Paper aceito no GlobalSouthAI (IJCAI-ECAI 2026). Aplicações em mineração, energia e ecossistemas costeiros." },
-  { title:"Dados públicos transformados em sistemas de inteligência", body:"Fontes públicas distintas (PNCP, contratos, gastos) unificadas em pipelines, exploradores e interfaces de monitoramento — aplicadas a contratação e transparência na Bahia.", how:["APIs","ETL","Engenharia de Dados","Interfaces"], src:"Public Data Intelligence · R$529,5M mapeados", links:[{t:"Gastos Reais BA ↗", href:"https://luxverso.com/gastos-reais-ba/"},{t:"Explorador ↗", href:"https://luxverso.com/explorador-dados-bahia/"},{t:"Monitor PNCP ↗", href:"https://luxverso.com/monitor-gastos-pncp/"}],
+  { title:"Dados públicos transformados em sistemas de inteligência", body:"Fontes públicas distintas (PNCP, contratos, gastos) unificadas em pipelines, exploradores e interfaces de monitoramento — aplicadas a contratação e transparência na Bahia.", how:["APIs","ETL","Engenharia de Dados","Interfaces"], src:"Public Data Intelligence · R$529,5M mapeados", links:[{t:"Gastos Reais BA ↗", href:"https://viniburilux.github.io/gastos-reais-ba/"},{t:"Explorador ↗", href:"https://viniburilux.github.io/explorador-dados-bahia/"},{t:"Monitor PNCP ↗", href:"https://viniburilux.github.io/monitor-gastos-pncp/"}],
     deep:"Infraestrutura aberta e contínua: coleta via API do PNCP, classificação automática, integração com indicadores fiscais e demográficos. Não é análise pontual — é sistema de inteligência operacional sobre dados públicos. Código e dados abertos." },
   { title:"Discovery científico e tecnológico para encontrar o que importa", body:"Conecta literatura, datasets, patentes e ativos de pesquisa para descobrir oportunidades, relações e caminhos de decisão — sem se perder no ruído da informação fragmentada.", how:["Metadata","Cross-source Discovery","R&D Scouting"], src:"TraceFoundry · High-stakes discovery", links:[{t:"TraceFoundry ↗", href:"https://github.com/viniburilux/TraceFoundry"}],
     deep:"Motor de discovery que normaliza metadados de fontes distintas, aplica critérios explícitos de seleção e registra por que candidatos foram aceitos ou rejeitados. Aplicável a technology intelligence, R&D scouting, due diligence científica e patent landscape. A camada técnica preserva provenance e rastreabilidade — o GitHub é o laboratório." },
-  { title:"Pesquisa experimental que vira método, dataset e sistema", body:"Da formulação de hipótese à construção de dataset, protocolo e artefato público — incluindo avaliação de LLMs, estudos longitudinais e ML aplicado a sinal físico.", how:["Avaliação de IA","Datasets","ML Aplicado"], src:"AI / Scientific Research", links:[{t:"MISB Benchmark ↗", href:"https://www.kaggle.com/benchmarks/viniburilux/misb-metacognitive-identity-stability-benchmark"},{t:"Semantic Convergence ↗", href:"https://github.com/viniburilux/LuxVerso-Semantic-Convergence-Study"},{t:"LuxSense ↗", href:"https://luxverso.com/luxsense/"}],
+  { title:"Pesquisa experimental que vira método, dataset e sistema", body:"Da formulação de hipótese à construção de dataset, protocolo e artefato público — incluindo avaliação de LLMs, estudos longitudinais e ML aplicado a sinal físico.", how:["Avaliação de IA","Datasets","ML Aplicado"], src:"AI / Scientific Research", links:[{t:"MISB Benchmark ↗", href:"https://www.kaggle.com/benchmarks/viniburilux/misb-metacognitive-identity-stability-benchmark"},{t:"Semantic Convergence ↗", href:"https://github.com/viniburilux/LuxVerso-Semantic-Convergence-Study"},{t:"LuxSense ↗", href:"https://viniburilux.github.io/luxsense/"}],
     deep:"MISB: benchmark público de estabilidade metacognitiva em LLMs sob pressão adversarial. Semantic Convergence: dataset longitudinal de 352 conversas e 34.626 mensagens. LuxSense: demonstração pública de machine learning sobre espectro Raman bruto (classificação automática). Pesquisa que vira artefato utilizável." }
 ];
 
-
-/* Peer-reviewed publications, accepted only. Full profile (incl. non-accepted work) linked separately. */
+/* Peer-reviewed publications, accepted only */
 const publications = [
   { venue:"CHI 2026 · Workshop InterAI (3ª edição)", title:"The Illusion of Consensus in Human-Centered Interactive AI", href:"https://openreview.net/forum?id=eJtBEBmYGB" },
   { venue:"CHI 2026 · Workshop HEAL", title:"When Humans Become Regime Stabilizers", href:"https://openreview.net/forum?id=PJNqpu0fKr" },
@@ -228,17 +250,17 @@ const publications = [
 ];
 
 function pubBlock(){
-  return `<div class="sebrae-callout">
+  return `<div class="callout">
     <span class="tag">Publicações com peer review — aceitas</span>
     ${publications.map(p=>`<p><a href="${p.href}" target="_blank" style="color:var(--fg); text-decoration:none; border-bottom:1px solid var(--amber-dim);">${p.title}</a><br><span style="color:var(--fg-dimmer); font-family:'IBM Plex Mono',monospace; font-size:12px;">${p.venue}</span></p>`).join('')}
     <a class="go" href="https://openreview.net/profile?id=~Vinicius_Buri_Lux1" target="_blank">Ver as 33 submissões no OpenReview ↗</a>
   </div>`;
 }
 function barcelonaBlock(){
-  return `<div class="sebrae-callout">
+  return `<div class="callout">
     <span class="tag">Trajetória</span>
     <p>Pesquisador independente de Salvador, sem laboratório, sem vínculo institucional, sem financiamento — aceito para apresentar 2 trabalhos na CHI 2026, em Barcelona, com submissão feita majoritariamente pelo celular.</p>
-    <a class="go" href="https://luxverso.com/barcelona/" target="_blank">Ver a história completa ↗</a>
+    <a class="go" href="https://viniburilux.github.io/barcelona/" target="_blank">Ver a história completa ↗</a>
   </div>`;
 }
 function evidCard(e, deep){
@@ -291,7 +313,7 @@ function render(view){
       <p class="lede">A gente descobre o que pode ser construído.</p>
       <div class="cta-row">
         <a class="cta-main" href="https://wa.me/5585999798762?text=Ol%C3%A1%2C%20Vini!%20Quero%20entender%20melhor%20o%20que%20a%20LuxVerso%20faz." target="_blank">Quero explorar meu problema ↗</a>
-        <a class="cta-secondary" href="https://luxverso.com/Desafio-Sebrae/">Ver 35 desafios já analisados ↗</a>
+        <a class="cta-secondary" href="./Desafio-Sebrae/">Ver 35 desafios já analisados ↗</a>
       </div>
       <div class="perspective-nudge">
         <span>Quer se aprofundar?</span>
@@ -332,7 +354,7 @@ function render(view){
     <section>
       <h2>Quer entrar em mais detalhe técnico?</h2>
       <div class="cta-row">
-        <a class="cta-main" href="https://luxverso.com/luxsense/" target="_blank">Ver o LuxSense ↗</a>
+        <a class="cta-main" href="https://viniburilux.github.io/luxsense/" target="_blank">Ver o LuxSense ↗</a>
         <a class="cta-secondary" href="https://github.com/viniburilux" target="_blank">Ver o GitHub ↗</a>
       </div>
       <div class="perspective-nudge">
@@ -357,11 +379,11 @@ function render(view){
       <p class="lede">Não é falta de tecnologia disponível. É a distância entre a tecnologia existir e sua empresa saber operar ela.</p>
     </section>
     <section>
-      <div class="sebrae-callout">
+      <div class="callout">
         <span class="tag">Prova de trabalho</span>
         <p>Pediram para escolher alguns desafios da Jornada Sebrae 2026. A gente analisou os 35.</p>
         <p>Mapeamos o problema, achamos a oportunidade técnica e estruturamos um caminho de solução para cada um — antes de qualquer contrato existir.</p>
-        <a class="go" href="https://luxverso.com/Desafio-Sebrae/">Explorar os 35 desafios ↗</a>
+        <a class="go" href="./Desafio-Sebrae/">Explorar os 35 desafios ↗</a>
       </div>
     </section>
     <section>
@@ -409,7 +431,7 @@ function render(view){
     <section>
       <div class="eyebrow">Publicações e trajetória</div>
       ${pubBlock()}
-      <div style="height:20px;"></div>
+      <div style="height:22px;"></div>
       ${barcelonaBlock()}
     </section>
     <section>
@@ -455,14 +477,14 @@ function render(view){
     <section>
       <div class="eyebrow">Publicações e trajetória</div>
       ${pubBlock()}
-      <div style="height:20px;"></div>
+      <div style="height:22px;"></div>
       ${barcelonaBlock()}
     </section>
     <section>
-      <div class="sebrae-callout">
+      <div class="callout">
         <span class="tag">Capacidade de execução em prazo</span>
         <p>Na Jornada Sebrae de Inovação Aberta 2026, a empresa recebeu a possibilidade de submeter poucos desafios entre 35 disponíveis. Em vez de escolher a priori, analisou os 35 — diagnóstico, oportunidade técnica e caminho de solução para cada um — antes de decidir onde submeter.</p>
-        <a class="go" href="https://luxverso.com/Desafio-Sebrae/">Ver a análise completa ↗</a>
+        <a class="go" href="./Desafio-Sebrae/">Ver a análise completa ↗</a>
       </div>
     </section>
     <section>
@@ -480,7 +502,7 @@ function render(view){
   }
 }
 
-/* ============ NOVAS VIEWS INSTITUCIONAIS ============ */
+/* ============ INSTITUTIONAL VIEWS ============ */
 function renderInstitutional(view) {
   const m = document.getElementById('mainContent');
   const baseNav = `<div class="perspective-nudge"><span>Navegar:</span>
@@ -508,7 +530,7 @@ function renderInstitutional(view) {
         <span class="step">Descobrir</span><span class="arrow">→</span>
         <span class="step">Aplicar</span>
       </div>
-      <p class="lede" style="margin-top:24px;">23 repositórios públicos, 10 sistemas funcionais, 19 descobertas documentadas, 4 papers aceitos, 3 datasets públicos — produzidos de forma independente, sem laboratório institucional, sem financiamento externo.</p>
+      <p class="lede" style="margin-top:28px;">23 repositórios públicos, 10 sistemas funcionais, 19 descobertas documentadas, 4 papers aceitos, 3 datasets públicos — produzidos de forma independente, sem laboratório institucional, sem financiamento externo.</p>
     </section>
     <section>
       <div class="eyebrow">Como trabalhamos</div>
@@ -521,7 +543,7 @@ function renderInstitutional(view) {
     <section>
       <div class="eyebrow">Publicações e trajetória</div>
       ${pubBlock()}
-      <div style="height:20px;"></div>
+      <div style="height:22px;"></div>
       ${barcelonaBlock()}
     </section>
     <section>${baseNav}</section>`;
@@ -537,11 +559,11 @@ function renderInstitutional(view) {
     <section>
       <div class="eyebrow">Programas</div>
       <div class="evid-grid">
-        <div class="evid-card"><div class="evid-title">🧬 Biotecnologia e Agro</div><div class="evid-body" style="font-size:13px;">Investigação de bioinsumos, organismos, processos e rotas tecnológicas. 763 obras catalogadas, 2.680 atores, 4.045 relações.</div></div>
-        <div class="evid-card"><div class="evid-title">🛰️ Território, Energia e Meio Ambiente</div><div class="evid-body" style="font-size:13px;">Detecção de transformação territorial, monitoramento de mineração, energia e ecossistemas. GhostWorks, TTI, Manguezais SP.</div></div>
-        <div class="evid-card"><div class="evid-title">⛏️ Mineração e Materiais Críticos</div><div class="evid-body" style="font-size:13px;">Patentes minerais, prospecção, reciclagem de baterias. Corpus de 72 arquivos, 22 datasets, 43 patentes.</div></div>
-        <div class="evid-card"><div class="evid-title">🏛️ Dados Públicos e Transparência</div><div class="evid-body" style="font-size:13px;">Contratações públicas, cruzamento multi-fonte, dashboards. R$160M mapeados, 4 cruzamentos CGU.</div></div>
-        <div class="evid-card"><div class="evid-title">🔬 Ciência, Tecnologia e Infraestrutura</div><div class="evid-body" style="font-size:13px;">TraceFoundry, representações R4-R6, experimento Lux-vs-LLM, sensoriamento inteligente.</div></div>
+        <div class="evid-card"><div class="evid-title">🧬 Biotecnologia e Agro</div><div class="evid-body">Investigação de bioinsumos, organismos, processos e rotas tecnológicas. 763 obras catalogadas, 2.680 atores, 4.045 relações.</div></div>
+        <div class="evid-card"><div class="evid-title">🛰️ Território, Energia e Meio Ambiente</div><div class="evid-body">Detecção de transformação territorial, monitoramento de mineração, energia e ecossistemas. GhostWorks, TTI, Manguezais SP.</div></div>
+        <div class="evid-card"><div class="evid-title">⛏️ Mineração e Materiais Críticos</div><div class="evid-body">Patentes minerais, prospecção, reciclagem de baterias. Corpus de 72 arquivos, 22 datasets, 43 patentes.</div></div>
+        <div class="evid-card"><div class="evid-title">🏛️ Dados Públicos e Transparência</div><div class="evid-body">Contratações públicas, cruzamento multi-fonte, dashboards. R$160M mapeados, 4 cruzamentos CGU.</div></div>
+        <div class="evid-card"><div class="evid-title">🔬 Ciência, Tecnologia e Infraestrutura</div><div class="evid-body">TraceFoundry, representações R4-R6, experimento Lux-vs-LLM, sensoriamento inteligente.</div></div>
       </div>
     </section>
     <section>
@@ -561,12 +583,11 @@ function renderInstitutional(view) {
     <section>
       <div class="eyebrow">Descobertas recentes</div>
       <div id="intelFeed" class="evid-grid" style="margin-top:0;">
-        <div class="evid-card"><div class="evid-title">🔄 Carregando...</div></div>
+        <div class="evid-card"><div class="evid-title">— Carregando descobertas...</div></div>
       </div>
-      <p style="margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--fg-dimmer);"><a href="https://github.com/viniburilux/Sistemas-Inteligentes/tree/main/intelligence-pipeline" style="color:var(--amber);">Ver pipeline completo ↗</a></p>
+      <p style="margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--fg-dimmer);"><a href="https://github.com/viniburilux/Sistemas-Inteligentes/tree/main/intelligence-pipeline" style="color:var(--amber);" target="_blank">Ver pipeline completo ↗</a></p>
     </section>
     <section>${baseNav}</section>`;
-    // Load feed from pipeline
     fetch('https://luxverso.com/intel-feed.json')
       .then(r=>r.json())
       .then(data=>{
@@ -574,9 +595,9 @@ function renderInstitutional(view) {
         if(data.entries){
           feed.innerHTML = data.entries.slice(0,6).map(e=>
             `<div class="evid-card">
-              <div class="evid-title">${e.title.length > 70 ? e.title.slice(0,70)+'...' : e.title}</div>
-              <div class="evid-body" style="font-size:13px;">${e.summary}</div>
-              <div class="evid-foot"><span class="evid-src">${e.domain} · ${e.status}</span><span class="evid-links"><a href="https://luxverso.com/intelligence/${e.slug}.md">Abrir ↗</a></span></div>
+              <div class="evid-title">${e.title.length > 70 ? e.title.slice(0,70)+'…' : e.title}</div>
+              <div class="evid-body" style="font-size:13.5px;">${e.summary}</div>
+              <div class="evid-foot"><span class="evid-src">${e.domain} · ${e.status}</span><span class="evid-links"><a href="https://luxverso.com/intelligence/${e.slug}.md" target="_blank">Abrir ↗</a></span></div>
             </div>`
           ).join('');
         } else {
@@ -597,12 +618,12 @@ function renderInstitutional(view) {
     </section>
     <section>
       <div class="evid-grid">
-        <div class="evid-card"><div class="evid-title">Sistemas Inteligentes</div><div class="evid-body" style="font-size:13px;">Plataforma de investigação multi-domínio. Capacidades: descoberta, proveniência, representação, agentes, sensoriamento.</div><div class="evid-foot"><span class="evid-links"><a href="https://luxverso.com/Sistemas-Inteligentes/" target="_blank">Abrir ↗</a></span></div></div>
-        <div class="evid-card"><div class="evid-title">GhostWorks</div><div class="evid-body" style="font-size:13px;">Inteligência territorial por embeddings de satélite. TTI, atlas de trajetórias, mineração.</div><div class="evid-foot"><span class="evid-links"><a href="https://luxverso.com/ghostworks/" target="_blank">Abrir ↗</a></span></div></div>
-        <div class="evid-card"><div class="evid-title">LuxSense</div><div class="evid-body" style="font-size:13px;">Sensor Raman com IA (99,43% acurácia). Paper em revisão, TRL 3-4.</div><div class="evid-foot"><span class="evid-links"><a href="https://luxverso.com/luxsense" target="_blank">Abrir ↗</a></span></div></div>
-        <div class="evid-card"><div class="evid-title">Lux-Radar</div><div class="evid-body" style="font-size:13px;">Motor de oportunidade com release semanal automatizado.</div><div class="evid-foot"><span class="evid-links"><a href="https://github.com/viniburilux/Lux-Radar" target="_blank">Abrir ↗</a></span></div></div>
-        <div class="evid-card"><div class="evid-title">TraceFoundry</div><div class="evid-body" style="font-size:13px;">Infraestrutura de evidência com 7 estados epistêmicos. Licença MIT.</div><div class="evid-foot"><span class="evid-links"><a href="https://github.com/viniburilux/TraceFoundry" target="_blank">Abrir ↗</a></span></div></div>
-        <div class="evid-card"><div class="evid-title">Inteligência Biotecnológica</div><div class="evid-body" style="font-size:13px;">Corpus público de 763 obras, 2.680 atores, trilhas de investigação.</div><div class="evid-foot"><span class="evid-links"><a href="https://github.com/viniburilux/inteligencia-biotecnologica-agropecuaria" target="_blank">Abrir ↗</a></span></div></div>
+        <div class="evid-card"><div class="evid-title">Sistemas Inteligentes</div><div class="evid-body">Plataforma de investigação multi-domínio. Capacidades: descoberta, proveniência, representação, agentes, sensoriamento.</div><div class="evid-foot"><span class="evid-links"><a href="https://viniburilux.github.io/Sistemas-Inteligentes/" target="_blank">Abrir ↗</a></span></div></div>
+        <div class="evid-card"><div class="evid-title">GhostWorks</div><div class="evid-body">Inteligência territorial por embeddings de satélite. TTI, atlas de trajetórias, mineração.</div><div class="evid-foot"><span class="evid-links"><a href="https://viniburilux.github.io/ghostworks/" target="_blank">Abrir ↗</a></span></div></div>
+        <div class="evid-card"><div class="evid-title">LuxSense</div><div class="evid-body">Sensor Raman com IA (99,43% acurácia). Paper em revisão, TRL 3-4.</div><div class="evid-foot"><span class="evid-links"><a href="https://viniburilux.github.io/luxsense/" target="_blank">Abrir ↗</a></span></div></div>
+        <div class="evid-card"><div class="evid-title">Lux-Radar</div><div class="evid-body">Motor de oportunidade com release semanal automatizado.</div><div class="evid-foot"><span class="evid-links"><a href="https://github.com/viniburilux/Lux-Radar" target="_blank">Abrir ↗</a></span></div></div>
+        <div class="evid-card"><div class="evid-title">TraceFoundry</div><div class="evid-body">Infraestrutura de evidência com 7 estados epistêmicos. Licença MIT.</div><div class="evid-foot"><span class="evid-links"><a href="https://github.com/viniburilux/TraceFoundry" target="_blank">Abrir ↗</a></span></div></div>
+        <div class="evid-card"><div class="evid-title">Inteligência Biotecnológica</div><div class="evid-body">Corpus público de 763 obras, 2.680 atores, trilhas de investigação.</div><div class="evid-foot"><span class="evid-links"><a href="https://github.com/viniburilux/inteligencia-biotecnologica-agropecuaria" target="_blank">Abrir ↗</a></span></div></div>
       </div>
     </section>
     <section>${baseNav}</section>`;
@@ -617,12 +638,12 @@ function renderInstitutional(view) {
     </section>
     <section>
       <div class="evid-grid">
-        <div class="evid-card"><div class="evid-title">🧬 Biotecnologia e Agro</div><div class="evid-body" style="font-size:13px;">Bioinsumos, controle biológico, rotas tecnológicas. Corpus de 763 obras, 2.680 atores.</div></div>
-        <div class="evid-card"><div class="evid-title">🛰️ Território e Meio Ambiente</div><div class="evid-body" style="font-size:13px;">Transformação territorial, manguezais, queimadas, monitoramento costeiro.</div></div>
-        <div class="evid-card"><div class="evid-title">⛏️ Mineração e Materiais</div><div class="evid-body" style="font-size:13px;">Prospecção mineral, materiais críticos, reciclagem de baterias, patentes.</div></div>
-        <div class="evid-card"><div class="evid-title">⚡ Energia</div><div class="evid-body" style="font-size:13px;">Expansão renovável, impacto territorial, transição energética.</div></div>
-        <div class="evid-card"><div class="evid-title">🏛️ Dados Públicos</div><div class="evid-body" style="font-size:13px;">Transparência, contratações, cruzamento multi-fonte, controle social.</div></div>
-        <div class="evid-card"><div class="evid-title">🔬 Ciência e P&D</div><div class="evid-body" style="font-size:13px;">Technology intelligence, scouting, investigação científica, sensoriamento.</div></div>
+        <div class="evid-card"><div class="evid-title">🧬 Biotecnologia e Agro</div><div class="evid-body">Bioinsumos, controle biológico, rotas tecnológicas. Corpus de 763 obras, 2.680 atores.</div></div>
+        <div class="evid-card"><div class="evid-title">🛰️ Território e Meio Ambiente</div><div class="evid-body">Transformação territorial, manguezais, queimadas, monitoramento costeiro.</div></div>
+        <div class="evid-card"><div class="evid-title">⛏️ Mineração e Materiais</div><div class="evid-body">Prospecção mineral, materiais críticos, reciclagem de baterias, patentes.</div></div>
+        <div class="evid-card"><div class="evid-title">⚡ Energia</div><div class="evid-body">Expansão renovável, impacto territorial, transição energética.</div></div>
+        <div class="evid-card"><div class="evid-title">🏛️ Dados Públicos</div><div class="evid-body">Transparência, contratações, cruzamento multi-fonte, controle social.</div></div>
+        <div class="evid-card"><div class="evid-title">🔬 Ciência e P&D</div><div class="evid-body">Technology intelligence, scouting, investigação científica, sensoriamento.</div></div>
       </div>
     </section>
     <section>${baseNav}</section>`;
@@ -667,7 +688,6 @@ function enterView(view) {
   if(location.hash !== `#${view}`) history.replaceState(null, '', `#${view}`);
   document.getElementById('gate').style.display = 'none';
   document.getElementById('app').classList.add('open');
-  // Update active nav link
   document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
   document.querySelectorAll('.nav-link').forEach(l => {
     if(l.getAttribute('onclick')?.includes(view)) l.classList.add('active');
@@ -693,13 +713,19 @@ function showGate(){
   window.scrollTo(0,0);
 }
 
-/* Deep links remain simple: each perspective can be shared as #rapido, #tecnologia, #empresa, #pesquisa or #investidor. */
-const validViews = doors.map(d=>d.key);
+/* Deep links */
+const validViews = [...doors.map(d=>d.key), 'sobre', 'pesquisa-view', 'inteligencia-view', 'sistemas-view', 'dominios-view', 'oportunidades-view'];
 const requestedView = location.hash.replace('#','');
-if(validViews.includes(requestedView)) enter(requestedView);
+if(validViews.includes(requestedView)) {
+  if(doors.some(d=>d.key===requestedView)) enter(requestedView);
+  else enterView(requestedView);
+}
 window.addEventListener('hashchange', ()=>{
   const view = location.hash.replace('#','');
-  if(validViews.includes(view)) enter(view);
+  if(validViews.includes(view)) {
+    if(doors.some(d=>d.key===view)) enter(view);
+    else enterView(view);
+  }
 });
 </script>
 
