@@ -104,6 +104,21 @@ a{color:inherit;text-decoration:none;}
 .sys-card .bot .lk{color:var(--lime);font-weight:600;transition:color .15s;}
 .sys-card .bot .lk:hover{color:var(--lime-d);}
 
+/* RECOGNITION */
+.recognition{border:1px solid var(--lime);background:linear-gradient(135deg,rgba(214,242,61,.12),rgba(21,26,22,.96) 58%);padding:30px 32px;position:relative;overflow:hidden;}
+.recognition::after{content:'DESTAQUE';position:absolute;top:24px;right:28px;color:rgba(214,242,61,.18);font-size:clamp(38px,6vw,76px);font-weight:800;letter-spacing:-.08em;line-height:1;pointer-events:none;}
+.recognition .section-eyebrow{margin-bottom:12px;}
+.recognition-title{max-width:720px;font-size:clamp(22px,2.6vw,34px);font-weight:700;letter-spacing:-.04em;line-height:1.08;position:relative;z-index:1;}
+.recognition-sub{max-width:680px;margin-top:12px;color:var(--fg-2);font-size:clamp(14px,1.1vw,17px);position:relative;z-index:1;}
+.recognition-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ln);margin-top:26px;position:relative;z-index:1;}
+.recognition-card{background:rgba(15,20,16,.94);padding:20px;min-height:132px;display:flex;flex-direction:column;justify-content:space-between;}
+.recognition-card .n{font:700 11px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--lime);letter-spacing:.12em;}
+.recognition-card .challenge{margin-top:18px;font-size:clamp(14px,1.1vw,17px);font-weight:650;line-height:1.3;color:var(--fg);}
+.recognition-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:22px;color:var(--fg-3);font-size:12px;position:relative;z-index:1;}
+.recognition-foot .source{color:var(--fg-2);}
+.recognition-foot a{color:var(--lime);font-weight:600;}
+@media(max-width:720px){.recognition-grid{grid-template-columns:1fr;}.recognition::after{top:70px;right:18px;font-size:44px;}.recognition{padding:24px 20px;}}
+
 /* CONTACT */
 .contact-block{margin-top:28px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
 .contact-alt{margin-top:18px;font-size:13px;color:var(--fg-3);display:flex;flex-wrap:wrap;gap:16px;}
@@ -219,6 +234,21 @@ a{color:inherit;text-decoration:none;}
     <span class="fs">IMPLEMENTAÇÃO</span>
   </div>
   <div class="flow-note">A tecnologia é escolhida em função do <span>problema.</span> Não o contrário.</div>
+</div>
+
+<!-- RECONHECIMENTO -->
+<div class="section" id="reconhecimento">
+  <div class="recognition">
+    <div class="section-eyebrow">Reconhecimento | Destaque</div>
+    <div class="recognition-title">Selecionada para o Pitch Day da Jornada de Inovação Aberta — Sebrae Conexões Corporativas</div>
+    <div class="recognition-sub">3 desafios · 3 contextos · 1 equipe</div>
+    <div class="recognition-grid">
+      <div class="recognition-card"><span class="n">01</span><div class="challenge">AP Projetos — Elaboração e Emissão de Documentos de Engenharia</div></div>
+      <div class="recognition-card"><span class="n">02</span><div class="challenge">Grupo Interjato — Inteligência e Visão Computacional aplicada a Vídeos</div></div>
+      <div class="recognition-card"><span class="n">03</span><div class="challenge">Unimed — Solicitação e Validação de OPME com Governança</div></div>
+    </div>
+    <div class="recognition-foot"><span class="source">Fonte: Sebrae Conexões Corporativas — Jornada de Inovação Aberta.</span><a href="/assets/sebrae-conexoes-corporativas-jornada-inovacao-aberta-pitch-day.pdf" download>Baixar documento oficial →</a></div>
+  </div>
 </div>
 
 <!-- EVIDÊNCIAS -->
