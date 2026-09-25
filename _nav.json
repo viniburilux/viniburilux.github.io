@@ -34,6 +34,13 @@
           "category": "camada técnica",
           "description": "TraceFoundry, memória, proveniência e sistemas de investigação.",
           "url": "https://luxverso.com/infrastructure/"
+        },
+        {
+          "id": "empresa",
+          "name": "Empresa",
+          "category": "camada comercial",
+          "description": "Capacidades, equipe, método e evidências — para organizações que trazem um problema real.",
+          "url": "https://luxverso.com/empresa/"
         }
       ]
     },
