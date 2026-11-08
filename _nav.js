@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const registryUrl = 'https://luxverso.com/_nav.json';
+  const registryUrl = '/_nav.json';
   const currentUrl = window.location.href.replace(/\/$/, '');
 
   const style = document.createElement('style');
