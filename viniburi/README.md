@@ -1,6 +1,6 @@
 # Vinícius Buri Lux
 
-Personal presentation page, served at https://luxverso.com/viniburi/
+Personal presentation page, served at https://viniburilux.github.io/viniburi/
 
 - [Presentation page](./index.html)
 - [Supporting Evidence and Project Record (DOCX)](../emergent-ventures/Emergent_Ventures_Supporting_Evidence_and_Project_Record.docx)
